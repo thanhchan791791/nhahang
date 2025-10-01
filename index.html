@@ -34,6 +34,13 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <style>
+  .loading,
+  .error-message,
+  .sent-message {
+    display: none;
+  }
+</style>
 </head>
 
 <body class="index-page">
@@ -69,7 +76,6 @@
             <li><a href="#hero" class="active">Trang chủ</a></li>
             <li><a href="#about">Giới thiệu</a></li>
             <li><a href="#menu">Menu</a></li>
-            <li><a href="#book-a-table">Đặt bàn</a></li>
            <!--  <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
                 <li><a href="#">Dropdown 1</a></li>
@@ -158,44 +164,42 @@
          <div class="col-lg-4">
   <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
     <h3>Đặt bàn</h3>
-    <form action="forms/book-a-table.php" method="post" class="php-email-form">
-      <div class="row gy-3">
-        <div class="col-md-6">
-          <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
-        </div>
-        <div class="col-md-6">
-          <input type="email" name="email" class="form-control" placeholder="Email" required>
-        </div>
-        <div class="col-md-6">
-          <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
-        </div>
-        <div class="col-md-6">
-          <select name="people" class="form-control" required>
-            <option value="">Số người</option>
-            <option value="1">1 Người</option>
-            <option value="2">2 Người</option>
-            <option value="3">3 Người</option>
-            <option value="4">4 Người</option>
-            <option value="5">5+ Người</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <input type="date" name="date" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <input type="time" name="time" class="form-control" required>
-        </div>
-        <div class="col-12">
-          <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn" ></textarea>
-        </div>
-        <div class="col-12">
-          <div class="loading">Đang gửi...</div>
-          <div class="error-message"></div>
-          <div class="sent-message">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
-          <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
-        </div>
-      </div>
-    </form>
+   <form id="firebase-booking-form">
+  <div class="row gy-3">
+    <div class="col-md-6">
+      <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
+    </div>
+    <div class="col-md-6">
+      <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
+    </div>
+    <div class="col-md-6">
+      <select name="people" class="form-control" required>
+        <option value="">Số người</option>
+        <option value="1">1 Người</option>
+        <option value="2">2 Người</option>
+        <option value="3">3 Người</option>
+        <option value="4">4 Người</option>
+        <option value="5">5+ Người</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <input type="date" name="date" class="form-control" required>
+    </div>
+    <div class="col-md-6">
+      <input type="time" name="time" class="form-control" required>
+    </div>
+    <div class="col-12">
+      <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn"></textarea>
+    </div>
+    <div class="col-12">
+      <div class="loading" style="display:none;">Đang gửi...</div>
+      <div class="error-message" style="display:none;color:red;"></div>
+      <div class="sent-message" style="display:none;color:green;">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
+      <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
+    </div>
+  </div>
+</form>
+
   </div>
 </div>
 
@@ -575,7 +579,7 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="reservation-container">
+           <!--  <div class="reservation-container">
               <div class="row g-0">
 
                 <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
@@ -585,64 +589,53 @@
     <p>Hãy đặt bàn trước để chúng tôi phục vụ bạn chu đáo nhất. Vui lòng điền đầy đủ thông tin bên dưới.</p>
   </div>
 
-  <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
-    <div class="row gy-3">
-      <div class="col-12">
-        <input type="text" name="name" class="form-control" placeholder="Họ và Tên" required="">
-      </div>
-      <div class="col-12">
-        <input type="email" class="form-control" name="email" placeholder="Địa chỉ Email" required="">
-      </div>
-      <div class="col-12">
-        <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại" required="">
-      </div>
-      <div class="col-6">
-        <input type="date" name="date" class="form-control" required="">
-      </div>
-      <div class="col-6">
-        <input type="time" class="form-control" name="time" required="">
-      </div>
-      <div class="col-6">
-        <select name="people" class="form-select" required="">
-          <option value="">Số Khách</option>
-          <option value="1">1 Người</option>
-          <option value="2">2 Người</option>
-          <option value="3">3 Người</option>
-          <option value="4">4 Người</option>
-          <option value="5">5 Người</option>
-          <option value="6">6+ Người</option>
-        </select>
-      </div>
-      <div class="col-6">
-        <select name="occasion" class="form-select">
-          <option value="">Dịp Đặc Biệt</option>
-          <option value="birthday">Sinh Nhật</option>
-          <option value="anniversary">Kỷ Niệm</option>
-          <option value="business">Tiệc Công Việc</option>
-          <option value="date">Hẹn Hò</option>
-          <option value="celebration">Liên Hoan</option>
-          <option value="other">Khác</option>
-        </select>
-      </div>
-      <div class="col-12">
-        <textarea class="form-control" name="message" rows="3" placeholder="Yêu cầu đặc biệt hoặc chế độ ăn uống"></textarea>
-      </div>
+ <form id="firebase-booking-form" role="form">
+  <div class="row gy-3">
+    <div class="col-12">
+      <input type="text" name="name" class="form-control" placeholder="Họ và Tên" required>
     </div>
-
-    <div class="my-3">
-      <div class="loading">Đang gửi...</div>
-      <div class="error-message"></div>
-      <div class="sent-message">Yêu cầu đặt bàn của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ sớm để xác nhận.</div>
+    <div class="col-12">
+      <input type="email" class="form-control" name="email" placeholder="Địa chỉ Email" required>
     </div>
+    <div class="col-12">
+      <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại" required>
+    </div>
+    <div class="col-6">
+      <input type="date" name="date" class="form-control" required>
+    </div>
+    <div class="col-6">
+      <input type="time" class="form-control" name="time" required>
+    </div>
+    <div class="col-6">
+      <select name="people" class="form-select" required>
+        <option value="">Số Khách</option>
+        <option value="1">1 Người</option>
+        <option value="2">2 Người</option>
+        <option value="3">3 Người</option>
+        <option value="4">4 Người</option>
+        <option value="5">5 Người</option>
+        <option value="6">6+ Người</option>
+      </select>
+    </div>
+  </div>
 
-    <button type="submit" class="btn-reserve w-100">
-      <i class="bi bi-calendar-check me-2"></i>
-      Đặt Bàn Ngay
-    </button>
-  </form>
+  <div class="my-3">
+    <div class="loading" style="display:none;">Đang gửi...</div>
+    <div class="error-message" style="display:none; color:red;"></div>
+    <div class="sent-message" style="display:none; color:green;">
+      Yêu cầu đặt bàn của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ sớm để xác nhận.
+    </div>
+  </div>
+
+  <button type="submit" class="btn-reserve w-100">
+    <i class="bi bi-calendar-check me-2"></i>
+    Đặt Bàn Ngay
+  </button>
+</form>
+
 </div>
 
-                </div>
+                </div> -->
 
               <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
   <div class="reservation-info-section">
@@ -1070,67 +1063,67 @@
       width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
-
+<!-- 
   <!-- Contact Form Section (Overlapping) -->
   <div class="container form-container-overlap">
     <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
-          <h2 class="text-center mb-4">Gửi tin nhắn cho chúng tôi</h2>
+  <h2 class="text-center mb-4">Gửi tin nhắn cho chúng tôi</h2>
 
-          <form action="forms/contact.php" method="post" class="php-email-form">
-            <div class="row g-3">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <i class="bi bi-person"></i>
-                    <input type="text" class="form-control" name="name" placeholder="Họ và Tên" required="">
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <i class="bi bi-envelope"></i>
-                    <input type="email" class="form-control" name="email" placeholder="Địa chỉ Email" required="">
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-md-12">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <i class="bi bi-text-left"></i>
-                    <input type="text" class="form-control" name="subject" placeholder="Chủ đề" required="">
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="form-group">
-                  <div class="input-with-icon">
-                    <i class="bi bi-chat-dots message-icon"></i>
-                    <textarea class="form-control" name="message" placeholder="Nhập tin nhắn..." style="height: 180px" required=""></textarea>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12">
-                <div class="loading">Đang gửi...</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Tin nhắn của bạn đã được gửi. Xin cảm ơn!</div>
-              </div>
-
-              <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary btn-submit">GỬI NGAY</button>
-              </div>
-            </div>
-          </form>
+  <form id="firebase-contact-form" class="firebase-form">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="input-with-icon">
+            <i class="bi bi-person"></i>
+            <input type="text" class="form-control" name="name" placeholder="Họ và Tên" required>
+          </div>
         </div>
       </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <div class="input-with-icon">
+            <i class="bi bi-phone"></i>
+            <input type="tel" class="form-control" name="phone" placeholder="Số điện thoại" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="form-group">
+          <div class="input-with-icon">
+            <i class="bi bi-text-left"></i>
+            <input type="text" class="form-control" name="subject" placeholder="Chủ đề" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group">
+          <div class="input-with-icon">
+            <i class="bi bi-chat-dots message-icon"></i>
+            <textarea class="form-control" name="message" placeholder="Nhập tin nhắn..." style="height: 180px" required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="loading">Đang gửi...</div>
+        <div class="error-message"></div>
+        <div class="sent-message">Tin nhắn của bạn đã được gửi. Xin cảm ơn!</div>
+      </div>
+
+      <div class="col-12 text-center">
+        <button type="submit" class="btn btn-primary btn-submit">GỬI NGAY</button>
+      </div>
     </div>
-  </div>
+  </form>
+</div>
+      </div>
+    </div>
+  </div> 
 
 </section><!-- /Contact Section -->
 
@@ -1284,5 +1277,135 @@
   <script src="assets/js/main.js"></script>
 
 </body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-database.js";
 
-</html>
+  // === Thông tin Telegram ===
+  const TELEGRAM_BOT_TOKEN = "7807531189:AAGhMQ9jjew7Q9ywMDSTaGDy4Ns6XtPQUrI";
+  const TELEGRAM_CHAT_ID = "-4804053572";
+
+  // Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyB4S6E-Gl6k5mG57otkF8WUh3iuvqq-pWw",
+    authDomain: "member-ffd77.firebaseapp.com",
+    databaseURL: "https://member-ffd77-default-rtdb.firebaseio.com",
+    projectId: "member-ffd77",
+    storageBucket: "member-ffd77.firebasestorage.app",
+    messagingSenderId: "375537857518",
+    appId: "1:375537857518:web:86449f4419f0ab5f6954ff",
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Gửi thông báo Telegram
+  function sendToTelegram(data, type) {
+    let text = "";
+
+    if (type === "booking") {
+      text = `
+📌 *Yêu cầu đặt bàn mới*
+
+👤 Tên: ${data.name}
+📞 Điện thoại: ${data.phone}
+👥 Số người: ${data.people}
+📅 Ngày: ${data.date}
+⏰ Giờ: ${data.time}
+📝 Ghi chú: ${data.message || "Không có"}
+⏱️ Thời gian gửi: ${data.createdAt}
+      `;
+    } else if (type === "contact") {
+      text = `
+📩 *Liên hệ mới từ khách hàng*
+
+👤 Tên: ${data.name}
+📞 Điện thoại: ${data.phone}
+📌 Chủ đề: ${data.subject}
+📝 Tin nhắn: ${data.message}
+⏱️ Thời gian gửi: ${data.createdAt}
+      `;
+    }
+
+    return fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: text,
+        parse_mode: "Markdown"
+      })
+    });
+  }
+
+  // Hàm xử lý form chung
+  function handleFormSubmit(form, type) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const loadingEl = this.querySelector(".loading");
+      const errorEl = this.querySelector(".error-message");
+      const sentEl = this.querySelector(".sent-message");
+      const btn = this.querySelector("button[type=submit]");
+
+      loadingEl.style.display = "block";
+      if (errorEl) errorEl.style.display = "none";
+      if (sentEl) sentEl.style.display = "none";
+      if (btn) btn.disabled = true;
+
+      let data = {};
+
+      if (type === "booking") {
+        data = {
+          name: this.name.value,
+          phone: this.phone.value,
+          people: this.people.value,
+          date: this.date.value,
+          time: this.time.value,
+          message: this.message.value,
+          formType: type,
+          createdAt: new Date().toISOString()
+        };
+      } else if (type === "contact") {
+        data = {
+          name: this.name.value,
+          phone: this.phone.value,
+          subject: this.subject.value,
+          message: this.message.value,
+          formType: type,
+          createdAt: new Date().toISOString()
+        };
+      }
+
+      const formRef = ref(db, type === "booking" ? "bookings" : "contacts");
+      const newRef = push(formRef);
+
+      set(newRef, data)
+        .then(() => sendToTelegram(data, type))
+        .then(() => {
+          loadingEl.style.display = "none";
+          if (sentEl) sentEl.style.display = "block";
+          this.reset();
+          if (btn) btn.disabled = false;
+        })
+        .catch((err) => {
+          loadingEl.style.display = "none";
+          if (errorEl) {
+            errorEl.innerText = "Lỗi: " + err.message;
+            errorEl.style.display = "block";
+          }
+          if (btn) btn.disabled = false;
+        });
+    });
+  }
+
+  // Kích hoạt cho từng form
+  const bookingForm = document.getElementById("firebase-booking-form");
+  if (bookingForm) handleFormSubmit(bookingForm, "booking");
+
+  const contactForm = document.getElementById("firebase-contact-form");
+  if (contactForm) handleFormSubmit(contactForm, "contact");
+</script>
+
+
+</html>x
