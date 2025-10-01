@@ -131,8 +131,8 @@
               <p class="hero-description">Đắm mình trong ẩm thực Buôn Ma Thuột đậm đà bản sắc, chế biến từ tâm huyết và nguyên liệu tinh tuyển. Từ món ăn truyền thống dân dã đến biến tấu độc đáo, tất cả tạo nên trải nghiệm đáng nhớ cho thực khách.</p>
 
               <div class="hero-actions" data-aos="fade-up" data-aos-delay="200">
-                <a href="#" class="btn btn-primary">Đặt bàn</a>
-                <a href="#" class="btn btn-outline">Menu</a>
+                <a href="#datban" class="btn btn-primary">Đặt bàn</a>
+                <a href="#menu" class="btn btn-outline">Menu</a>
               </div>
 
               <div class="hero-features" data-aos="fade-up" data-aos-delay="300">
@@ -162,45 +162,50 @@
           </div>
 
          <div class="col-lg-4">
-  <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
-    <h3>Đặt bàn</h3>
-   <form id="firebase-booking-form">
-  <div class="row gy-3">
-    <div class="col-md-6">
-      <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
-    </div>
-    <div class="col-md-6">
-      <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
-    </div>
-    <div class="col-md-6">
-      <select name="people" class="form-control" required>
-        <option value="">Số người</option>
-        <option value="1">1 Người</option>
-        <option value="2">2 Người</option>
-        <option value="3">3 Người</option>
-        <option value="4">4 Người</option>
-        <option value="5">5+ Người</option>
-      </select>
-    </div>
-    <div class="col-md-6">
-      <input type="date" name="date" class="form-control" required>
-    </div>
-    <div class="col-md-6">
-      <input type="time" name="time" class="form-control" required>
-    </div>
-    <div class="col-12">
-      <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn"></textarea>
-    </div>
-    <div class="col-12">
-      <div class="loading" style="display:none;">Đang gửi...</div>
-      <div class="error-message" style="display:none;color:red;"></div>
-      <div class="sent-message" style="display:none;color:green;">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
-      <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
+ <!-- Section Đặt bàn -->
+<section id="datban" class="section booking-section py-5">
+  <div class="container">
+    <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
+      <h3 class="mb-4 text-center">Đặt bàn</h3>
+      <form id="firebase-booking-form">
+        <div class="row gy-3">
+          <div class="col-md-6">
+            <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
+          </div>
+          <div class="col-md-6">
+            <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
+          </div>
+          <div class="col-md-6">
+            <select name="people" class="form-control" required>
+              <option value="">Số người</option>
+              <option value="1">1 Người</option>
+              <option value="2">2 Người</option>
+              <option value="3">3 Người</option>
+              <option value="4">4 Người</option>
+              <option value="5">5+ Người</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <input type="date" name="date" class="form-control" required>
+          </div>
+          <div class="col-md-6">
+            <input type="time" name="time" class="form-control" required>
+          </div>
+          <div class="col-12">
+            <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn"></textarea>
+          </div>
+          <div class="col-12">
+            <div class="loading" style="display:none;">Đang gửi...</div>
+            <div class="error-message" style="display:none;color:red;"></div>
+            <div class="sent-message" style="display:none;color:green;">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
+            <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</form>
+</section>
 
-  </div>
 </div>
 
         </div>
