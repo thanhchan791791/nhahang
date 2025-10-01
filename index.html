@@ -155,49 +155,50 @@
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
-              <h3>Đặt bàn</h3>
-              <form action="forms/book-a-table.php" method="post" class="php-email-form">
-                <div class="row gy-3">
-                  <div class="col-md-6">
-                    <input type="text" name="name" class="form-control" placeholder="Tên của bạn" required="">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="email" name="email" class="form-control" placeholder="Email của bạn" required="">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required="">
-                  </div>
-                  <div class="col-md-6">
-                    <select name="people" class="form-control" required="">
-                      <option value="">Guests</option>
-                      <option value="1">1 Person</option>
-                      <option value="2">2 People</option>
-                      <option value="3">3 People</option>
-                      <option value="4">4 People</option>
-                      <option value="5">5+ People</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6">
-                    <input type="date" name="date" class="form-control" required="">
-                  </div>
-                  <div class="col-md-6">
-                    <input type="time" name="time" class="form-control" required="">
-                  </div>
-                  <div class="col-12">
-                    <textarea name="message" class="form-control" rows="3" placeholder="Special requests or dietary restrictions"></textarea>
-                  </div>
-                  <div class="col-12">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your reservation request has been sent. We'll contact you shortly!</div>
-                    <button type="submit" class="btn btn-primary w-100">Reserve Now</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
+         <div class="col-lg-4">
+  <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
+    <h3>Đặt bàn</h3>
+    <form action="forms/book-a-table.php" method="post" class="php-email-form">
+      <div class="row gy-3">
+        <div class="col-md-6">
+          <input type="text" name="name" class="form-control" placeholder="Họ và tên" required>
+        </div>
+        <div class="col-md-6">
+          <input type="email" name="email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="col-md-6">
+          <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
+        </div>
+        <div class="col-md-6">
+          <select name="people" class="form-control" required>
+            <option value="">Số người</option>
+            <option value="1">1 Người</option>
+            <option value="2">2 Người</option>
+            <option value="3">3 Người</option>
+            <option value="4">4 Người</option>
+            <option value="5">5+ Người</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <input type="date" name="date" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+          <input type="time" name="time" class="form-control" required>
+        </div>
+        <div class="col-12">
+          <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn" ></textarea>
+        </div>
+        <div class="col-12">
+          <div class="loading">Đang gửi...</div>
+          <div class="error-message"></div>
+          <div class="sent-message">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
+          <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
         </div>
       </div>
 
