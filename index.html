@@ -8,37 +8,56 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/logobanme.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&family=Source+Serif+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Platia
-  * Template URL: https://bootstrapmade.com/platia-bootstrap-restaurant-template/
-  * Updated: Aug 11 2025 with Bootstrap v5.3.7
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
   <style>
-  .loading,
+  /* Base visibility for loading - controlled by JS display: none/block */
+  .loading {
+    display: none;
+  }
+  
+  /* Styles for error/sent messages to enable slide/fade transition (iOS-like) */
   .error-message,
   .sent-message {
-    display: none;
+    /* Hidden state */
+    display: block; /* Important: Must be block for max-height to transition, replacing original display:none */
+    opacity: 0;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    /* Custom transition for a smooth slide effect */
+    transition: opacity 0.5s ease, max-height 0.6s ease, padding 0.6s ease, margin 0.6s ease;
+    text-align: center; 
+  }
+
+  /* The actual show state */
+  .message-show {
+    opacity: 1;
+    max-height: 100px; /* Sufficient height */
+    padding: 10px 0; /* Vertical padding */
+    margin-top: 15px; /* Separation margin */
+  }
+
+  /* Colors (re-applied here for consistency) */
+  .error-message {
+    color: red;
+  }
+  .sent-message {
+    color: green;
   }
 </style>
 </head>
@@ -60,14 +79,10 @@
           <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
-    </div><!-- End Top Bar -->
-
-    <div class="branding d-flex align-items-cente">
+    </div><div class="branding d-flex align-items-cente">
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.webp" alt=""> -->
           <h1 class="sitename">Ẩm thực Buôn mê</h1>
         </a>
 
@@ -76,24 +91,7 @@
             <li><a href="#hero" class="active">Trang chủ</a></li>
             <li><a href="#about">Giới thiệu</a></li>
             <li><a href="#menu">Menu</a></li>
-           <!--  <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                <li><a href="#">Dropdown 1</a></li>
-                <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                  <ul>
-                    <li><a href="#">Deep Dropdown 1</a></li>
-                    <li><a href="#">Deep Dropdown 2</a></li>
-                    <li><a href="#">Deep Dropdown 3</a></li>
-                    <li><a href="#">Deep Dropdown 4</a></li>
-                    <li><a href="#">Deep Dropdown 5</a></li>
-                  </ul>
-                </li>
-                <li><a href="#">Dropdown 2</a></li>
-                <li><a href="#">Dropdown 3</a></li>
-                <li><a href="#">Dropdown 4</a></li>
-              </ul>
-            </li> -->
-            <li><a href="#contact">Liên hệ</a></li>
+           <li><a href="#contact">Liên hệ</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -106,14 +104,12 @@
 
   <main class="main">
 
-    <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
       <div class="hero-background">
       <div class="hero-background">
   <video autoplay muted loop playsinline webkit-playsinline poster="assets/img/restaurant/fallback.jpg">
     <source src="assets/img/restaurant/0930.mp4" type="video/mp4">
-    <!-- Fallback text nếu trình duyệt không hỗ trợ video -->
     Your browser does not support the video tag.
   </video>
   <div class="overlay"></div>
@@ -162,8 +158,7 @@
           </div>
 
          <div class="col-lg-4">
- <!-- Section Đặt bàn -->
-<section id="datban" class="section booking-section py-5">
+ <section id="datban" class="section booking-section py-5">
   <div class="container">
     <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
       <h3 class="mb-4 text-center">Đặt bàn</h3>
@@ -196,8 +191,8 @@
           </div>
           <div class="col-12">
             <div class="loading" style="display:none;">Đang gửi...</div>
-            <div class="error-message" style="display:none;color:red;"></div>
-            <div class="sent-message" style="display:none;color:green;">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
             <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
           </div>
         </div>
@@ -218,19 +213,13 @@
         </div>
       </div>
 
-    </section><!-- /Hero Section -->
+    </section><section id="about" class="about section">
 
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <span class="description-title">&nbsp;About</span>
+        <span class="description-title"> About</span>
         <h2>Câu chuyện</h2>
         <p>Ẩm thực Buôn Ma Thuột mang đậm hương vị núi rừng Tây Nguyên, giản dị mà nồng nàn, gắn liền với văn hóa đồng bào và thiên nhiên hùng vĩ.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      </div><div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row g-5 align-items-center">
           <div class="col-lg-6" data-aos="fade-up">
@@ -284,19 +273,13 @@
 
       </div>
 
-    </section><!-- /About Section -->
+    </section><section id="menu" class="menu section">
 
-    <!-- Menu Section -->
-    <section id="menu" class="menu section">
-
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <span class="description-title">Menu</span>
         <h2>Menu</h2>
         <p>Mỗi bữa ăn tại quán cơm đồng bào là một hành trình trải nghiệm hương vị Buôn Mê, nơi hội tụ sự chân thành và tinh hoa ẩm thực Tây Nguyên.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      </div><div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
@@ -572,77 +555,13 @@
 
       </div>
 
-    </section><!-- /Menu Section -->
-
-   
-   
-
-    <!-- Book A Table Section -->
-    <section id="book-a-table" class="book-a-table section light-background">
+    </section><section id="book-a-table" class="book-a-table section light-background">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
         <div class="row">
           <div class="col-12">
-           <!--  <div class="reservation-container">
-              <div class="row g-0">
-
-                <div class="col-lg-5" data-aos="fade-right" data-aos-delay="200">
-                  <div class="reservation-form-section">
-  <div class="form-header text-center">
-    <h3>Đặt Bàn</h3>
-    <p>Hãy đặt bàn trước để chúng tôi phục vụ bạn chu đáo nhất. Vui lòng điền đầy đủ thông tin bên dưới.</p>
-  </div>
-
- <form id="firebase-booking-form" role="form">
-  <div class="row gy-3">
-    <div class="col-12">
-      <input type="text" name="name" class="form-control" placeholder="Họ và Tên" required>
-    </div>
-    <div class="col-12">
-      <input type="email" class="form-control" name="email" placeholder="Địa chỉ Email" required>
-    </div>
-    <div class="col-12">
-      <input type="tel" class="form-control" name="phone" placeholder="Số Điện Thoại" required>
-    </div>
-    <div class="col-6">
-      <input type="date" name="date" class="form-control" required>
-    </div>
-    <div class="col-6">
-      <input type="time" class="form-control" name="time" required>
-    </div>
-    <div class="col-6">
-      <select name="people" class="form-select" required>
-        <option value="">Số Khách</option>
-        <option value="1">1 Người</option>
-        <option value="2">2 Người</option>
-        <option value="3">3 Người</option>
-        <option value="4">4 Người</option>
-        <option value="5">5 Người</option>
-        <option value="6">6+ Người</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="my-3">
-    <div class="loading" style="display:none;">Đang gửi...</div>
-    <div class="error-message" style="display:none; color:red;"></div>
-    <div class="sent-message" style="display:none; color:green;">
-      Yêu cầu đặt bàn của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ sớm để xác nhận.
-    </div>
-  </div>
-
-  <button type="submit" class="btn-reserve w-100">
-    <i class="bi bi-calendar-check me-2"></i>
-    Đặt Bàn Ngay
-  </button>
-</form>
-
-</div>
-
-                </div> -->
-
-              <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
+           <div class="col-lg-7" data-aos="fade-left" data-aos-delay="300">
   <div class="reservation-info-section">
     <div class="hero-image">
       <img src="assets/img/restaurant/showcase-2.webp" alt="Không gian quán ăn" class="img-fluid">
@@ -727,10 +646,7 @@
 
       </div>
 
-    </section><!-- /Book A Table Section -->
-
-    <!-- Location Section -->
-    <section id="location" class="location section">
+    </section><section id="location" class="location section">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
 
@@ -757,7 +673,6 @@
     <p>Ghé thăm ngay hôm nay</p>
   </div>
 
-  <!-- Địa chỉ -->
   <div class="info-card" data-aos="fade-up" data-aos-delay="300">
     <div class="info-icon">
       <i class="bi bi-geo-alt"></i>
@@ -772,7 +687,6 @@
     </div>
   </div>
 
-  <!-- Số điện thoại -->
   <div class="info-card" data-aos="fade-up" data-aos-delay="400">
     <div class="info-icon">
       <i class="bi bi-telephone"></i>
@@ -784,7 +698,6 @@
     </div>
   </div>
 
-  <!-- Giờ hoạt động -->
   <div class="info-card" data-aos="fade-up" data-aos-delay="500">
     <div class="info-icon">
       <i class="bi bi-clock"></i>
@@ -798,7 +711,6 @@
     </div>
   </div>
 
-  <!-- CTA -->
   <div class="cta-wrapper" data-aos="fade-up" data-aos-delay="600">
     <a href="tel:0907489088" class="btn-book">📞 Gọi đặt bàn</a>
     <a href="https://maps.app.goo.gl/fFu3bVaFgcrLaaw56" target="_blank" class="btn-contact">📍 Xem bản đồ</a>
@@ -810,148 +722,19 @@
 
       </div>
 
-    </section><!-- /Location Section -->
-
-    <!-- Events Section -->
-    <section id="events" class="events section light-background">
+    </section><section id="events" class="events section light-background">
 
      
      
-      <!--   <div class="awards-section" data-aos="fade-up" data-aos-delay="200">
-          <div class="row align-items-center">
-            <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="250">
-              <div class="awards-content">
-                <h3>Recognition &amp; Awards</h3>
-                <p>At enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-              </div>
-            </div>
-            <div class="col-lg-8" data-aos="fade-left" data-aos-delay="300">
-              <div class="awards-grid">
-                <div class="award-item">
-                  <div class="award-icon">
-                    <i class="bi bi-trophy-fill"></i>
-                  </div>
-                  <div class="award-details">
-                    <h4>Best Restaurant 2024</h4>
-                    <span>City Dining Awards</span>
-                  </div>
-                </div>
-                <div class="award-item">
-                  <div class="award-icon">
-                    <i class="bi bi-star-fill"></i>
-                  </div>
-                  <div class="award-details">
-                    <h4>5-Star Rating</h4>
-                    <span>Local Food Guide</span>
-                  </div>
-                </div>
-                <div class="award-item">
-                  <div class="award-icon">
-                    <i class="bi bi-gem"></i>
-                  </div>
-                  <div class="award-details">
-                    <h4>Excellence Award</h4>
-                    <span>Culinary Institute</span>
-                  </div>
-                </div>
-                <div class="award-item">
-                  <div class="award-icon">
-                    <i class="bi bi-heart-fill"></i>
-                  </div>
-                  <div class="award-details">
-                    <h4>Customer Choice</h4>
-                    <span>Community Favorite</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
-       <!--  <div class="community-section" data-aos="fade-up" data-aos-delay="200">
-          <div class="row g-4">
-            <div class="col-lg-6" data-aos="fade-right" data-aos-delay="250">
-              <div class="community-card">
-                <div class="community-header">
-                  <div class="community-icon">
-                    <i class="bi bi-people-fill"></i>
-                  </div>
-                  <div>
-                    <h3>Community Involvement</h3>
-                    <p>Supporting local farmers and charities since 2015</p>
-                  </div>
-                </div>
-                <div class="community-stats">
-                  <div class="stat-row">
-                    <div class="stat-item">
-                      <span class="stat-number">$50K+</span>
-                      <span class="stat-label">Donated to Local Charities</span>
-                    </div>
-                    <div class="stat-item">
-                      <span class="stat-number">25+</span>
-                      <span class="stat-label">Local Farm Partners</span>
-                    </div>
-                  </div>
-                  <div class="stat-row">
-                    <div class="stat-item">
-                      <span class="stat-number">100+</span>
-                      <span class="stat-label">Community Events Hosted</span>
-                    </div>
-                    <div class="stat-item">
-                      <span class="stat-number">500+</span>
-                      <span class="stat-label">Volunteer Hours</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6" data-aos="fade-left" data-aos-delay="300">
-              <div class="sustainability-card">
-                <div class="sustainability-header">
-                  <div class="sustainability-icon">
-                    <i class="bi bi-recycle"></i>
-                  </div>
-                  <div>
-                    <h3>Eco-Friendly Practices</h3>
-                    <p>Committed to sustainable dining and zero waste</p>
-                  </div>
-                </div>
-                <div class="sustainability-features">
-                  <div class="feature-item">
-                    <i class="bi bi-leaf-fill"></i>
-                    <span>100% Compostable Packaging</span>
-                  </div>
-                  <div class="feature-item">
-                    <i class="bi bi-water"></i>
-                    <span>Water Conservation Program</span>
-                  </div>
-                  <div class="feature-item">
-                    <i class="bi bi-lightning-fill"></i>
-                    <span>Renewable Energy Powered</span>
-                  </div>
-                  <div class="feature-item">
-                    <i class="bi bi-truck"></i>
-                    <span>Local Sourcing Priority</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
       </div>
 
    <section id="gallery" class="gallery section">
 
-  <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
     <span class="description-title">Bộ Sưu Tập</span>
     <h2>Khoảnh khắc tại nhà hàng</h2>
     <p>Khám phá không gian, ẩm thực và đội ngũ của chúng tôi qua những hình ảnh chân thực.</p>
-  </div><!-- End Section Title -->
-
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
+  </div><div class="container" data-aos="fade-up" data-aos-delay="100">
 
     <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
       <ul class="restaurant-gallery-filters isotope-filters mb-4 justify-content-center d-flex gap-2" data-aos="fade-up" data-aos-delay="100">
@@ -963,7 +746,6 @@
       </ul>
 
       <div class="row g-3 isotope-container" data-aos="fade-up" data-aos-delay="200">
-        <!-- Ví dụ món ăn -->
         <div class="col-lg-4 col-md-6 isotope-item filter-food">
           <figure class="gallery-card">
             <a href="assets/img/restaurant/main-3.webp" class="glightbox" data-gallery="restaurant-gallery">
@@ -976,7 +758,6 @@
           </figure>
         </div>
 
-        <!-- Ví dụ không gian -->
         <div class="col-lg-4 col-md-6 isotope-item filter-interior">
           <figure class="gallery-card">
             <a href="assets/img/restaurant/showcase-2.webp" class="glightbox" data-gallery="restaurant-gallery">
@@ -988,30 +769,19 @@
             </figcaption>
           </figure>
         </div>
-      </div><!-- End Gallery Items Container -->
-
-    </div>
+      </div></div>
 
   </div>
 
-</section><!-- /Gallery Section -->
+</section><section id="contact" class="contact section light-background">
 
-
-   <!-- Contact Section -->
-<section id="contact" class="contact section light-background">
-
-  <!-- Section Title -->
   <div class="container section-title" data-aos="fade-up">
     <span class="description-title">Liên hệ</span>
     <h2>Liên hệ</h2>
     <p>Hãy kết nối với chúng tôi để được hỗ trợ nhanh nhất</p>
-  </div><!-- End Section Title -->
+  </div><div class="container" data-aos="fade-up" data-aos-delay="100">
 
-  <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-    <!-- Contact Info Boxes -->
     <div class="row gy-4 mb-5">
-      <!-- Địa chỉ -->
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
         <div class="contact-info-box">
           <div class="icon-box">
@@ -1030,7 +800,6 @@
         </div>
       </div>
 
-      <!-- Email -->
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
         <div class="contact-info-box">
           <div an="icon-box">
@@ -1044,7 +813,6 @@
         </div>
       </div>
 
-      <!-- Giờ hoạt động -->
       <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
         <div class="contact-info-box">
           <div class="icon-box">
@@ -1061,16 +829,13 @@
 
   </div>
 
-  <!-- Google Maps (Full Width) -->
   <div class="map-section" data-aos="fade-up" data-aos-delay="200">
     <iframe 
       src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d0!2d106.6775563!3d10.7771101!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f279934d92f%3A0x102e7dcb8bf687a9!2zMTAuNzc3MTEwMSwgMTA2LjY3NzU1NjMg4Lit4LiB4bqtbmcsIHRwIDguIDExMCwgxJDhuqFpIE1pbmhoxqEgQ2jDrSBNaW5oIGzDoW4!5e0!3m2!1svi!2s!4v1696085712345!5m2!1svi!2s" 
       width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
     </iframe>
   </div>
-<!-- 
-  <!-- Contact Form Section (Overlapping) -->
-  <div class="container form-container-overlap">
+<div class="container form-container-overlap">
     <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="300">
       <div class="col-lg-10">
         <div class="contact-form-wrapper">
@@ -1130,16 +895,13 @@
     </div>
   </div> 
 
-</section><!-- /Contact Section -->
-
-  </main>
+</section></main>
 
   <footer id="footer" class="footer dark-background">
 
   <div class="container">
     <div class="row gy-5">
 
-      <!-- Giới thiệu -->
       <div class="col-lg-4">
         <div class="footer-content">
           <a href="index.html" class="logo d-flex align-items-center mb-4">
@@ -1150,7 +912,6 @@
             và không gian ấm cúng cho mọi dịp đặc biệt.
           </p>
 
-          <!-- Newsletter -->
           <div class="newsletter-form">
             <h5>Nhận tin mới nhất</h5>
             <form action="forms/newsletter.php" method="post" class="php-email-form">
@@ -1168,7 +929,6 @@
         </div>
       </div>
 
-      <!-- Menu nhanh -->
       <div class="col-lg-2 col-6">
         <div class="footer-links">
           <h4>Khám phá</h4>
@@ -1182,7 +942,6 @@
         </div>
       </div>
 
-      <!-- Dịch vụ -->
       <div class="col-lg-2 col-6">
         <div class="footer-links">
           <h4>Dịch vụ</h4>
@@ -1196,7 +955,6 @@
         </div>
       </div>
 
-      <!-- Liên hệ -->
       <div class="col-lg-4">
         <div class="footer-contact">
           <h4>Liên hệ</h4>
@@ -1228,7 +986,6 @@
             </div>
           </div>
 
-          <!-- Social -->
           <div class="social-links">
             <a href="#"><i class="bi bi-facebook"></i></a>
             <a href="#"><i class="bi bi-instagram"></i></a>
@@ -1241,7 +998,6 @@
     </div>
   </div>
 
-  <!-- Footer dưới -->
   <div class="footer-bottom">
     <div class="container">
       <div class="row align-items-center">
@@ -1263,13 +1019,10 @@
 </footer>
 
 
-  <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
@@ -1278,7 +1031,6 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
 </body>
@@ -1353,10 +1105,16 @@
       const sentEl = this.querySelector(".sent-message");
       const btn = this.querySelector("button[type=submit]");
 
+      // --- BẮT ĐẦU: Logic cho hiệu ứng trượt ---
+      // 1. Reset (ẩn) các thông báo lỗi/thành công trước đó để kích hoạt lại transition
+      if (errorEl) errorEl.classList.remove("message-show");
+      if (sentEl) sentEl.classList.remove("message-show");
+
+      // 2. Hiện loading (vẫn dùng toggle display đơn giản)
       loadingEl.style.display = "block";
-      if (errorEl) errorEl.style.display = "none";
-      if (sentEl) sentEl.style.display = "none";
+      // Bỏ qua các dòng ẩn message cũ bằng style.display="none" vì đã dùng class
       if (btn) btn.disabled = true;
+      // --- KẾT THÚC: Logic cho hiệu ứng trượt (Reset) ---
 
       let data = {};
 
@@ -1389,7 +1147,10 @@
         .then(() => sendToTelegram(data, type))
         .then(() => {
           loadingEl.style.display = "none";
-          if (sentEl) sentEl.style.display = "block";
+          // --- BẮT ĐẦU: Logic cho hiệu ứng trượt (Thành công) ---
+          if (sentEl) sentEl.classList.add("message-show");
+          if (errorEl) errorEl.classList.remove("message-show"); // Đảm bảo lỗi ẩn
+          // --- KẾT THÚC: Logic cho hiệu ứng trượt (Thành công) ---
           this.reset();
           if (btn) btn.disabled = false;
         })
@@ -1397,7 +1158,10 @@
           loadingEl.style.display = "none";
           if (errorEl) {
             errorEl.innerText = "Lỗi: " + err.message;
-            errorEl.style.display = "block";
+            // --- BẮT ĐẦU: Logic cho hiệu ứng trượt (Lỗi) ---
+            errorEl.classList.add("message-show");
+            if (sentEl) sentEl.classList.remove("message-show"); // Đảm bảo thành công ẩn
+            // --- KẾT THÚC: Logic cho hiệu ứng trượt (Lỗi) ---
           }
           if (btn) btn.disabled = false;
         });
