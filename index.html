@@ -24,42 +24,83 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
-  /* Base visibility for loading - controlled by JS display: none/block */
-  .loading {
-    display: none;
-  }
-  
-  /* Styles for error/sent messages to enable slide/fade transition (iOS-like) */
-  .error-message,
-  .sent-message {
-    /* Hidden state */
-    display: block; /* Important: Must be block for max-height to transition, replacing original display:none */
-    opacity: 0;
-    max-height: 0;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    /* Custom transition for a smooth slide effect */
-    transition: opacity 0.5s ease, max-height 0.6s ease, padding 0.6s ease, margin 0.6s ease;
-    text-align: center; 
-  }
+/* CSS cho hiệu ứng Modal/Overlay hiển thị giữa màn hình */
+.form-status-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none; /* Khởi tạo ẩn */
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Cao hơn bootstrap modal */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
-  /* The actual show state */
-  .message-show {
-    opacity: 1;
-    max-height: 100px; /* Sufficient height */
-    padding: 10px 0; /* Vertical padding */
-    margin-top: 15px; /* Separation margin */
-  }
+.form-status-overlay.show {
+  display: flex;
+  opacity: 1;
+}
 
-  /* Colors (re-applied here for consistency) */
-  .error-message {
-    color: red;
-  }
-  .sent-message {
-    color: green;
-  }
-</style>
+.form-status-box {
+  background: white;
+  color: #333;
+  padding: 30px;
+  border-radius: 10px;
+  max-width: 90%;
+  min-width: 300px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: translateY(-50px);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.form-status-overlay.show .form-status-box {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.form-status-box h4 {
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.form-status-box .bi {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+/* Định nghĩa màu sắc cho từng trạng thái */
+.status-loading h4 { color: #0d6efd; }
+.status-loading .bi { color: #0d6efd; }
+
+.status-error h4 { color: #dc3545; }
+.status-error .bi { color: #dc3545; }
+
+.status-sent h4 { color: #198754; }
+.status-sent .bi { color: #198754; }
+
+/* Đảm bảo các div thông báo cũ trong form bị ẩn hoàn toàn */
+.booking-card .loading,
+.booking-card .error-message,
+.booking-card .sent-message,
+.contact-form-wrapper .loading,
+.contact-form-wrapper .error-message,
+.contact-form-wrapper .sent-message {
+    display: none !important;
+}
+
+/* FIX LỖI HIỂN THỊ DROPDOWN TRẮNG BÓC */
+.booking-card select.form-control,
+.booking-card select.form-control option {
+    color: #333 !important; /* Đảm bảo màu chữ tối */
+    background-color: #fff !important; /* Đảm bảo nền trắng */
+}
+  </style>
 </head>
 
 <body class="index-page">
@@ -161,7 +202,7 @@
  <section id="datban" class="section booking-section py-5">
   <div class="container">
     <div class="booking-card" data-aos="fade-left" data-aos-delay="200">
-      <h3 class="mb-4 text-center">Đặt bàn</h3>
+      <h3 class="mb-4 text-center">Đặt bàn & Phòng VIP</h3>
       <form id="firebase-booking-form">
         <div class="row gy-3">
           <div class="col-md-6">
@@ -169,6 +210,13 @@
           </div>
           <div class="col-md-6">
             <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" required>
+          </div>
+          <div class="col-md-6">
+            <select name="tableType" class="form-control" required>
+              <option value="">Chọn loại bàn</option>
+              <option value="Bàn thường">Bàn thường</option>
+              <option value="Phòng VIP">Phòng VIP</option>
+            </select>
           </div>
           <div class="col-md-6">
             <select name="people" class="form-control" required>
@@ -190,9 +238,6 @@
             <textarea name="message" class="form-control" rows="3" placeholder="Yêu cầu đặc biệt / chế độ ăn"></textarea>
           </div>
           <div class="col-12">
-            <div class="loading" style="display:none;">Đang gửi...</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Yêu cầu đặt bàn đã được gửi. Chúng tôi sẽ liên hệ bạn sớm!</div>
             <button type="submit" class="btn btn-primary w-100">Đặt ngay</button>
           </div>
         </div>
@@ -880,10 +925,7 @@
       </div>
 
       <div class="col-12">
-        <div class="loading">Đang gửi...</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Tin nhắn của bạn đã được gửi. Xin cảm ơn!</div>
-      </div>
+        </div>
 
       <div class="col-12 text-center">
         <button type="submit" class="btn btn-primary btn-submit">GỬI NGAY</button>
@@ -1033,6 +1075,10 @@
 
   <script src="assets/js/main.js"></script>
 
+<div id="form-status-modal" class="form-status-overlay">
+  <div class="form-status-box" id="status-box-content">
+    </div>
+</div>
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
@@ -1056,7 +1102,96 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Gửi thông báo Telegram
+  // === Logic Modal Thông Báo Toàn Cục ===
+  const modalEl = document.getElementById("form-status-modal");
+  const modalContentEl = document.getElementById("status-box-content");
+
+  // KHAI BÁO BIẾN ĐỂ LƯU ID CỦA LỆNH SETTIMEOUT CẦN HỦY
+  let hideTimeoutId = null; 
+  
+  function hideModal() {
+    if (!modalEl) return;
+    
+    // Xóa bất kỳ lệnh ẩn đang chờ nào
+    if (hideTimeoutId) {
+        clearTimeout(hideTimeoutId);
+        hideTimeoutId = null;
+    }
+    
+    modalEl.classList.remove("show");
+    
+    // Lên lịch ẩn hoàn toàn (display: none) sau khi hiệu ứng fade-out (0.3s) kết thúc
+    hideTimeoutId = setTimeout(() => {
+        modalEl.style.display = 'none';
+        // Xóa listener tạm thời sau khi đóng
+        modalEl.removeEventListener('click', handleOverlayClick);
+        hideTimeoutId = null; // Xóa ID sau khi thực thi
+    }, 300); 
+  }
+
+  function showModal(type, message) {
+    if (!modalEl || !modalContentEl) return;
+    
+    // QUAN TRỌNG: Hủy lệnh ẩn cũ (nếu có) trước khi hiển thị nội dung mới
+    if (hideTimeoutId) {
+        clearTimeout(hideTimeoutId);
+        hideTimeoutId = null;
+    }
+
+    modalEl.classList.remove("show");
+    modalContentEl.innerHTML = "";
+    
+    let icon, title;
+    let boxClass = `status-${type}`;
+
+    if (type === "loading") {
+      icon = '<i class="bi bi-hourglass-split"></i>';
+      title = "Đang xử lý...";
+    } else if (type === "sent") {
+      icon = '<i class="bi bi-check-circle-fill"></i>';
+      title = "Yêu cầu đã được gửi!";
+    } else if (type === "error") {
+      icon = '<i class="bi bi-x-circle-fill"></i>';
+      title = "Lỗi!";
+    }
+
+    modalContentEl.innerHTML = `
+      ${icon}
+      <h4>${title}</h4>
+      <p>${message}</p>
+    `;
+    modalContentEl.className = `form-status-box ${boxClass}`;
+    
+    modalEl.style.display = 'flex';
+    setTimeout(() => {
+        modalEl.classList.add("show");
+    }, 10);
+  }
+  
+  // Hàm xử lý click trên lớp phủ (overlay)
+  function handleOverlayClick(event) {
+    // Chỉ đóng khi click trực tiếp vào overlay (để không đóng khi click vào box nội dung)
+    if (event.target === modalEl) {
+        hideModal();
+    }
+  }
+
+  // Gán listener để đóng modal khi click ra ngoài và cho nút Đóng (cho trạng thái SENT)
+  function setupClickToClose() {
+    // Thêm listener vào overlay (lớp nền đen)
+    modalEl.addEventListener("click", handleOverlayClick);
+    
+    // Nếu có nút Đóng (cho form đặt bàn), thêm listener cho nút đó
+    const closeBtn = modalEl.querySelector('#modal-close-btn');
+    if (closeBtn) {
+        // Sử dụng { once: true } để tự động xóa listener sau lần click đầu tiên
+        closeBtn.addEventListener('click', hideModal, { once: true }); 
+    }
+  }
+
+  // === Hết Logic Modal ===
+
+  // Gửi thông báo Telegram (Đã cập nhật để bao gồm Loại bàn/phòng)
   function sendToTelegram(data, type) {
     let text = "";
 
@@ -1066,6 +1201,7 @@
 
 👤 Tên: ${data.name}
 📞 Điện thoại: ${data.phone}
+🛋️ Loại bàn: ${data.tableType}
 👥 Số người: ${data.people}
 📅 Ngày: ${data.date}
 ⏰ Giờ: ${data.time}
@@ -1100,21 +1236,12 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      const loadingEl = this.querySelector(".loading");
-      const errorEl = this.querySelector(".error-message");
-      const sentEl = this.querySelector(".sent-message");
       const btn = this.querySelector("button[type=submit]");
 
-      // --- BẮT ĐẦU: Logic cho hiệu ứng trượt ---
-      // 1. Reset (ẩn) các thông báo lỗi/thành công trước đó để kích hoạt lại transition
-      if (errorEl) errorEl.classList.remove("message-show");
-      if (sentEl) sentEl.classList.remove("message-show");
-
-      // 2. Hiện loading (vẫn dùng toggle display đơn giản)
-      loadingEl.style.display = "block";
-      // Bỏ qua các dòng ẩn message cũ bằng style.display="none" vì đã dùng class
+      // --- BẮT ĐẦU: Logic cho Modal (Loading) ---
+      showModal("loading", "Hệ thống đang xử lý yêu cầu của bạn...");
       if (btn) btn.disabled = true;
-      // --- KẾT THÚC: Logic cho hiệu ứng trượt (Reset) ---
+      // --- KẾT THÚC: Logic cho Modal (Loading) ---
 
       let data = {};
 
@@ -1122,6 +1249,7 @@
         data = {
           name: this.name.value,
           phone: this.phone.value,
+          tableType: this.tableType.value, // Lấy giá trị Loại bàn/phòng
           people: this.people.value,
           date: this.date.value,
           time: this.time.value,
@@ -1146,23 +1274,44 @@
       set(newRef, data)
         .then(() => sendToTelegram(data, type))
         .then(() => {
-          loadingEl.style.display = "none";
-          // --- BẮT ĐẦU: Logic cho hiệu ứng trượt (Thành công) ---
-          if (sentEl) sentEl.classList.add("message-show");
-          if (errorEl) errorEl.classList.remove("message-show"); // Đảm bảo lỗi ẩn
-          // --- KẾT THÚC: Logic cho hiệu ứng trượt (Thành công) ---
+          let successMessage = "Yêu cầu của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ bạn sớm!";
+          
+          if (type === "booking") {
+            const warningHtml = `
+              <p class="mt-3 text-danger" style="font-weight: 700; margin-top: 15px !important; font-size: 1.1em;">
+                ⚠️ Lưu ý: Chúng tôi chỉ giữ bàn/phòng trong **10 phút** kể từ giờ đặt.
+              </p>
+              <button id="modal-close-btn" class="btn btn-success mt-3" type="button">Đóng</button>
+              <p class="mt-2 text-secondary" style="font-size: 0.9em;">(Hoặc nhấn vào nền mờ để đóng)</p>
+            `;
+            successMessage += warningHtml;
+          }
+
+          // --- BẮT ĐẦU: Logic cho Modal (Thành công) ---
+          // showModal sẽ tự động hủy lệnh ẩn (nếu có) từ trạng thái loading
+          showModal("sent", successMessage); 
+
+          if (type === "contact") {
+              // Tự động đóng modal cho form liên hệ sau 3s
+              setTimeout(hideModal, 3000);
+          } else if (type === "booking") {
+              // Thiết lập lắng nghe sự kiện click để đóng cho form đặt bàn
+              setupClickToClose(); 
+          }
+          // --- KẾT THÚC: Logic cho Modal (Thành công) ---
+          
           this.reset();
           if (btn) btn.disabled = false;
         })
         .catch((err) => {
-          loadingEl.style.display = "none";
-          if (errorEl) {
-            errorEl.innerText = "Lỗi: " + err.message;
-            // --- BẮT ĐẦU: Logic cho hiệu ứng trượt (Lỗi) ---
-            errorEl.classList.add("message-show");
-            if (sentEl) sentEl.classList.remove("message-show"); // Đảm bảo thành công ẩn
-            // --- KẾT THÚC: Logic cho hiệu ứng trượt (Lỗi) ---
-          }
+          // --- BẮT ĐẦU: Logic cho Modal (Lỗi) ---
+          // showModal cũng sẽ tự động hủy lệnh ẩn (nếu có)
+          showModal("error", `Có lỗi xảy ra trong quá trình gửi. Vui lòng thử lại. Chi tiết: ${err.message}`);
+          
+          // Tự động đóng sau 5s 
+          setTimeout(hideModal, 5000); 
+          // --- KẾT THÚC: Logic cho Modal (Lỗi) ---
+          
           if (btn) btn.disabled = false;
         });
     });
