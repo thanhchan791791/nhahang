@@ -209,7 +209,7 @@
             grid-template-columns: repeat(3, 1fr); /* 3 cột trên mobile (mặc định) */
             gap: 15px; /* Khoảng cách giữa các thẻ */
             padding: 20px 0 20px 0; /* Loại bỏ padding ngang dư thừa */
-            overflow-x: hidden; /* Bỏ cuộn ngang */
+            /* ĐÃ SỬA: Xóa overflow-x: hidden để đảm bảo không tạo thanh cuộn riêng */
         }
         
         /* Employee Card - THẺ NHỎ (PROFILE CARD) */
@@ -574,7 +574,9 @@
                 padding: 0 15px 120px 15px; /* Giảm padding ngang trên mobile */
             }
             .employee-card {
-padding: 5px 5px;            }
+                /* ĐÃ SỬA: Giảm padding dọc để thẻ ngắn lại trên mobile */
+                padding: 5px 5px;            
+            }
             .employee-card img {
                 width: 100px; 
                 height: 100px;
