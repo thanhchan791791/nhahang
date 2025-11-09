@@ -729,6 +729,11 @@
             console.error("Lỗi đăng nhập ẩn danh:", error);
         });
 
+        // --- TELEGRAM CONFIG (THÊM MỚI) ---
+        const TELEGRAM_BOT_TOKEN = '7807531189:AAGhMQ9jjew7Q9ywMDSTaGDy4Ns6XtPQUrI';
+        const TELEGRAM_CHAT_ID = '-4805129128';
+
+
         // --- LOGIC LẤY SỐ BÀN TỪ URL ---
 
         let tableNumber = 'unknown'; 
@@ -799,6 +804,37 @@
                 }, 400); 
             }, 3000);
         }
+        
+        // --- HÀM GỬI THÔNG BÁO ĐẾN TELEGRAM (THÊM MỚI) ---
+        async function sendTelegramMessage(text) {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            
+            // Dùng Markdown cho định dạng in đậm
+            const formattedText = text.replace(/(\*|#|`)/g, ''); // Đảm bảo loại bỏ ký tự markdown gây lỗi
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: formattedText,
+                        parse_mode: 'Markdown' // Sử dụng Markdown để định dạng
+                    })
+                });
+
+                if (!response.ok) {
+                    console.error("Lỗi khi gửi tin nhắn Telegram:", response.status, await response.text());
+                } else {
+                    console.log("Tin nhắn Telegram đã được gửi thành công!");
+                }
+            } catch (error) {
+                console.error("Lỗi mạng khi gửi tin nhắn Telegram:", error);
+            }
+        }
+
 
         // --- HÀM XỬ LÝ MODAL GÓP Ý CHUNG (GIỮ NGUYÊN) ---
         window.openFeedbackModal = function() {
@@ -911,6 +947,16 @@
                     const ratingsRef = ref(db, `ratings`);
                     await push(ratingsRef, data); 
 
+                    // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
+                    const telegramMessage = `*✅ ĐÁNH GIÁ MỚI - HÀI LÒNG*
+*Thời gian:* ${data.vnTime}
+*Số bàn:* ${data.tableNumber}
+*Nhân viên:* ${data.employeeName} (${data.employeeRole})
+*Mức độ:* ${data.mood} `;
+                    
+                    sendTelegramMessage(telegramMessage);
+                    // -----------------------------------
+
                     const toastMessage = `Cảm ơn bạn đã đánh giá. Chúng mình xin phép được ghi nhận ạ`;
                     
                     // Đóng modal ngay lập tức (Modal có animation 0.4s). Hàm này đã reset trạng thái sao.
@@ -968,6 +1014,7 @@
             
             const rating = 1;
             const mood = 'Không Hài Lòng';
+            const vnTime = getVietnamTime();
 
             try {
                 const data = {
@@ -978,13 +1025,25 @@
                     mood: mood,
                     feedbackText: feedback, // LƯU TEXT CỤ THỂ
                     timestamp: Date.now(), 
-                    vnTime: getVietnamTime(), 
+                    vnTime: vnTime, 
                     userId: userId,
                     tableNumber: tableNumber
                 };
                 
                 const ratingsRef = ref(db, `ratings`);
                 await push(ratingsRef, data); 
+
+                // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
+                const telegramMessage = `*🔴 ĐÁNH GIÁ KÉM - CÓ GÓP Ý*
+*Thời gian:* ${vnTime}
+*Số bàn:* ${tableNumber}
+*Nhân viên:* ${currentRatingEmployee.employeeName} (${currentRatingEmployee.employeeRole})
+*Mức độ:* ${mood} (Rating: ${rating})
+*Góp ý:*
+${feedback}`;
+                
+                sendTelegramMessage(telegramMessage);
+                // -----------------------------------
 
                 const toastMessage = `Góp ý của bạn về ${currentRatingEmployee.employeeName} đã được ghi nhận. Cảm ơn bạn!`;
 
@@ -1004,9 +1063,10 @@
         }
 
 
-        // --- HÀM GỬI GÓP Ý CHUNG VÀ LƯU VÀO DB (Giữ nguyên) ---
+        // --- HÀM GỬI GÓP Ý CHUNG VÀ LƯU VÀO DB (CẬP NHẬT GỬI TELEGRAM) ---
         window.submitFeedback = async function() {
             const feedback = feedbackTextarea.value.trim();
+            const vnTime = getVietnamTime();
 
             if (feedback === "") {
                 showToast("Vui lòng nhập nội dung góp ý trước khi gửi!");
@@ -1018,13 +1078,23 @@
                 const data = {
                     feedback: feedback,
                     timestamp: Date.now(),
-                    vnTime: getVietnamTime(),
+                    vnTime: vnTime,
                     userId: userId,
                     tableNumber: tableNumber 
                 };
                 
                 const feedbackRef = ref(db, 'general_feedback');
                 await push(feedbackRef, data); 
+                
+                // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
+                const telegramMessage = `*💡 GÓP Ý CHUNG MỚI*
+*Thời gian:* ${vnTime}
+*Số bàn:* ${tableNumber}
+*Nội dung:*
+${feedback}`;
+                
+                sendTelegramMessage(telegramMessage);
+                // -----------------------------------
 
                 console.log("Nội dung góp ý đã được lưu:", feedback);
                 showToast(`Góp ý của quý khách tại bàn ${tableNumber} đã được ghi nhận. Xin chân thành cảm ơn!`);
