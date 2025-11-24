@@ -12,4 +12,11 @@
     <priority>1.00</priority>
   </url>
 
+  <!-- Thêm bài viết mới -->
+  <url>
+    <loc>https://amthucbuonme.vn/amthucbuonme-quan-10</loc>
+    <lastmod>2025-11-24T18:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
 </urlset>
