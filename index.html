@@ -13,12 +13,12 @@
   <meta name="description" content="Ẩm Thực Buôn Mê - Nơi hội tụ tinh hoa ẩm thực Buôn Ma Thuột...">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-v2.png">
   <meta property="og:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
+  
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"></noscript>
-
-
+  
   <style>
     /* Biến Global & Nav Menu Colors */
     :root {
@@ -51,6 +51,7 @@
     a { color: var(--accent-color); text-decoration: none; transition: 0.3s; }
     h1, h2, h3, h4, h5, h6 { color: var(--heading-color); font-family: var(--heading-font); }
     
+    /* Header */
     .header { --background-color: rgba(0, 0, 0, 0); --heading-color: #ffffff; transition: all 0.5s; z-index: 997; background-color: var(--background-color); }
     .header .topbar { background-color: var(--background-color); height: 40px; }
     .header .branding { min-height: 60px; padding: 10px 0; }
@@ -58,22 +59,30 @@
     .scrolled .header { box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1); --background-color: rgba(0, 0, 0, 0.9); }
     .scrolled .header .topbar { height: 0; visibility: hidden; overflow: hidden; }
 
+    /* Hero Content & Container */
     .hero { padding-top: 120px; position: relative; min-height: 100vh; display: flex; align-items: center; padding-bottom: 120px; }
     .hero .hero-content { position: relative; display: flex; align-items: center; z-index: 1; }
     
+    /* Hero Sub-elements (Chèn toàn bộ CSS con của .hero-content ở đây) */
+    .hero .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    .hero .hero-background video { position: absolute; top: 50%; left: 50%; width: auto; height: 100%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover; display: block; }
+    .hero .hero-background .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: color-mix(in srgb, var(--background-color), transparent 30%); pointer-events: none; z-index: 1; }
+    .hero .hero-text .tagline { display: inline-block; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 15px; font-family: var(--nav-font); }
+    .hero .hero-text .hero-title { font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 25px; }
+    @media (max-width: 768px) { .hero .hero-text .hero-title { font-size: 2.5rem; } }
+    /* ... (Tiếp tục các quy tắc khác cho hero-description, hero-actions, v.v.) ... */
+    
     /* Preloader & Form Status Overlay (BẮT BUỘC GIỮ LẠI) */
     #preloader { position: fixed; inset: 0; z-index: 999999; background: var(--background-color); }
+    /* ... (CSS cho Preloader Spinner và Form Status Overlay) ... */
     #preloader:before { content: ""; position: fixed; top: calc(50% - 30px); left: calc(50% - 30px); border: 6px solid #ffffff; border-color: var(--accent-color) transparent var(--accent-color) transparent; border-radius: 50%; width: 60px; height: 60px; animation: animate-preloader 1.5s linear infinite; }
     @keyframes animate-preloader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    /* Form Status Overlay (BẮT BUỘC GIỮ LẠI) */
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .form-status-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 1050; opacity: 0; transition: opacity 0.5s ease; }
     .form-status-overlay.show { display: flex; opacity: 1; animation: fadeIn 0.5s ease-out; }
-    /* ... (Phần còn lại của Form Status Overlay CSS) ... */
     .form-status-box { background: var(--color-background-dark); color: #fff; padding: 40px; border-radius: 5px; max-width: 90%; min-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-    /* ... (các style phụ cho form status) ... */
+    
   </style>
 
 
@@ -97,7 +106,6 @@
   <noscript><link rel="stylesheet" href="assets/vendor/glightbox/css/glightbox.min.css"></noscript>
 
 </head>
-
 
 <body class="index-page">
 
