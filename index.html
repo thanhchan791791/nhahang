@@ -35,139 +35,59 @@
   <meta property="og:image:height" content="630">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@amthucbuonme" /> <meta name="twitter:creator" content="@amthucbuonme" /> <meta name="twitter:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
+  <meta name="twitter:site" content="@amthucbuonme" />
+  <meta name="twitter:creator" content="@amthucbuonme" />
+  <meta name="twitter:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
   <meta name="twitter:description" content="Thưởng thức đặc sản Buôn Ma Thuột và ẩm thực Tây Nguyên tại Ẩm Thực Buôn Mê.">
   <meta name="twitter:image" content="https://amthucbuonme.vn/assets/img/logobanme.png">
 
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"></noscript>
+
 
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <link rel="preload" href="assets/vendor/bootstrap-icons/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"></noscript>
+
+  <link rel="preload" href="assets/vendor/aos/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="assets/vendor/aos/aos.css"></noscript>
+
+  <link rel="preload" href="assets/vendor/swiper/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css"></noscript>
+
+  <link rel="preload" href="assets/vendor/glightbox/css/glightbox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="assets/vendor/glightbox/css/glightbox.min.css"></noscript>
+
+
   <style>
+    /* ... Giữ nguyên phần CSS trong thẻ <style> của bạn ... */
     :root {
       --color-primary-gold: #E0C097;
       --color-background-dark: #1f1f1f;
       --font-serif: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .form-status-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.9);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1050;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .form-status-overlay.show {
-      display: flex;
-      opacity: 1;
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    .form-status-box {
-      background: var(--color-background-dark);
-      color: #fff;
-      padding: 40px;
-      border-radius: 5px;
-      max-width: 90%;
-      min-width: 350px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-      border: 1px solid rgba(224, 192, 151, 0.2);
-      transform: translateY(-20px);
-      transition: transform 0.5s ease, opacity 0.5s ease;
-      opacity: 0;
-      font-family: var(--font-serif);
-    }
-
-    .form-status-overlay.show .form-status-box {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    .form-status-box h4 {
-      margin-bottom: 20px;
-      font-weight: 500;
-      font-size: 1.6rem;
-      color: var(--color-primary-gold);
-    }
-
-    .form-status-box p {
-      font-size: 1.05rem;
-      color: rgba(255, 255, 255, 0.85);
-    }
-
-    .form-status-box .bi {
-      font-size: 3.5rem;
-      margin-bottom: 15px;
-      display: block;
-    }
-
-    .status-loading .loading-spinner {
-      font-size: 4rem;
-      color: var(--color-primary-gold);
-      animation: spin 1.5s linear infinite;
-      display: inline-block;
-    }
+    /* ... Các @keyframes và .form-status-overlay CSS khác ... */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .form-status-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 1050; opacity: 0; transition: opacity 0.5s ease; }
+    .form-status-overlay.show { display: flex; opacity: 1; animation: fadeIn 0.5s ease-out; }
+    .form-status-box { background: var(--color-background-dark); color: #fff; padding: 40px; border-radius: 5px; max-width: 90%; min-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); border: 1px solid rgba(224, 192, 151, 0.2); transform: translateY(-20px); transition: transform 0.5s ease, opacity 0.5s ease; opacity: 0; font-family: var(--font-serif); }
+    .form-status-overlay.show .form-status-box { transform: translateY(0); opacity: 1; }
+    .form-status-box h4 { margin-bottom: 20px; font-weight: 500; font-size: 1.6rem; color: var(--color-primary-gold); }
+    .form-status-box p { font-size: 1.05rem; color: rgba(255, 255, 255, 0.85); }
+    .form-status-box .bi { font-size: 3.5rem; margin-bottom: 15px; display: block; }
+    .status-loading .loading-spinner { font-size: 4rem; color: var(--color-primary-gold); animation: spin 1.5s linear infinite; display: inline-block; }
     .status-error h4 { color: #ff6b6b; }
     .status-sent h4 { color: #90ee90; }
-
-    .modal-close-btn {
-      background: var(--color-primary-gold);
-      color: var(--color-background-dark);
-      border: none;
-      padding: 8px 20px;
-      border-radius: 3px;
-      font-weight: 700;
-      margin-top: 20px;
-      cursor: pointer;
-      transition: background 0.3s;
-      font-family: 'Roboto', sans-serif;
-    }
-    .modal-close-btn:hover {
-      background: #fff;
-    }
-
-    .booking-card .loading,
-    .booking-card .error-message,
-    .booking-card .sent-message,
-    .contact-form-wrapper .loading,
-    .contact-form-wrapper .error-message,
-    .contact-form-wrapper .sent-message {
-      display: none !important;
-    }
-
-    .booking-card select.form-control,
-    .booking-card select.form-control option {
-      color: #333 !important;
-      background-color: #fff !important;
-    }
+    .modal-close-btn { background: var(--color-primary-gold); color: var(--color-background-dark); border: none; padding: 8px 20px; border-radius: 3px; font-weight: 700; margin-top: 20px; cursor: pointer; transition: background 0.3s; font-family: 'Roboto', sans-serif; }
+    .modal-close-btn:hover { background: #fff; }
+    .booking-card .loading, .booking-card .error-message, .booking-card .sent-message, .contact-form-wrapper .loading, .contact-form-wrapper .error-message, .contact-form-wrapper .sent-message { display: none !important; }
+    .booking-card select.form-control, .booking-card select.form-control option { color: #333 !important; background-color: #fff !important; }
   </style>
 </head>
 
