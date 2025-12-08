@@ -15,28 +15,65 @@
   <meta property="og:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"></noscript>
 
 
   <style>
-    /* ✅ Đặt các biến và quy tắc CSS cho HEADER và HERO SECTION tại đây */
+    /* Biến Global & Nav Menu Colors */
     :root {
-      /* Các biến màu và font-family cơ bản */
+      /* Fonts */
+      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      --heading-font: "Source Serif Pro", sans-serif;
+      --nav-font: "Roboto Slab", sans-serif;
+      /* Global Colors */
+      --background-color: #f8efeb;
+      --default-color: #352a26;
+      --heading-color: #291812;
+      --accent-color: #e07844;
+      --surface-color: #ffffff;
+      --contrast-color: #ffffff;
+      /* Nav Menu Colors */
+      --nav-color: rgba(255, 255, 255, 0.6);
+      --nav-hover-color: #e07844;
+      --nav-mobile-background-color: #ffffff;
+      --nav-dropdown-background-color: #ffffff;
+      --nav-dropdown-color: #352a26;
+      --nav-dropdown-hover-color: #e07844;
+      scroll-behavior: smooth;
+      /* Biến Form Status Overlay */
       --color-primary-gold: #E0C097;
       --color-background-dark: #1f1f1f;
-      --font-serif: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
     }
-    body { background-color: var(--color-background-dark); /* Thêm style body để tránh màn hình trắng */ }
-    /* ... Chèn CSS của Header, Navigation, Hero Section vào đây ... */
 
-    /* CSS cho Form Status Overlay (Giữ nguyên) */
+    /* General Styling & Header/Hero Critical Layout */
+    body { color: var(--default-color); background-color: var(--background-color); }
+    a { color: var(--accent-color); text-decoration: none; transition: 0.3s; }
+    h1, h2, h3, h4, h5, h6 { color: var(--heading-color); font-family: var(--heading-font); }
+    
+    .header { --background-color: rgba(0, 0, 0, 0); --heading-color: #ffffff; transition: all 0.5s; z-index: 997; background-color: var(--background-color); }
+    .header .topbar { background-color: var(--background-color); height: 40px; }
+    .header .branding { min-height: 60px; padding: 10px 0; }
+    .header .logo h1 { font-size: 30px; margin: 0; font-weight: 700; color: var(--heading-color); }
+    .scrolled .header { box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1); --background-color: rgba(0, 0, 0, 0.9); }
+    .scrolled .header .topbar { height: 0; visibility: hidden; overflow: hidden; }
+
+    .hero { padding-top: 120px; position: relative; min-height: 100vh; display: flex; align-items: center; padding-bottom: 120px; }
+    .hero .hero-content { position: relative; display: flex; align-items: center; z-index: 1; }
+    
+    /* Preloader & Form Status Overlay (BẮT BUỘC GIỮ LẠI) */
+    #preloader { position: fixed; inset: 0; z-index: 999999; background: var(--background-color); }
+    #preloader:before { content: ""; position: fixed; top: calc(50% - 30px); left: calc(50% - 30px); border: 6px solid #ffffff; border-color: var(--accent-color) transparent var(--accent-color) transparent; border-radius: 50%; width: 60px; height: 60px; animation: animate-preloader 1.5s linear infinite; }
+    @keyframes animate-preloader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Form Status Overlay (BẮT BUỘC GIỮ LẠI) */
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    /* ... (Phần CSS dài của Form Status Overlay và Loading) ... */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .form-status-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 1050; opacity: 0; transition: opacity 0.5s ease; }
-    /* (Đoạn này phải giữ lại để xử lý hiển thị trạng thái form) */
-    /* ... (Phần còn lại của CSS trong <style>) ... */
+    .form-status-overlay.show { display: flex; opacity: 1; animation: fadeIn 0.5s ease-out; }
+    /* ... (Phần còn lại của Form Status Overlay CSS) ... */
+    .form-status-box { background: var(--color-background-dark); color: #fff; padding: 40px; border-radius: 5px; max-width: 90%; min-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+    /* ... (các style phụ cho form status) ... */
   </style>
 
 
