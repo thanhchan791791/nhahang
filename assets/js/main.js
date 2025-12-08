@@ -60,14 +60,25 @@
     });
   });
 
-  /**
-   * Preloader
+ /**
+   * Preloader - Đã tối ưu hóa
+   * Thay vì chờ 'load' (tải xong tất cả ảnh nặng), ta đặt giới hạn thời gian.
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
+    // Hàm dùng để tắt preloader
+    const removePreloader = () => {
+      if (preloader && preloader.parentNode) {
+        preloader.remove();
+      }
+    };
+
+    // Cách 1: Tắt ngay khi trình duyệt báo đã tải xong mọi thứ (như cũ)
+    window.addEventListener('load', removePreloader);
+
+    // Cách 2 (QUAN TRỌNG): Tự động tắt sau 1000ms (1 giây) dù mạng có chậm hay ảnh chưa tải xong
+    // Giúp khách hàng luôn truy cập được web chứ không bị treo màn hình xoay
+    setTimeout(removePreloader, 1000);
   }
 
   /**
