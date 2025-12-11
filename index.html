@@ -7,105 +7,175 @@
 
   <title>Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên</title>
 
-  <link rel="canonical" href="https://amthucbuonme.vn">
-  <meta name="robots" content="index, follow">
+  <!-- ✅ SEO cơ bản -->
+  <meta name="description" content="Ẩm Thực Buôn Mê - Nơi hội tụ tinh hoa ẩm thực Buôn Ma Thuột. Thưởng thức đặc sản Tây Nguyên, món ngon dân dã, không gian đậm chất núi rừng.">
+  <meta name="keywords" content="ẩm thực Buôn Mê, Buôn Ma Thuột, đặc sản Tây Nguyên, món ngon Buôn Mê, nhà hàng Buôn Ma Thuột, đặc sản Buôn Ma Thuột, amthucbuonme.vn">
   <meta name="language" content="vi">
-  <meta name="description" content="Ẩm Thực Buôn Mê - Nơi hội tụ tinh hoa ẩm thực Buôn Ma Thuột...">
+  <meta name="author" content="Ẩm Thực Buôn Mê">
+
+  <!-- ✅ Favicon & App Icons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-v2.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-v2.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-v2.png">
+  <link rel="shortcut icon" href="/favicon-v2.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon-v2.png">
+  <meta name="theme-color" content="#1f1f1f">
+
+  <!-- ✅ Open Graph (Facebook, Zalo, Google...) -->
   <meta property="og:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
-  
+  <meta property="og:description" content="Khám phá hương vị ẩm thực Tây Nguyên tại Ẩm Thực Buôn Mê. Món ngon Buôn Ma Thuột, không gian dân dã và đậm chất văn hoá.">
+  <meta property="og:image" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+  <meta property="og:image:secure_url" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://amthucbuonme.vn">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
+  <meta name="twitter:description" content="Thưởng thức đặc sản Buôn Ma Thuột và ẩm thực Tây Nguyên tại Ẩm Thực Buôn Mê.">
+  <meta name="twitter:image" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+
+  <!-- ✅ Preconnect Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap"></noscript>
-  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- ✅ CSS Vendor -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- ✅ Main CSS -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- ✅ Google site verification -->
+  <!-- <meta name="google-site-verification" content="DÁN_MÃ_TỪ_SEARCH_CONSOLE_VÀO_ĐÂY"> -->
+
   <style>
-    /* Biến Global & Nav Menu Colors */
     :root {
-      /* Fonts */
-      --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      --heading-font: "Source Serif Pro", sans-serif;
-      --nav-font: "Roboto Slab", sans-serif;
-      /* Global Colors */
-      --background-color: #f8efeb;
-      --default-color: #352a26;
-      --heading-color: #291812;
-      --accent-color: #e07844;
-      --surface-color: #ffffff;
-      --contrast-color: #ffffff;
-      /* Nav Menu Colors */
-      --nav-color: rgba(255, 255, 255, 0.6);
-      --nav-hover-color: #e07844;
-      --nav-mobile-background-color: #ffffff;
-      --nav-dropdown-background-color: #ffffff;
-      --nav-dropdown-color: #352a26;
-      --nav-dropdown-hover-color: #e07844;
-      scroll-behavior: smooth;
-      /* Biến Form Status Overlay */
       --color-primary-gold: #E0C097;
       --color-background-dark: #1f1f1f;
+      --font-serif: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
     }
 
-    /* General Styling & Header/Hero Critical Layout */
-    body { color: var(--default-color); background-color: var(--background-color); }
-    a { color: var(--accent-color); text-decoration: none; transition: 0.3s; }
-    h1, h2, h3, h4, h5, h6 { color: var(--heading-color); font-family: var(--heading-font); }
-    
-    /* Header */
-    .header { --background-color: rgba(0, 0, 0, 0); --heading-color: #ffffff; transition: all 0.5s; z-index: 997; background-color: var(--background-color); }
-    .header .topbar { background-color: var(--background-color); height: 40px; }
-    .header .branding { min-height: 60px; padding: 10px 0; }
-    .header .logo h1 { font-size: 30px; margin: 0; font-weight: 700; color: var(--heading-color); }
-    .scrolled .header { box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1); --background-color: rgba(0, 0, 0, 0.9); }
-    .scrolled .header .topbar { height: 0; visibility: hidden; overflow: hidden; }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 
-    /* Hero Content & Container */
-    .hero { padding-top: 120px; position: relative; min-height: 100vh; display: flex; align-items: center; padding-bottom: 120px; }
-    .hero .hero-content { position: relative; display: flex; align-items: center; z-index: 1; }
-    
-    /* Hero Sub-elements (Chèn toàn bộ CSS con của .hero-content ở đây) */
-    .hero .hero-background { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-    .hero .hero-background video { position: absolute; top: 50%; left: 50%; width: auto; height: 100%; min-width: 100%; min-height: 100%; transform: translate(-50%, -50%); object-fit: cover; display: block; }
-    .hero .hero-background .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: color-mix(in srgb, var(--background-color), transparent 30%); pointer-events: none; z-index: 1; }
-    .hero .hero-text .tagline { display: inline-block; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-color); margin-bottom: 15px; font-family: var(--nav-font); }
-    .hero .hero-text .hero-title { font-size: 3.5rem; font-weight: 700; line-height: 1.2; margin-bottom: 25px; }
-    @media (max-width: 768px) { .hero .hero-text .hero-title { font-size: 2.5rem; } }
-    /* ... (Tiếp tục các quy tắc khác cho hero-description, hero-actions, v.v.) ... */
-    
-    /* Preloader & Form Status Overlay (BẮT BUỘC GIỮ LẠI) */
-    #preloader { position: fixed; inset: 0; z-index: 999999; background: var(--background-color); }
-    /* ... (CSS cho Preloader Spinner và Form Status Overlay) ... */
-    #preloader:before { content: ""; position: fixed; top: calc(50% - 30px); left: calc(50% - 30px); border: 6px solid #ffffff; border-color: var(--accent-color) transparent var(--accent-color) transparent; border-radius: 50%; width: 60px; height: 60px; animation: animate-preloader 1.5s linear infinite; }
-    @keyframes animate-preloader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    .form-status-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); display: none; align-items: center; justify-content: center; z-index: 1050; opacity: 0; transition: opacity 0.5s ease; }
-    .form-status-overlay.show { display: flex; opacity: 1; animation: fadeIn 0.5s ease-out; }
-    .form-status-box { background: var(--color-background-dark); color: #fff; padding: 40px; border-radius: 5px; max-width: 90%; min-width: 350px; text-align: center; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
-    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .form-status-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1050;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .form-status-overlay.show {
+      display: flex;
+      opacity: 1;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .form-status-box {
+      background: var(--color-background-dark);
+      color: #fff;
+      padding: 40px;
+      border-radius: 5px;
+      max-width: 90%;
+      min-width: 350px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(224, 192, 151, 0.2);
+      transform: translateY(-20px);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+      font-family: var(--font-serif);
+    }
+
+    .form-status-overlay.show .form-status-box {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .form-status-box h4 {
+      margin-bottom: 20px;
+      font-weight: 500;
+      font-size: 1.6rem;
+      color: var(--color-primary-gold);
+    }
+
+    .form-status-box p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .form-status-box .bi {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .status-loading .loading-spinner {
+      font-size: 4rem;
+      color: var(--color-primary-gold);
+      animation: spin 1.5s linear infinite;
+      display: inline-block;
+    }
+    .status-error h4 { color: #ff6b6b; }
+    .status-sent h4 { color: #90ee90; }
+
+    .modal-close-btn {
+      background: var(--color-primary-gold);
+      color: var(--color-background-dark);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 3px;
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Roboto', sans-serif;
+    }
+    .modal-close-btn:hover {
+      background: #fff;
+    }
+
+    .booking-card .loading,
+    .booking-card .error-message,
+    .booking-card .sent-message,
+    .contact-form-wrapper .loading,
+    .contact-form-wrapper .error-message,
+    .contact-form-wrapper .sent-message {
+      display: none !important;
+    }
+
+    .booking-card select.form-control,
+    .booking-card select.form-control option {
+      color: #333 !important;
+      background-color: #fff !important;
+    }
   </style>
-
-
-  <link rel="preload" href="assets/vendor/bootstrap/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css"></noscript>
-
-  <link rel="preload" href="assets/css/main.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/css/main.css"></noscript>
-
-
-  <link rel="preload" href="assets/vendor/bootstrap-icons/bootstrap-icons.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css"></noscript>
-
-  <link rel="preload" href="assets/vendor/aos/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/vendor/aos/aos.css"></noscript>
-
-  <link rel="preload" href="assets/vendor/swiper/swiper-bundle.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/vendor/swiper/swiper-bundle.min.css"></noscript>
-
-  <link rel="preload" href="assets/vendor/glightbox/css/glightbox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="assets/vendor/glightbox/css/glightbox.min.css"></noscript>
-
 </head>
+
 
 <body class="index-page">
 
@@ -1506,13 +1576,12 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
 
+  <script src="assets/js/main.js"></script>
 
 <div id="form-status-modal" class="form-status-overlay">
   <div class="form-status-box" id="status-box-content">
     </div>
 </div>
-  <script src="assets/js/main.js"></script>
-
 </body>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
