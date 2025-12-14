@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <url>
-    <loc>https://amthucbuonme.vn/</loc>
-    <lastmod>2025-10-10T15:23:00+00:00</lastmod>
-    <priority>1.00</priority>
-  </url>
+  <url>
+    <loc>https://amthucbuonme.vn/</loc>
+    <lastmod>2025-10-10T15:23:00+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
 
-  <url>
-    <loc>https://amthucbuonme.vn/amthucbuonme-quan-10</loc>
-    <lastmod>2025-11-24T18:00:00+00:00</lastmod>
-    <priority>0.80</priority>
-  </url>
+  <url>
+    <loc>https://amthucbuonme.vn/amthucbuonme-quan-10</loc>
+    <lastmod>2025-11-24T18:00:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 
-  <url>
-    <loc>https://amthucbuonme.vn/am-thuc-buon-me-quan-10-dam-da-huong-nui-rung/</loc>
-    <lastmod>2025-11-28T02:10:00+00:00</lastmod>
-    <priority>0.80</priority>
-  </url>
+  <url>
+    <loc>https://amthucbuonme.vn/am-thuc-buon-me-quan-10-dam-da-huong-nui-rung/</loc>
+    <lastmod>2025-11-28T02:10:00+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 
-  <url>
-    <loc>https://amthucbuonme.vn/dac-san-bmt-sai-gon-quan-10/</loc>
-    <lastmod>2025-12-04T03:34:44+00:00</lastmod>
-    <priority>0.80</priority>
-  </url>
+  <url>
+    <loc>https://amthucbuonme.vn/dac-san-bmt-sai-gon-quan-10/</loc>
+    <lastmod>2025-12-04T03:34:44+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- BÀI VIẾT MỚI THÊM -->
+  <url>
+    <loc>https://amthucbuonme.vn/am-thuc-buon-me-quan-10-dam-da-huong-nui-rung/them</loc>
+    <lastmod>2025-12-14T05:00:00+00:00</lastmod>
+    <priority>0.70</priority>
+  </url>
 
 </urlset>
