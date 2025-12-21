@@ -151,9 +151,11 @@
             padding-top: 10px;
         }
 
+        /* HIỂN THỊ DỌC: ẢNH TRÊN, CHỮ DƯỚI */
         .food-item {
             display: flex;
-            padding: 12px;
+            flex-direction: column; 
+            padding: 10px;
             background: #fff;
             border-radius: 20px;
             margin-bottom: 15px;
@@ -165,16 +167,33 @@
 
         .food-item:active { transform: scale(0.96); background: #FDFCFB; }
 
-        .food-img { width: 85px; height: 85px; object-fit: cover; border-radius: 15px; flex-shrink: 0; }
-        .food-detail { flex: 1; padding-left: 12px; display: flex; flex-direction: column; justify-content: center; min-width: 0; }
-        .food-name { font-weight: 700; font-size: 1rem; color: #2D1B18; margin-bottom: 4px; }
+        .food-img { 
+            width: 100%; 
+            height: auto; /* Để ảnh tự động theo tỉ lệ, không bị khuất */
+            max-height: 200px; /* Giới hạn chiều cao tối đa để không quá dài */
+            object-fit: cover; 
+            border-radius: 15px; 
+            margin-bottom: 10px;
+        }
+        
+        .food-detail { 
+            flex: 1; 
+            padding: 0 5px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            min-width: 0; 
+        }
+        
+        .food-name { font-weight: 700; font-size: 1.05rem; color: #2D1B18; margin-bottom: 4px; }
         .food-price { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; }
 
         .item-badge {
-            position: absolute; top: 8px; right: 8px;
+            position: absolute; top: 15px; right: 15px;
             background: var(--gold-accent); color: white;
-            font-size: 0.7rem; padding: 2px 8px; border-radius: 10px;
+            font-size: 0.75rem; padding: 3px 10px; border-radius: 12px;
             font-weight: 800; display: none;
+            z-index: 10;
         }
 
         /* --- POPUP MÓN ĂN --- */
@@ -338,24 +357,18 @@
     let lastTotalCount = 0;
     let currentModalItem = null;
 
-    // LẤY SỐ BÀN TỪ URL (?table=B23 hoặc #table=B23)
     function getTableFromURL() {
-        // Kiểm tra dấu ? trước
         const urlParams = new URLSearchParams(window.location.search);
         let table = urlParams.get('table');
-        
-        // Nếu không thấy ?, kiểm tra dấu # (Hash)
         if (!table && window.location.hash) {
-            const hash = window.location.hash.substring(1); // bỏ dấu #
+            const hash = window.location.hash.substring(1);
             const hashParams = new URLSearchParams(hash);
             table = hashParams.get('table');
         }
-        
         return table || "Khong xac dinh";
     }
     const tableNumber = getTableFromURL();
 
-    // THÔNG TIN TELEGRAM
     const TELEGRAM_TOKEN = "8581857488:AAGFtZdA3NecouzR8YaJsH0eVKEFlGZ2fB0";
     const TELEGRAM_CHAT_ID = "-5038976521";
 
@@ -542,22 +555,16 @@
         overlay.style.display = sheet.classList.contains('open') ? 'block' : 'none';
     };
 
-    // HÀM GỬI TELEGRAM - ĐÃ THÊM SỐ BÀN VÀ TỐI GIẢN THEO YÊU CẦU
     async function sendTelegramMessage(cartData) {
         let message = `BAN: ${tableNumber}\n`;
-        
-        
         Object.keys(cartData).forEach((id, index) => {
             const item = cartData[id];
             message += `${index + 1}. ${item.name} (x${item.qty})\n`;
             if(item.note) message += `- Ghi chu: ${item.note}\n`;
             message += "\n";
         });
-        
         message += "------------------";
-
         const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-        
         try {
             await fetch(url, {
                 method: "POST",
@@ -574,25 +581,18 @@
 
     window.submitOrder = async () => {
         const btn = document.getElementById('btn-main-submit');
-        
-        // Khóa nút lại để không gửi nhiều đơn
         btn.disabled = true;
         btn.innerText = "Dang gui...";
-
-        // Gửi đơn lên Telegram
         await sendTelegramMessage(cart);
-        
         toggleCart(false);
         const success = document.getElementById('success-overlay');
         success.classList.add('show');
-        
         confetti({ 
             particleCount: 150, 
             spread: 70, 
             origin: { y: 0.6 }, 
             colors: ['#C69C6D', '#3E2723'] 
         });
-        
         setTimeout(() => location.reload(), 3000);
     };
 </script>
