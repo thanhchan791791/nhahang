@@ -2,1145 +2,600 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Đánh Giá Dịch Vụ - Nhà hàng Ẩm thực Buôn Mê (Phiên bản iOS Wood/Earthy)</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Ẩm thực Buôn Mê - Premium Order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        /* ------------------ BIẾN MÀU SẮC CHỦ ĐẠO (WOOD/EARTHY THEME - iOS 5 SAO) ------------------ */
         :root {
-            /* Tông màu Gỗ/Đất mới - Sâu và Sang trọng */
-            --wood-dark: #3b2a22; /* Màu nâu sô cô la đậm - Text chính */
-            --wood: #5a3f33; /* Màu nâu gỗ đậm - Primary Accent */
-            --wood-light: #8b5e45; /* Màu nâu gỗ sáng - Accent/Highlight */
-            --cream: #f4e6d4; /* Nền kem/Linen mềm mại - Background chính */
-            --highlight: #ffd99e; /* Vàng ấm/Vàng đồng - Active Star */
-            
-            --ios-primary: var(--wood); 
-            --ios-background: var(--cream);
-            --ios-light-gray: #d9c7b4; /* Màu xám nhạt cho input/separator - ấm hơn */
-            --ios-dark-gray: var(--wood-dark); /* Màu chữ chính */
-            --ios-text-secondary: #7e6e61; /* Màu chữ phụ (Nâu xám nhạt) */
-            --ios-card-bg: #FFFFFF;
-            
-            /* Màu ngôi sao mới - Vàng ấm cho 5 sao */
-            --star-color-active: var(--highlight); /* Vàng ấm/Vàng đồng */
-            --star-color-inactive: var(--ios-light-gray); /* Nền xám nhạt */
-            
-            /* Định nghĩa đổ bóng mềm kiểu iOS - Dùng màu nâu */
-            --ios-shadow-soft: 0 10px 30px rgba(0,0,0,0.1); /* Bóng dày hơn, nổi hơn */
-            --ios-shadow-button: 0 8px 25px rgba(90, 63, 51, 0.4); /* Shadow từ màu nâu chính */
-            
-            /* Bo góc mềm mại kiểu iOS */
-            --radius-main-container: 24px; /* Bo góc lớn cho Main Content */
-            --radius-card: 26px;
-            --radius-input: 18px;
-            --radius-button-full: 48px; /* Bo góc full cho floating button */
-            --radius-toast: 18px;
-            
-            /* iOS Easing Function */
-            --ios-ease: cubic-bezier(.22,.98,.45,1);
-            --ios-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --primary-color: #3E2723;
+            --gold-accent: #C69C6D;
+            --bg-creme: #FAF9F6;
+            --ios-blur: rgba(255, 255, 255, 0.85);
+            --header-height: 80px;
+            --sidebar-width: 110px;
+            --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
-        /* ------------------ CÁC PHÉP CHUYỂN ĐỘNG (ANIMATION) ------------------ */
-
-        /* Hiệu ứng trượt lên và mờ dần (Fade In Up) */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* HIỆU ỨNG NHẢY LỚN KHI CLICK */
-        @keyframes starBounce {
-            0% { 
-                transform: scale(1); 
-            }
-            50% { 
-                transform: scale(1.7); /* Nảy lớn hơn */
-                color: var(--highlight); 
-                filter: drop-shadow(0 0 15px var(--highlight)); 
-            }
-            100% { 
-                transform: scale(1.2); 
-            }
-        }
-
-        /* Pop-up Nảy vào vị trí MỚI (TOP: 33%) */
-        @keyframes toastPopInTop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
-            80% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        }
-
-        /* Mờ dần và thu nhỏ để ẩn */
-        @keyframes toastFadeOutTop {
-            0% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
-        }
-        
-        /* --- HIỆU ỨNG VẼ VÒNG TRÒN (DRAWING EFFECT) --- */
-        @keyframes drawCircle {
-            0% { border-width: 0px; border-color: transparent; transform: scale(0.8); }
-            50% { border-width: 3px; border-color: var(--wood-light); transform: scale(1.1); }
-            100% { border-width: 3px; border-color: var(--wood-light); transform: scale(1); }
-        }
-
-        /* --- HIỆU ỨNG VẼ DẤU TÍCH (STROKE EFFECT bằng clip-path) --- */
-        @keyframes drawCheckmark {
-            0% { 
-                clip-path: inset(100% 100% 0% 0%); /* Ẩn hoàn toàn từ trên trái */
-                opacity: 0.5; /* Hơi mờ lúc bắt đầu */
-            }
-            1% { opacity: 1; }
-            100% { 
-                clip-path: inset(0% 0% 0% 0%); /* Hiện toàn bộ */
-                opacity: 1; 
-            }
-        }
-
-
-        /* -------------------------- CSS CHÍNH -------------------------- */
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Roboto, sans-serif, 'Inter', Arial, sans-serif;
-            background-color: var(--ios-background);
+        /* KHÓA CUỘN NGANG TUYỆT ĐỐI */
+        html, body {
+            height: 100vh;
+            width: 100%;
             margin: 0;
             padding: 0;
-            color: var(--ios-dark-gray);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-        }
-        
-        /* CSS CẬP NHẬT: Thêm lại các lớp animation bị thiếu */
-        .animated-element {
-            opacity: 0;
-            transform: translateY(25px); /* Bắt đầu từ dưới lên */
-            transition: opacity 1.0s var(--ios-ease), transform 1.0s var(--ios-ease);
-        }
-
-        .animated-element.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Container Chính - Canh giữa và giới hạn kích thước */
-        .main-container {
-            max-width: 580px; /* Max-width trên desktop */
-            margin: 0 auto;
-            padding: 0 20px 120px 20px; /* Thêm padding ngang trở lại */
-        }
-
-        /* iOS Header Style */
-        .app-header {
-            padding: 40px 0 30px; /* Giảm padding ngang trong header */
-            text-align: center; /* Căn giữa */
-        }
-        
-        /* Logo Quán */
-        .logo-container {
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: transform 0.3s var(--ios-ease), box-shadow 0.3s var(--ios-ease);
-        }
-
-        .logo-container:hover {
-             transform: translateY(-4px); 
-             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        #restaurantLogo {
-            width: 120px; 
-            height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 16px; 
-            background: linear-gradient(135deg, var(--wood-light), var(--wood)); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
-            overflow: hidden;
-            margin-bottom: 15px;
-        }
-        
-        #restaurantLogo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
-        }
-        
-        /* Icon dự phòng */
-        #restaurantLogo i {
-             font-size: 50px !important;
-        }
-
-        .app-header h1 {
-            font-size: 2em; 
-            font-weight: 900; 
-            margin: 0;
-            letter-spacing: 0.5px; 
-            color: var(--ios-dark-gray);
-            line-height: 1.2;
-        }
-        .app-header p {
-            font-size: 1em;
-            color: var(--ios-text-secondary);
-            margin-top: 10px;
-            font-weight: 500;
-            max-width: 420px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Employee List - BỐ CỤC GRID XUỐNG HÀNG */
-        .employee-list {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 cột trên mobile (mặc định) */
-            gap: 15px; /* Khoảng cách giữa các thẻ */
-            padding: 20px 0 20px 0; /* Loại bỏ padding ngang dư thừa */
-            /* ĐÃ SỬA: Xóa overflow-x: hidden để đảm bảo không tạo thanh cuộn riêng */
-        }
-        
-        /* Employee Card - THẺ NHỎ (PROFILE CARD) */
-        /* THÊM animated-element VÀO ĐÂY ĐỂ TỪNG THẺ LOAD RIÊNG */
-        .employee-card {
-            background-color: var(--ios-card-bg);
-            border-radius: var(--radius-card); /* Bo góc mềm */
-            box-shadow: var(--ios-shadow-soft); 
-            padding: 15px; /* Giảm padding */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            min-height: auto; 
-            transition: transform 0.2s var(--ios-ease), box-shadow 0.2s var(--ios-ease);
-            cursor: pointer; 
-        }
-        
-        .employee-card:active {
-            transform: scale(0.98); /* Hiệu ứng bấm nhẹ */
-        }
-        
-        /* [THAY ĐỔI QUAN TRỌNG] KHUNG ẢNH NHÂN VIÊN - CHUYỂN LẠI VỀ HÌNH TRÒN VÀ LẤP ĐẦY */
-        .employee-card img {
-            width: 80px; 
-            height: 80px;
-            /* ĐÃ SỬA: Chuyển lại về hình tròn để có tính thẩm mỹ profile hơn */
-            border-radius: 50%; 
-            /* ĐÃ SỬA: Dùng 'cover' để LẤP ĐẦY 100% khung, KHÔNG CÒN KHOẢNG TRẮNG */
-            object-fit: cover; 
-            background-color: transparent; 
-            margin-bottom: 10px;
-            margin-top: 0;
-            border: 3px solid var(--ios-light-gray); /* Viền nhẹ */
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .employee-card h3 {
-            margin: 0;
-            font-size: 1em; /* Tên nhỏ hơn */
-            font-weight: 700; 
-            /* Cho phép tên xuống dòng */
-            white-space: normal; 
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
-        .employee-card p {
-            font-size: 0.9em;
-            color: var(--wood-light);
-            margin: 3px 0 0 0;
-            font-weight: 600;
-            white-space: nowrap; /* Giữ chức danh không xuống dòng */
-        }
-
-        /* Rating Icons - HỆ THỐNG ICON CẢM XÚC */
-        /* ẨN ICON TRONG THẺ NHÂN VIÊN */
-        .employee-card .rating-stars {
-            display: none !important; 
-        }
-
-        .rating-stars {
-            display: flex;
-            justify-content: space-around; /* ĐÃ SỬA: Phân bố đều icon */
-            width: 100%;
-            max-width: 250px; /* ĐÃ SỬA: Giới hạn chiều rộng để 2 icon xích lại gần nhau */
-            margin: 30px auto; /* ĐÃ SỬA: Căn giữa khối rating */
-            padding: 0; 
-        }
-        
-        .rating-star {
-            font-size: 50px; /* ĐÃ SỬA: Tăng kích thước icon */
-            cursor: pointer;
-            color: var(--ios-text-secondary); /* Dùng màu xám ấm cho trạng thái inactive */
-            transition: color 0.2s var(--ios-ease), transform 0.25s var(--ios-ease), filter 0.25s var(--ios-ease);
-            
-            /* FIX TRIỆT ĐỂ: Vùng bấm riêng biệt và rõ ràng */
-            position: relative; 
-            z-index: 1000; 
-            padding: 15px; /* Vùng bấm lớn */
-            margin: 0; 
-            display: inline-block; 
-            line-height: 1; 
-            text-align: center;
-        }
-        
-        /* HIỆU ỨNG KHI RÊ CHUỘT (HOVER) */
-        .rating-star:hover {
-            transform: scale(1.1);
-            color: var(--highlight);
-        }
-
-        /* TRẠNG THÁI ĐÃ ĐƯỢC CHỌN (ACTIVE) */
-        .rating-star.active {
-            color: var(--highlight); /* Màu vàng ấm cho Hài Lòng */
-            filter: drop-shadow(0 0 4px rgba(255, 217, 158, 0.4)); 
-            transform: scale(1.1);
-        }
-        
-        /* Màu riêng cho icon Không Hài Lòng */
-        .rating-star.frown.active {
-            color: var(--wood); /* Màu nâu gỗ đậm cho Không Hài Lòng */
-            filter: drop-shadow(0 0 4px rgba(90, 63, 51, 0.4));
-        }
-
-        /* CLASS ĐỂ KÍCH HOẠT HIỆU ỨNG NÀY */
-        .rating-star.star-bounce {
-            animation: starBounce 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-        
-        /* Fixed Feedback Button - ĐÃ SỬA VÀ CĂN GIỮA TUYỆT ĐỐI */
-        .feedback-button-fixed {
+            overflow: hidden !important;
             position: fixed;
-            bottom: 30px;
-            left: 50%; /* Đảm bảo nút bắt đầu từ giữa */
-            transform: translateX(-50%); /* Kéo nút lùi về 50% chiều rộng của nó để căn giữa hoàn hảo */
-            padding: 16px 36px; 
-            background: linear-gradient(180deg, var(--ios-card-bg) 0%, var(--cream) 100%);
-            color: var(--wood-dark);
-            border: none;
-            border-radius: var(--radius-button-full);
-            font-size: 1.1em;
-            font-weight: 700; 
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1), 0 0 0 1px var(--ios-light-gray); 
-            z-index: 1000;
-            transition: transform 0.2s var(--ios-ease), box-shadow 0.2s var(--ios-ease);
-            display: flex;
-            align-items: center;
-            gap: 12px; 
-            min-height: 55px; 
-            letter-spacing: 0.2px;
-            
-            /* ĐẢM BẢO NÚT HIỆN NGAY LẬP TỨC */
-            opacity: 1;
-        }
-        
-        .feedback-button-fixed:active {
-            transform: translateX(-50%) translateY(2px); /* Duy trì căn giữa khi nhấn */
-            box-shadow: 5px 15px rgba(0,0,0,0.1); 
         }
 
-        /* -------------------------- TOAST NOTIFICATION STYLE (ĐÃ SỬA VỊ TRÍ) -------------------------- */
-        #toastNotification {
+        * {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-creme);
+            color: #2C1B18;
+        }
+
+        /* --- HEADER --- */
+        .restaurant-header {
+            height: var(--header-height);
+            background: var(--ios-blur);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
             position: fixed;
-            /* ĐÃ SỬA: Đặt ở vị trí 1/3 từ trên xuống (2/3 màn hình từ dưới lên) */
-            top: 33%; 
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.9); 
-            z-index: 2000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 18px 30px; 
-            border-radius: var(--radius-toast);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.2); 
-            color: var(--ios-dark-gray);
-            font-weight: 600; 
-            font-size: 1.1em; 
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-            transition: none;
-            max-width: 90%;
-            text-align: center;
-        }
-
-        /* Dùng animation mới để đảm bảo nó nảy vào vị trí TOP: 33% */
-        #toastNotification.show {
-            animation: toastPopInTop 0.4s var(--ios-spring) forwards; 
-        }
-
-        #toastNotification.hide {
-            animation: toastFadeOutTop 0.3s ease-out forwards; 
-        }
-        
-        .success-icon-container {
-            width: 60px; 
-            height: 60px;
-            border-radius: 50%;
-            border: 3px solid transparent; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin-bottom: 5px; 
-            background: rgba(139, 94, 69, 0.05); 
-            transition: border-color 0.2s;
-        }
-
-        .success-check-icon {
-            font-size: 2.2em; 
-            color: var(--wood-light);
-            opacity: 0; 
-            transform: scale(1.1);
-            clip-path: inset(100% 100% 0% 0%); 
-        }
-
-        #toastNotification.show .success-icon-container {
-            animation: drawCircle 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s forwards; 
-        }
-
-        #toastNotification.show .success-check-icon {
-            animation: drawCheckmark 0.6s ease-out 0.6s forwards; 
-        }
-
-        /* -------------------------- MODAL STYLE -------------------------- */
-        .feedback-modal {
-            position: fixed;
-            z-index: 1001; 
-            left: 0;
             top: 0;
             width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.25); 
-            backdrop-filter: blur(12px); 
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-            pointer-events: none; 
-        }
-        
-        .feedback-modal.show {
-            opacity: 1;
-            pointer-events: auto; 
+            z-index: 1100;
+            border-bottom: 1px solid rgba(62, 39, 35, 0.08);
         }
 
-        .modal-content {
-            background-color: var(--ios-card-bg);
-            margin: 15vh auto; 
-            padding: 30px;
-            border-radius: var(--radius-card);
-            width: 90%;
-            max-width: 480px; 
-            box-shadow: var(--ios-shadow-soft);
-            position: relative;
-            opacity: 0; 
-            transform: translateY(50px) scale(0.95);
-            transition: transform 0.4s var(--ios-spring), opacity 0.3s ease-out;
+        .restaurant-logo {
+            height: 40px; width: 40px;
+            object-fit: contain; border-radius: 10px; margin-right: 12px;
         }
 
-        .feedback-modal.show .modal-content {
-            opacity: 1;
-            transform: translateY(0) scale(1); 
+        .restaurant-name {
+            font-weight: 900; font-size: 1.2rem;
+            color: var(--primary-color); margin: 0;
+            letter-spacing: -0.5px; text-transform: uppercase;
         }
 
-        .modal-content h2 {
-            font-size: 1.8em; 
+        /* --- LAYOUT --- */
+        .order-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding-top: var(--header-height);
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            background: #F2EFE9;
+            overflow-y: auto;
+            scrollbar-width: none;
+            border-right: 1px solid rgba(62, 39, 35, 0.05);
+            padding: 10px 5px;
+        }
+        .sidebar::-webkit-scrollbar { display: none; }
+
+        .sidebar-group-label {
+            font-size: 0.9rem;
             font-weight: 800;
-            margin: 0 0 8px 0;
-            color: var(--ios-dark-gray);
-        }
-        .modal-content p {
-            color: var(--ios-text-secondary);
-            font-size: 1em;
-            margin-bottom: 25px;
+            color: var(--primary-color);
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin: 25px 0 12px;
+            text-transform: uppercase;
+            padding-bottom: 5px;
+            border-bottom: 2px solid rgba(198, 156, 109, 0.3);
         }
 
-        /* Input & Textarea */
-        .modal-content textarea {
-            width: 100%;
-            height: 150px; 
-            padding: 20px; 
-            margin: 10px 0 25px 0;
-            box-sizing: border-box;
+        .nav-link {
+            padding: 12px 8px;
+            margin-bottom: 8px;
+            color: #8D736B;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            line-height: 1.2;
             border: 1px solid transparent;
-            border-radius: var(--radius-input);
-            resize: vertical;
-            font-size: 1em;
-            font-family: inherit;
-            background-color: var(--ios-light-gray); 
-            transition: border-color 0.3s, box-shadow 0.3s, background-color 0.3s;
-            outline: none;
-            color: var(--ios-dark-gray);
+            position: relative;
         }
 
-        .modal-content textarea:focus {
-            border-color: var(--wood-light); 
-            box-shadow: 0 0 0 1px var(--wood-light), 0 0 12px rgba(139, 94, 69, 0.15); 
-            background-color: var(--ios-card-bg);
-        }
-        
-        /* Modal Submit Button */
-        .modal-content button {
-            width: 100%;
-            background-color: var(--wood);
-            color: white;
-            padding: 16px;
-            border: none;
-            border-radius: var(--radius-input); 
-            cursor: pointer;
-            font-size: 1.15em;
-            font-weight: 700;
-            transition: transform 0.2s var(--ios-ease), background-color 0.2s;
-            min-height: 50px; 
-        }
-        
-        /* Modal Submit Button DÀNH CHO NÚT HỦY */
-        .modal-content button:nth-of-type(2) {
-             background-color: transparent !important;
-             color: var(--ios-text-secondary) !important;
-             font-weight: 500 !important;
-             padding: 10px 16px !important;
+        .nav-link.active {
+            background: #FFFFFF !important;
+            color: var(--primary-color) !important;
+            font-weight: 900 !important;
+            box-shadow: 0 8px 15px rgba(62, 39, 35, 0.1);
+            transform: scale(1.05);
+            border: 1px solid rgba(198, 156, 109, 0.2);
         }
 
-
-        .modal-content button:active {
-            transform: scale(0.98); 
-            background-color: var(--wood-dark); 
-        }
-        
-        /* Fix cho nút hủy khi active */
-        .modal-content button:nth-of-type(2):active {
-            transform: scale(0.98);
-            background-color: rgba(0, 0, 0, 0.05) !important; 
-        }
-
-        .close-button {
-            color: var(--ios-text-secondary);
-            font-size: 32px;
-            font-weight: 200;
-            cursor: pointer;
+        .bestseller-icon {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            transition: color 0.2s;
-            line-height: 1;
+            top: -2px;
+            right: 4px;
+            font-size: 0.8rem;
+            color: #FF4D4D;
+            filter: drop-shadow(0 0 2px rgba(255, 77, 77, 0.4));
+        }
+
+        /* --- CONTENT --- */
+        .menu-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding: 0 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-header {
+            position: relative;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            letter-spacing: -1px;
+            margin: 25px 0 15px;
+            padding-top: 10px;
+        }
+
+        /* HIỂN THỊ DỌC: ẢNH TRÊN, CHỮ DƯỚI */
+        .food-item {
+            display: flex;
+            flex-direction: column; 
+            padding: 10px;
+            background: #fff;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 15px rgba(62, 39, 35, 0.04);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-item:active { transform: scale(0.96); background: #FDFCFB; }
+
+        .food-img { 
+            width: 100%; 
+            height: auto; /* Để ảnh tự động theo tỉ lệ, không bị khuất */
+            max-height: 200px; /* Giới hạn chiều cao tối đa để không quá dài */
+            object-fit: cover; 
+            border-radius: 15px; 
+            margin-bottom: 10px;
         }
         
-        /* [THAY ĐỔI QUAN TRỌNG] KHUNG ẢNH NHÂN VIÊN TRONG MODAL */
-        #ratingEmployeeImage {
-            width: 100px; 
-            height: 100px; 
-            /* ĐÃ SỬA: Chuyển lại về hình tròn để lấp đầy */
-            border-radius: 50% !important; 
-            /* ĐÃ SỬA: Dùng 'cover' để LẤP ĐẦY 100% khung, KHÔNG CÒN KHOẢNG TRẮNG */
-            object-fit: cover !important; 
-            background-color: transparent; 
-            margin: 15px auto 10px !important; 
-            border: 3px solid var(--wood-light) !important;
-        }
-
-
-        /* -------------------------- MEDIA QUERIES -------------------------- */
-
-        @media (min-width: 580px) {
-            .employee-list {
-                grid-template-columns: repeat(4, 1fr); /* 4 cột trên desktop */
-                gap: 20px;
-            }
+        .food-detail { 
+            flex: 1; 
+            padding: 0 5px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            min-width: 0; 
         }
         
-        @media (max-width: 580px) {
-            .employee-list {
-                grid-template-columns: repeat(3, 1fr); /* 3 cột trên mobile */
-                gap: 12px;
-            }
-            .main-container {
-                padding: 0 15px 120px 15px; /* Giảm padding ngang trên mobile */
-            }
-            .employee-card {
-                /* ĐÃ SỬA: Giảm padding dọc để thẻ ngắn lại trên mobile */
-                padding: 5px 5px;            
-            }
-            .employee-card img {
-                width: 100px; 
-                height: 100px;
-            }
-            .employee-card h3 {
-                font-size: 0.9em;
-            }
+        .food-name { font-weight: 700; font-size: 1.05rem; color: #2D1B18; margin-bottom: 4px; }
+        .food-price { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; }
+
+        .item-badge {
+            position: absolute; top: 15px; right: 15px;
+            background: var(--gold-accent); color: white;
+            font-size: 0.75rem; padding: 3px 10px; border-radius: 12px;
+            font-weight: 800; display: none;
+            z-index: 10;
         }
+
+        /* --- POPUP MÓN ĂN --- */
+        .item-modal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            width: 90%; max-width: 400px; background: white; border-radius: 30px;
+            z-index: 3000; padding: 25px; opacity: 0; pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .item-modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+        
+        .modal-img { width: 100%; height: 200px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
+        .modal-name { font-weight: 900; font-size: 1.4rem; color: var(--primary-color); margin-bottom: 5px; }
+        .modal-price { color: var(--gold-accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; }
+        
+        .note-input {
+            width: 100%; border: 1px solid #EEE; border-radius: 15px; padding: 12px;
+            font-size: 0.9rem; margin-top: 15px; background: #F9F9F9; outline: none;
+        }
+        .note-input:focus { border-color: var(--gold-accent); }
+
+        /* --- FLY ANIMATION --- */
+        .fly-dot {
+            position: fixed; width: 25px; height: 25px;
+            background: var(--gold-accent); border-radius: 50%;
+            z-index: 9999; pointer-events: none;
+            box-shadow: 0 0 15px var(--gold-accent);
+            transition: all 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* --- CART ICON --- */
+        .footer-cart-icon {
+            position: fixed; bottom: calc(25px + var(--safe-area-bottom));
+            right: 20px; width: 60px; height: 60px;
+            background: var(--primary-color); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 2000;
+            opacity: 0; transform: translateY(100px);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .footer-cart-icon.visible { opacity: 1; transform: translateY(0); }
+
+        @keyframes bounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
+        .footer-cart-icon.bump { animation: bounce 0.4s ease-out; }
+
+        .cart-badge {
+            position: absolute; top: -2px; right: -2px;
+            background: var(--gold-accent); color: white;
+            font-weight: 800; font-size: 0.75rem;
+            min-width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--primary-color);
+        }
+
+        /* --- ORDER SHEET --- */
+        .order-sheet {
+            position: fixed; bottom: -100%; left: 0; right: 0;
+            background: #fff; border-radius: 30px 30px 0 0;
+            z-index: 2100; padding: 20px;
+            padding-bottom: calc(20px + var(--safe-area-bottom));
+            max-height: 80vh; overflow-y: auto;
+            transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .order-sheet.open { bottom: 0; }
+        .sheet-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 2050; display: none; }
+
+        .quantity-control { display: flex; align-items: center; background: #F5F3F0; border-radius: 20px; padding: 3px; gap: 15px; }
+        .btn-circle { width: 35px; height: 35px; border-radius: 50%; border: none; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-confirm-order { width: 100%; background: var(--primary-color); color: #fff; border: none; padding: 16px; border-radius: 18px; font-weight: 800; margin-top: 15px; }
+        .btn-confirm-order:disabled { background: #ccc !important; cursor: not-allowed; }
+        
+        .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #F5F5F5; }
+
+        #success-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
+        #success-overlay.show { opacity: 1; pointer-events: auto; }
     </style>
 </head>
 <body>
 
-    <div class="main-container">
-        <header class="app-header animated-element">
-            <div class="logo-container">
-                <div id="restaurantLogo">
-                    <img src="logobanme.png" 
-                         alt="Logo Nhà hàng Ẩm thực Buôn Mê" 
-                         onerror="this.onerror=null; this.outerHTML='<i class=\'fas fa-utensils\' style=\'font-size: 50px; color: #f4e6d4;\'></i>';" 
-                    >
-                </div>
-                <h1>Nhà hàng Ẩm thực Buôn Mê</h1>
-            </div>
-            <p> Sự hài lòng của quý khách là động lực của chúng tôi.</p>
-        </header>
+<div class="restaurant-header">
+    <img src="logobanme.png" alt="Logo" class="restaurant-logo" onerror="this.src='https://via.placeholder.com/100?text=BM'">
+    <h1 class="restaurant-name">Ẩm thực Buôn Mê</h1>
+</div>
 
-        <div class="employee-list" id="employeeList">
-            
-            <div class="employee-card animated-element" data-employee-id="NV001" onclick="openEmployeeRatingModal(this)">
-                <img src="nv3.jpg" alt="Nguyễn Thị A" onerror="this.onerror=null; this.src='https://placehold.co/100x100/E0D9D4/3E2723?text=A';">
-                <h3>Nguyễn Tuấn Đạt</h3>
-                <p>Giám sát</p>
-            </div>
-            
-            <div class="employee-card animated-element" data-employee-id="NV002" onclick="openEmployeeRatingModal(this)">
-                <img src="nv4.jpg" alt="Trần Văn B" onerror="this.onerror=null; this.src='https://placehold.co/100x100/E0D9D4/3E2723?text=B';">
-                <h3>Trương Bá Lân</h3>
-                <p>Bảo vệ</p>
-            </div>
-
-            <div class="employee-card animated-element" data-employee-id="NV003" onclick="openEmployeeRatingModal(this)">
-                <img src="nv5.jpg" alt="Lê Thị C" onerror="this.onerror=null; this.src='https://placehold.co/100x100/E0D9D4/3E2723?text=C';">
-                <h3>Tạ Thị Hoài Uyên</h3>
-                <p>Quản Lý</p>
-            </div>
-            
-            <div class="employee-card animated-element" data-employee-id="NV004" onclick="openEmployeeRatingModal(this)">
-                <img src="nv6.jpg" alt="Phạm Văn D" onerror="this.onerror=null; this.src='https://placehold.co/100x100/E0D9D4/3E2723?text=D';">
-                <h3>Phạm Hoàng Thanh Ngân </h3>
-                <p>Thu Ngân</p>
-            </div>
-            
-            <div class="employee-card animated-element" data-employee-id="NV005" onclick="openEmployeeRatingModal(this)">
-                <img src="ktv03.jpg" alt="Nguyễn Thị E" onerror="this.onerror=null; this.src='https://placehold.co/100x100/E0D9D4/3E2723?text=E';">
-                <h3>Trần Huỳnh Phi Yến</h3>
-                <p>Lễ Tân</p>
-            </div>
-           
-            
-        </div>
+<div class="order-container">
+    <div class="sidebar">
+        <div class="nav flex-column" id="category-list" role="tablist"></div>
     </div>
+    <div class="menu-content" id="main-menu" data-bs-spy="scroll" data-bs-target="#category-list" data-bs-offset="100" tabindex="0"></div>
+</div>
 
-    <button class="feedback-button-fixed" onclick="openFeedbackModal()">
-        <i class="fas fa-lightbulb"></i> Góp Ý Xây Dựng & Phát Triển
-    </button>
-
-    <div id="feedbackModal" class="feedback-modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeFeedbackModal()">&times;</span>
-            <h2>Góp Ý Xây Dựng 💡</h2>
-            <p>Chúng tôi luôn lắng nghe. Tất cả ý kiến của bạn sẽ được chuyển đến đội ngũ quản lý cao cấp.</p>
-            <textarea id="feedbackText" placeholder="Nhập góp ý về dịch vụ, món ăn, không gian, hoặc bất cứ điều gì bạn muốn chia sẻ..."></textarea>
-            <button onclick="submitFeedback()">Gửi Góp Ý</button>
+<div class="item-modal" id="itemModal">
+    <img id="modal-img" class="modal-img" src="">
+    <div id="modal-name" class="modal-name"></div>
+    <div id="modal-price" class="modal-price"></div>
+    
+    <div class="d-flex justify-content-between align-items-center">
+        <span style="font-weight: 600;">Số lượng:</span>
+        <div class="quantity-control">
+            <button class="btn-circle" onclick="changeModalQty(-1)">−</button>
+            <span id="modal-qty" style="font-weight: 800; font-size: 1.1rem;">1</span>
+            <button class="btn-circle" style="background:var(--primary-color); color:white" onclick="changeModalQty(1)">+</button>
         </div>
     </div>
     
-    <div id="employeeRatingModal" class="feedback-modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeEmployeeRatingModal()">&times;</span>
-            <div id="ratingModalContent" style="text-align: center;">
-                
-                <div class="employee-info-modal" style="text-align: center;">
-                    <img id="ratingEmployeeImage" src="" alt="Employee" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; background-color: transparent; margin: 15px auto 10px; border: 3px solid var(--wood-light);">
-                    <h2 style="font-size: 1.8em; margin: 5px 0 0 0;"><span id="ratingEmployeeName"></span></h2>
-                    <p id="ratingEmployeeRole" style="margin: 0; color: var(--wood-light); font-weight: 600; font-size: 1.1em;"></p>
-                </div>
-                
-                <p id="ratingPrompt" style="margin-top: 30px;">Cảm ơn quý khách đã dành thời gian đánh giá. Vui lòng chọn mức độ hài lòng của bạn:</p>
-                
-                <div id="dynamicRatingStars" class="rating-stars">
-                    <i class="fas fa-face-frown rating-star frown" 
-                       title="Không Hài Lòng" 
-                       data-rating="1" 
-                       onclick="handleRatingSelection(this, 1, 'Không Hài Lòng')">
-                    </i>
-                    <i class="fas fa-face-smile rating-star" 
-                       title="Hài Lòng" 
-                       data-rating="3" 
-                       onclick="handleRatingSelection(this, 3, 'Hài Lòng')">
-                    </i>
-                </div>
-                
-                <div id="employeeFeedbackArea" style="display: none;">
-                    <p style="margin: 25px 0 15px 0; font-weight: 600; color: var(--wood-dark);">Vui lòng cho chúng tôi biết tại sao bạn chưa hài lòng:</p>
-                    <textarea id="employeeFeedbackText" placeholder="Nhập góp ý cụ thể về nhân viên..." style="height: 100px;"></textarea>
-                    <button onclick="submitEmployeeFeedback()">Gửi Góp Ý Cụ Thể</button>
-                    <button onclick="closeEmployeeRatingModal()">Hủy và Đóng</button>
-                </div>
-                </div>
-            
-        </div>
-    </div>
+    <textarea id="modal-note" class="note-input" placeholder="Ghi chú thêm (VD: Không hành, cay vừa...)"></textarea>
     
-    <div id="toastNotification">
-        <div class="success-icon-container"> 
-            <i class="fas fa-check success-check-icon"></i> 
-        </div>
-        <span id="toastMessage"></span>
+    <div class="d-flex gap-2 mt-3">
+        <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1;" onclick="closeModal()">Hủy</button>
+        <button class="btn-confirm-order" style="flex: 2;" id="btn-add-to-cart">Thêm vào giỏ</button>
     </div>
+</div>
 
-    <script type="module">
-        // --- FIREBASE IMPORTS (GIỮ NGUYÊN) ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+<div class="footer-cart-icon" id="cartIcon" onclick="toggleCart()">
+    <i class="bi bi-bag-heart-fill" style="color:white; font-size:1.5rem;"></i>
+    <div class="cart-badge" id="total-count-badge">0</div>
+</div>
 
-        // --- FIREBASE CONFIG (GIỮ NGUYÊN) ---
-        const firebaseConfig = {
-            apiKey: "AIzaSyC4k2DyiEVKXcMpc_j9XwqZG1OHHBNegDk",
-            authDomain: "lichnghi-4c665.firebaseapp.com",
-            databaseURL: "https://lichnghi-4c665-default-rtdb.firebaseio.com",
-            projectId: "lichnghi-4c665",
-            storageBucket: "lichnghi-4c665.firebase-storage.app",
-            messagingSenderId: "86673813509",
-            appId: "1:86673813509:web:168376408dfcbf14e16c6c",
-            measurementId: "G-2G08MRQY1V"
-        };
-        
-        // --- KHỞI TẠO DỊCH VỤ ---
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const auth = getAuth(app);
-        let userId = 'anonymous'; 
+<div class="sheet-overlay" id="overlay" onclick="handleOverlayClick()"></div>
+<div class="order-sheet" id="orderSheet">
+    <div style="width:40px; height:4px; background:#DDD; border-radius:10px; margin:0 auto 15px;"></div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 style="font-weight: 800; color: #3E2723; margin: 0;">Giỏ hàng</h4>
+        <span onclick="toggleCart()" style="color: #C69C6D; font-weight: 700;">Đóng</span>
+    </div>
+    <div id="cart-list"></div>
+    <div id="sheet-footer-ui" style="display:none; margin-top:20px; border-top:1px solid #EEE;">
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <span style="font-weight: 600; color: #888;">Tổng cộng:</span>
+            <span id="total-price" style="font-size: 1.4rem; font-weight: 900; color: var(--primary-color);">0đ</span>
+        </div>
+        <button class="btn-confirm-order" id="btn-main-submit" onclick="submitOrder()">ĐẶT MÓN NGAY</button>
+    </div>
+</div>
 
-        // Đăng nhập ẩn danh
-        signInAnonymously(auth).then((userCredential) => {
-            userId = userCredential.user.uid;
-            console.log("Người dùng đã đăng nhập ẩn danh. User ID:", userId);
-        }).catch((error) => {
-            console.error("Lỗi đăng nhập ẩn danh:", error);
-        });
+<div id="success-overlay">
+    <i class="bi bi-check-circle-fill" style="font-size: 5rem; color: var(--primary-color);"></i>
+    <h2 style="font-weight: 900; margin-top: 20px;">Gửi đơn thành công!</h2>
+</div>
 
-        // --- TELEGRAM CONFIG (THÊM MỚI) ---
-        const TELEGRAM_BOT_TOKEN = '7807531189:AAGhMQ9jjew7Q9ywMDSTaGDy4Ns6XtPQUrI';
-        const TELEGRAM_CHAT_ID = '-4805129128';
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
+    const firebaseConfig = {
+        apiKey: "AIzaSyAV7r-rjXo6U62LX1AA7c7DAHb8GhOOOsg",
+        authDomain: "saigon-dalat.firebaseapp.com",
+        databaseURL: "https://saigon-dalat-default-rtdb.firebaseio.com",
+        projectId: "saigon-dalat",
+        storageBucket: "saigon-dalat.firebasestorage.app",
+        messagingSenderId: "339735183485",
+        appId: "1:339735183485:web:bc23cd740104d272577114"
+    };
 
-        // --- LOGIC LẤY SỐ BÀN TỪ URL ---
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    let masterMenu = {};
+    let cart = {};
+    let lastTotalCount = 0;
+    let currentModalItem = null;
 
-        let tableNumber = 'unknown'; 
-
-        function getTableNumberFromUrl() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const table = urlParams.get('table');
-            return table ? table.toUpperCase() : 'UNKNOWN'; 
+    function getTableFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        let table = urlParams.get('table');
+        if (!table && window.location.hash) {
+            const hash = window.location.hash.substring(1);
+            const hashParams = new URLSearchParams(hash);
+            table = hashParams.get('table');
         }
-        
-        tableNumber = getTableNumberFromUrl();
-        console.log("Số bàn (Table Number) từ URL:", tableNumber);
+        return table || "Khong xac dinh";
+    }
+    const tableNumber = getTableFromURL();
 
-        // --- HÀM XỬ LÝ CHUNG ---
+    const TELEGRAM_TOKEN = "8581857488:AAGFtZdA3NecouzR8YaJsH0eVKEFlGZ2fB0";
+    const TELEGRAM_CHAT_ID = "-5038976521";
 
-        const toastNotification = document.getElementById('toastNotification');
-        const toastMessage = document.getElementById('toastMessage');
-        let toastTimeout;
-        
-        let currentRatingEmployee = {};
-        const employeeRatingModal = document.getElementById('employeeRatingModal');
-        const ratingEmployeeNameElement = document.getElementById('ratingEmployeeName');
-        const ratingEmployeeImageElement = document.getElementById('ratingEmployeeImage');
-        const ratingEmployeeRoleElement = document.getElementById('ratingEmployeeRole');
-        const dynamicRatingStarsContainer = document.getElementById('dynamicRatingStars');
-        
-        // THÊM MỚI: Các element cho tính năng feedback
-        const employeeFeedbackArea = document.getElementById('employeeFeedbackArea');
-        const employeeFeedbackTextarea = document.getElementById('employeeFeedbackText');
-        const ratingPrompt = document.getElementById('ratingPrompt');
+    const foodLabels = { "4mon": "Món phải thử", "7mon": "Món nên trải nghiệm", "metTongHop": "Mẹt tổng hợp nhiều món", "monCanh": "Món Canh", "monChinh": "Món Chính", "monRau": "Món Rau", "monthemmet": "Món Thêm" };
+    const drinkLabels = { "coCon": "Đồ Có Cồn", "giaiKhat": "Giải Khát", "kem": "Kem", "nuocEp": "Nước Ép" };
 
-        const feedbackModal = document.getElementById('feedbackModal');
-        const feedbackTextarea = document.getElementById('feedbackText');
-        
-        
-        function getVietnamTime() {
-            const now = new Date();
-            const options = { 
-                year: 'numeric', 
-                month: '2-digit', 
-                day: '2-digit', 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit', 
-                hour12: false,
-                timeZone: 'Asia/Ho_Chi_Minh' 
-            };
-            return new Intl.DateTimeFormat('vi-VN', options).format(now);
-        }
+    onValue(ref(db, '/'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        masterMenu = { ...data.menu.food, ...data.menu.drink };
+        renderFullMenu(data.menuGroups, data.menu);
+    });
 
-        function showToast(message) {
-            clearTimeout(toastTimeout); 
-            
-            toastNotification.classList.remove('show');
-            toastNotification.classList.remove('hide');
-
-            toastMessage.textContent = message;
-            
-            setTimeout(() => {
-                toastNotification.classList.add('show'); 
-            }, 10);
-            
-            toastTimeout = setTimeout(() => {
-                toastNotification.classList.remove('show');
-                toastNotification.classList.add('hide'); 
-                setTimeout(() => {
-                    toastNotification.classList.remove('hide');
-                }, 400); 
-            }, 3000);
-        }
+    function renderFullMenu(groups, menuData) {
+        const sidebar = document.getElementById('category-list');
+        const mainMenu = document.getElementById('main-menu');
+        sidebar.innerHTML = '';
+        mainMenu.innerHTML = '';
         
-        // --- HÀM GỬI THÔNG BÁO ĐẾN TELEGRAM (THÊM MỚI) ---
-        async function sendTelegramMessage(text) {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            
-            // Dùng Markdown cho định dạng in đậm
-            const formattedText = text.replace(/(\*|#|`)/g, ''); // Đảm bảo loại bỏ ký tự markdown gây lỗi
-            
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: formattedText,
-                        parse_mode: 'Markdown' // Sử dụng Markdown để định dạng
-                    })
+        sidebar.innerHTML += '<div class="sidebar-group-label">Thực đơn</div>';
+        renderCategoryGroup(groups.food, menuData.food, foodLabels, sidebar, mainMenu);
+        
+        sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
+        renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
+        
+        setTimeout(() => {
+            new bootstrap.ScrollSpy(document.getElementById('main-menu'), {
+                target: '#category-list',
+                offset: 120
+            });
+        }, 500);
+    }
+
+    function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
+        Object.keys(labels).forEach(catId => {
+            if (groups && groups[catId]) {
+                let sectionContent = ''; let hasValid = false;
+                Object.keys(groups[catId]).forEach(itemId => {
+                    const info = details[itemId];
+                    if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
+                        hasValid = true;
+                        sectionContent += `
+                        <div class="food-item" onclick="openItemModal(event, '${itemId}')">
+                            <div class="item-badge" id="badge-${itemId}">0</div>
+                            <img src="${info.imageUrl}" class="food-img" loading="lazy">
+                            <div class="food-detail">
+                                <div class="food-name">${info.name}</div>
+                                <div class="food-price">${info.price.toLocaleString()}đ</div>
+                            </div>
+                        </div>`;
+                    }
                 });
+                if (hasValid) {
+                    let bestSellerHtml = '';
+                    if (catId === 'metTongHop' || catId === 'nuocEp') {
+                        bestSellerHtml = '<i class="bi bi-star-fill bestseller-icon"></i>';
+                    }
 
-                if (!response.ok) {
-                    console.error("Lỗi khi gửi tin nhắn Telegram:", response.status, await response.text());
-                } else {
-                    console.log("Tin nhắn Telegram đã được gửi thành công!");
+                    sidebarEl.innerHTML += `<a class="nav-link" href="#cat-${catId}">${bestSellerHtml}${labels[catId]}</a>`;
+                    contentEl.innerHTML += `<div id="cat-${catId}" class="menu-section"><div class="category-header">${labels[catId]}</div>${sectionContent}</div>`;
                 }
-            } catch (error) {
-                console.error("Lỗi mạng khi gửi tin nhắn Telegram:", error);
             }
-        }
+        });
+    }
 
-
-        // --- HÀM XỬ LÝ MODAL GÓP Ý CHUNG (GIỮ NGUYÊN) ---
-        window.openFeedbackModal = function() {
-            document.body.style.overflow = 'hidden'; 
-            feedbackModal.classList.remove('show'); 
-            setTimeout(() => {
-                feedbackModal.classList.add('show');
-            }, 10);
-            setTimeout(() => feedbackTextarea.focus(), 350); 
-        }
-
-        window.closeFeedbackModal = function() {
-            feedbackModal.classList.remove('show');
-            document.body.style.overflow = '';
-        }
+    window.openItemModal = (e, id) => {
+        const item = masterMenu[id];
+        currentModalItem = { id, ...item, qty: 1, clickEvent: e };
         
-        // --- HÀM XỬ LÝ MODAL ĐÁNH GIÁ NHÂN VIÊN MỚI (CẬP NHẬT RẤT QUAN TRỌNG) ---
-        window.closeEmployeeRatingModal = function() {
-            // FIX LỖI: Luôn đảm bảo reset trạng thái hiển thị bên trong modal khi đóng
-            employeeFeedbackArea.style.display = 'none'; // Ẩn khu vực góp ý chi tiết
-            dynamicRatingStarsContainer.style.display = 'flex'; // Hiện lại khu vực icon
-            
-            // Xóa trạng thái active của icon
-            const stars = dynamicRatingStarsContainer.querySelectorAll('.rating-star');
-            stars.forEach(star => {
-                star.classList.remove('active');
-                star.classList.remove('last-selected');
-                star.classList.remove('star-bounce'); 
-                star.style.pointerEvents = 'auto'; 
-            });
-            
-            // Đóng modal chính
-            employeeRatingModal.classList.remove('show');
-            document.body.style.overflow = '';
-        }
+        document.getElementById('modal-img').src = item.imageUrl;
+        document.getElementById('modal-name').innerText = item.name;
+        document.getElementById('modal-price').innerText = item.price.toLocaleString() + 'đ';
+        document.getElementById('modal-qty').innerText = '1';
+        document.getElementById('modal-note').value = '';
         
-        window.openEmployeeRatingModal = function(cardElement) {
-            const employeeId = cardElement.getAttribute('data-employee-id');
-            const employeeName = cardElement.querySelector('h3').textContent;
-            const employeeRole = cardElement.querySelector('p').textContent;
-            const employeeImage = cardElement.querySelector('img').src;
-            
-            currentRatingEmployee = { employeeId, employeeName, employeeRole };
-            
-            // Cập nhật nội dung Modal
-            ratingEmployeeNameElement.textContent = employeeName;
-            ratingEmployeeImageElement.src = employeeImage;
-            ratingEmployeeRoleElement.textContent = employeeRole;
-            
-            // THÊM MỚI: Reset feedback area và prompt (đảm bảo hiển thị đúng khu vực)
-            employeeFeedbackArea.style.display = 'none';
-            employeeFeedbackTextarea.value = '';
-            ratingPrompt.style.display = 'block'; 
-            dynamicRatingStarsContainer.style.display = 'flex'; // Hiện khu vực icon khi mở
+        document.getElementById('itemModal').classList.add('show');
+        document.getElementById('overlay').style.display = 'block';
 
-            // Reset trạng thái sao
-            const stars = dynamicRatingStarsContainer.querySelectorAll('.rating-star');
-            stars.forEach(star => {
-                star.classList.remove('active');
-                star.classList.remove('last-selected');
-                star.classList.remove('star-bounce'); 
-                star.style.pointerEvents = 'auto'; 
-            });
-            
-            dynamicRatingStarsContainer.style.pointerEvents = 'auto';
+        document.getElementById('btn-add-to-cart').onclick = () => {
+            const qty = currentModalItem.qty;
+            const note = document.getElementById('modal-note').value;
+            animateFly(currentModalItem.clickEvent);
+            updateCart(id, qty, item.price, note);
+            closeModal();
+        };
+    };
 
-            // Hiển thị modal
-            document.body.style.overflow = 'hidden'; 
-            employeeRatingModal.classList.add('show');
+    window.closeModal = () => {
+        document.getElementById('itemModal').classList.remove('show');
+        if (!document.getElementById('orderSheet').classList.contains('open')) {
+            document.getElementById('overlay').style.display = 'none';
         }
+    };
 
+    window.changeModalQty = (delta) => {
+        currentModalItem.qty = Math.max(1, currentModalItem.qty + delta);
+        document.getElementById('modal-qty').innerText = currentModalItem.qty;
+    };
 
-        // --- HÀM XỬ LÝ CHỌN RATING MỚI (handleRatingSelection) ---
-        window.handleRatingSelection = async function(selectedIconElement, rating, mood) {
-            
-            // Lấy tất cả các ngôi sao
-            const allStars = dynamicRatingStarsContainer.querySelectorAll('.rating-star');
-            
-            // 1. Reset trạng thái: Xóa tất cả hiệu ứng cũ
-            allStars.forEach(star => {
-                star.classList.remove('active');
-                star.classList.remove('last-selected');
-                star.classList.remove('star-bounce'); 
-            });
+    window.handleOverlayClick = () => {
+        closeModal();
+        toggleCart(false);
+    };
 
-            // Kích hoạt trạng thái ACTIVE cho chỉ icon được chọn
-            selectedIconElement.classList.add('active');
-            selectedIconElement.classList.add('star-bounce'); 
-            selectedIconElement.classList.add('last-selected');
-            
-            // Vô hiệu hóa tất cả các icon để tránh click kép trong quá trình xử lý/animation
-            allStars.forEach(star => star.style.pointerEvents = 'none'); 
-
-            if (rating === 3) {
-                // --- TRƯỜNG HỢP HÀI LÒNG (SMILE - 3 sao): LƯU NGAY ---
-                
-                try {
-                    const data = {
-                        employeeId: currentRatingEmployee.employeeId,
-                        employeeName: currentRatingEmployee.employeeName,
-                        employeeRole: currentRatingEmployee.employeeRole,
-                        rating: rating,
-                        mood: mood,
-                        timestamp: Date.now(), 
-                        vnTime: getVietnamTime(), 
-                        userId: userId,
-                        tableNumber: tableNumber
-                    };
-                    
-                    const ratingsRef = ref(db, `ratings`);
-                    await push(ratingsRef, data); 
-
-                    // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
-                    const telegramMessage = `*✅ ĐÁNH GIÁ MỚI - HÀI LÒNG*
-*Thời gian:* ${data.vnTime}
-*Số bàn:* ${data.tableNumber}
-*Nhân viên:* ${data.employeeName} (${data.employeeRole})
-*Mức độ:* ${data.mood} `;
-                    
-                    sendTelegramMessage(telegramMessage);
-                    // -----------------------------------
-
-                    const toastMessage = `Cảm ơn bạn đã đánh giá. Chúng mình xin phép được ghi nhận ạ`;
-                    
-                    // Đóng modal ngay lập tức (Modal có animation 0.4s). Hàm này đã reset trạng thái sao.
-                    closeEmployeeRatingModal(); 
-
-                    // Show Toast SAU KHI modal đã đóng (chờ 0.6s)
-                    setTimeout(() => { 
-                        showToast(toastMessage);
-                    }, 600); 
-
-                } catch (error) {
-                    console.error("Lỗi khi lưu đánh giá vào Firebase:", error);
-                    showToast("Lỗi! Không thể lưu đánh giá. Vui lòng thử lại.");
-                    allStars.forEach(star => star.style.pointerEvents = 'auto'); // Kích hoạt lại nếu lỗi xảy ra
-                }
-                
-            } else if (rating === 1) {
-                // --- TRƯỜNG HỢP KHÔNG HÀI LÒNG (FROWN - 1 sao): HIỆN FORM FEEDBACK ---
-                
-                // Ẩn prompt và khu vực icon sau khi animation nảy kết thúc
-                setTimeout(() => {
-                    ratingPrompt.style.display = 'none';
-                    dynamicRatingStarsContainer.style.display = 'none'; // Ẩn hoàn toàn khu vực icon
-                    
-                    // Hiện khu vực feedback
-                    employeeFeedbackArea.style.display = 'block';
-                    employeeFeedbackTextarea.focus();
-                    
-                    selectedIconElement.classList.remove('star-bounce'); 
-                    
-                    allStars.forEach(star => star.style.pointerEvents = 'auto'); // Kích hoạt lại các icon đã bị vô hiệu hóa
-                    
-                }, 500); 
-
-            }
+    window.updateCart = (id, delta, price, note = "") => {
+        if (!cart[id]) {
+            cart[id] = { qty: 0, price: price, name: masterMenu[id]?.name || id, note: "" };
         }
-
-        // --- HÀM SUBMIT FEEDBACK CỤ THỂ CHO NHÂN VIÊN (MỚI) ---
-        window.submitEmployeeFeedback = async function() {
-            const feedback = employeeFeedbackTextarea.value.trim();
-            // Lấy icon cuối cùng được chọn (Mặt Buồn)
-            const selectedStar = dynamicRatingStarsContainer.querySelector('.rating-star.last-selected');
-            
-            if (feedback === "") {
-                showToast("Vui lòng nhập nội dung góp ý cụ thể.");
-                employeeFeedbackTextarea.focus();
-                return;
-            }
-            
-            if (!selectedStar || selectedStar.getAttribute('data-rating') !== '1') {
-                showToast("Lỗi: Không tìm thấy mức đánh giá 1 sao. Vui lòng thử lại.");
-                closeEmployeeRatingModal();
-                return;
-            }
-            
-            const rating = 1;
-            const mood = 'Không Hài Lòng';
-            const vnTime = getVietnamTime();
-
-            try {
-                const data = {
-                    employeeId: currentRatingEmployee.employeeId,
-                    employeeName: currentRatingEmployee.employeeName,
-                    employeeRole: currentRatingEmployee.employeeRole,
-                    rating: rating,
-                    mood: mood,
-                    feedbackText: feedback, // LƯU TEXT CỤ THỂ
-                    timestamp: Date.now(), 
-                    vnTime: vnTime, 
-                    userId: userId,
-                    tableNumber: tableNumber
-                };
-                
-                const ratingsRef = ref(db, `ratings`);
-                await push(ratingsRef, data); 
-
-                // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
-                const telegramMessage = `*🔴 ĐÁNH GIÁ KÉM - CÓ GÓP Ý*
-*Thời gian:* ${vnTime}
-*Số bàn:* ${tableNumber}
-*Nhân viên:* ${currentRatingEmployee.employeeName} (${currentRatingEmployee.employeeRole})
-*Mức độ:* ${mood} (Rating: ${rating})
-*Góp ý:*
-${feedback}`;
-                
-                sendTelegramMessage(telegramMessage);
-                // -----------------------------------
-
-                const toastMessage = `Góp ý của bạn về ${currentRatingEmployee.employeeName} đã được ghi nhận. Cảm ơn bạn!`;
-
-                // 1. Reset và Đóng modal
-                employeeFeedbackTextarea.value = '';
-                closeEmployeeRatingModal(); 
-
-                // 2. Show Toast SAU KHI modal đã đóng (chờ 0.6s)
-                setTimeout(() => { 
-                    showToast(toastMessage);
-                }, 600);
-
-            } catch (error) {
-                console.error("Lỗi khi lưu góp ý nhân viên vào Firebase:", error);
-                showToast("Lỗi! Không thể gửi góp ý. Vui lòng thử lại.");
-            }
+        cart[id].qty += delta;
+        if (note) cart[id].note = note;
+        
+        if (cart[id].qty <= 0) delete cart[id];
+        
+        const b = document.getElementById(`badge-${id}`);
+        if(b) {
+            b.innerText = cart[id]?.qty || 0;
+            b.style.display = cart[id]?.qty > 0 ? 'block' : 'none';
         }
+        updateTotalUI();
+    };
 
-
-        // --- HÀM GỬI GÓP Ý CHUNG VÀ LƯU VÀO DB (CẬP NHẬT GỬI TELEGRAM) ---
-        window.submitFeedback = async function() {
-            const feedback = feedbackTextarea.value.trim();
-            const vnTime = getVietnamTime();
-
-            if (feedback === "") {
-                showToast("Vui lòng nhập nội dung góp ý trước khi gửi!");
-                return;
-            }
-
-            // FIREBASE LOGIC: Lưu góp ý
-            try {
-                const data = {
-                    feedback: feedback,
-                    timestamp: Date.now(),
-                    vnTime: vnTime,
-                    userId: userId,
-                    tableNumber: tableNumber 
-                };
-                
-                const feedbackRef = ref(db, 'general_feedback');
-                await push(feedbackRef, data); 
-                
-                // --- GỬI ĐẾN TELEGRAM (THÊM MỚI) ---
-                const telegramMessage = `*💡 GÓP Ý CHUNG MỚI*
-*Thời gian:* ${vnTime}
-*Số bàn:* ${tableNumber}
-*Nội dung:*
-${feedback}`;
-                
-                sendTelegramMessage(telegramMessage);
-                // -----------------------------------
-
-                console.log("Nội dung góp ý đã được lưu:", feedback);
-                showToast(`Góp ý của quý khách tại bàn ${tableNumber} đã được ghi nhận. Xin chân thành cảm ơn!`);
-                
-                feedbackTextarea.value = '';
-                closeFeedbackModal();
-
-            } catch (error) {
-                console.error("Lỗi khi lưu góp ý vào Firebase:", error);
-                showToast("Lỗi! Không thể gửi góp ý. Vui lòng thử lại.");
-            }
-        }
-
-        // Đóng modal khi click ra ngoài khung nội dung (Cập nhật để bao gồm cả 2 modal)
-        window.onclick = function(event) {
-            if (event.target == feedbackModal) {
-                window.closeFeedbackModal();
-            }
-            if (event.target == employeeRatingModal) {
-                window.closeEmployeeRatingModal();
-            }
-        }
-
-        // --- LOGIC CẬP NHẬT: ANIMATION HIỂN THỊ TỪNG PHẦN RẤT CHẬM VÀ TUẦN TỰ (STAGGERED) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const header = document.querySelector('.app-header');
-            const employeeCards = document.querySelectorAll('.employee-card'); // Lấy từng thẻ nhân viên
-            
-            // Danh sách các phần tử cần hiển thị tuần tự (Chỉ còn Header -> Từng thẻ nhân viên)
-            // Nút Góp Ý đã được loại bỏ khỏi danh sách này để hiển thị ngay lập tức.
-            const elements = [header, ...Array.from(employeeCards)]; 
-            
-            let delay = 0;
-            const delayIncrement = 200; // 200ms delay giữa mỗi phần tử
-
-            elements.forEach(el => {
-                if (el) {
-                    setTimeout(() => {
-                        el.classList.add('show');
-                    }, delay);
-                    // Tăng độ trễ cho phần tử tiếp theo
-                    delay += delayIncrement;
-                }
-            });
+    function updateTotalUI() {
+        let total = 0, count = 0;
+        let listHtml = '';
+        Object.keys(cart).forEach(id => { 
+            const item = cart[id];
+            total += (item.qty * item.price); count += item.qty;
+            listHtml += `
+            <div class="cart-item-row">
+                <div style="flex:1">
+                    <div style="font-weight:700; color:#3E2723">${item.name}</div>
+                    ${item.note ? `<div style="font-size:0.75rem; color:#888; font-style:italic">Ghi chú: ${item.note}</div>` : ''}
+                    <div style="color:#C69C6D; font-size:0.9rem">${(item.qty * item.price).toLocaleString()}đ</div>
+                </div>
+                <div class="quantity-control">
+                    <div class="btn-circle" onclick="updateCart('${id}', -1, ${item.price})">−</div>
+                    <span style="font-weight:800; min-width:20px; text-align:center;">${item.qty}</span>
+                    <div class="btn-circle" style="background:var(--primary-color); color:white" onclick="updateCart('${id}', 1, ${item.price})">+</div>
+                </div>
+            </div>`;
         });
         
-    </script>
+        const icon = document.getElementById('cartIcon');
+        if (count > lastTotalCount) {
+            icon.classList.remove('bump');
+            void icon.offsetWidth;
+            icon.classList.add('bump');
+        }
+        lastTotalCount = count;
+
+        if (count > 0) { 
+            icon.classList.add('visible'); 
+            document.getElementById('total-count-badge').innerText = count; 
+            document.getElementById('sheet-footer-ui').style.display = 'block'; 
+        } else { 
+            icon.classList.remove('visible'); 
+            document.getElementById('sheet-footer-ui').style.display = 'none'; 
+            toggleCart(false); 
+        }
+        document.getElementById('total-price').innerText = total.toLocaleString() + 'đ';
+        document.getElementById('cart-list').innerHTML = listHtml || '<p style="text-align:center; opacity:0.4; margin-top:20px;">Giỏ hàng đang trống</p>';
+    }
+
+    window.animateFly = (e) => {
+        if (!e) return;
+        const dot = document.createElement('div');
+        dot.className = 'fly-dot';
+        dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
+        document.body.appendChild(dot);
+        setTimeout(() => {
+            const rect = document.getElementById('cartIcon').getBoundingClientRect();
+            dot.style.left = (rect.left + 20) + 'px';
+            dot.style.top = (rect.top + 20) + 'px';
+            dot.style.transform = 'scale(0.2)'; dot.style.opacity = '0';
+        }, 10);
+        setTimeout(() => dot.remove(), 800);
+    };
+
+    window.toggleCart = (force) => {
+        const sheet = document.getElementById('orderSheet');
+        const overlay = document.getElementById('overlay');
+        if (force === false) { sheet.classList.remove('open'); overlay.style.display = 'none'; return; }
+        sheet.classList.toggle('open');
+        overlay.style.display = sheet.classList.contains('open') ? 'block' : 'none';
+    };
+
+    async function sendTelegramMessage(cartData) {
+        let message = `BAN: ${tableNumber}\n`;
+        Object.keys(cartData).forEach((id, index) => {
+            const item = cartData[id];
+            message += `${index + 1}. ${item.name} (x${item.qty})\n`;
+            if(item.note) message += `- Ghi chu: ${item.note}\n`;
+            message += "\n";
+        });
+        message += "------------------";
+        const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
+        try {
+            await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHAT_ID,
+                    text: message
+                })
+            });
+        } catch (error) {
+            console.error("Loi gui Telegram:", error);
+        }
+    }
+
+    window.submitOrder = async () => {
+        const btn = document.getElementById('btn-main-submit');
+        btn.disabled = true;
+        btn.innerText = "Dang gui...";
+        await sendTelegramMessage(cart);
+        toggleCart(false);
+        const success = document.getElementById('success-overlay');
+        success.classList.add('show');
+        confetti({ 
+            particleCount: 150, 
+            spread: 70, 
+            origin: { y: 0.6 }, 
+            colors: ['#C69C6D', '#3E2723'] 
+        });
+        setTimeout(() => location.reload(), 3000);
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
