@@ -151,7 +151,7 @@
             padding-top: 10px;
         }
 
-        /* HIỂN THỊ DỌC: ẢNH TRÊN, CHỮ DƯỚI */
+        /* HIỂN THỊ DỌC */
         .food-item {
             display: flex;
             flex-direction: column; 
@@ -169,8 +169,8 @@
 
         .food-img { 
             width: 100%; 
-            height: auto; /* Để ảnh tự động theo tỉ lệ, không bị khuất */
-            max-height: 200px; /* Giới hạn chiều cao tối đa để không quá dài */
+            height: auto; 
+            max-height: 200px; 
             object-fit: cover; 
             border-radius: 15px; 
             margin-bottom: 10px;
@@ -196,17 +196,23 @@
             z-index: 10;
         }
 
-        /* --- POPUP MÓN ĂN --- */
-        .item-modal {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
-            width: 90%; max-width: 400px; background: white; border-radius: 30px;
-            z-index: 3000; padding: 25px; opacity: 0; pointer-events: none;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        /* --- POPUP CHUNG (MODAL & ALERT) --- */
+        .custom-popup {
+            position: fixed; top: 50%; left: 50%; 
+            transform: translate(-50%, 100%) scale(0.8);
+            width: 90%; max-width: 400px; 
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: 35px; z-index: 3000; padding: 25px; 
+            opacity: 0; pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
         }
-        .item-modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+        .custom-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
         
-        .modal-img { width: 100%; height: 200px; object-fit: cover; border-radius: 20px; margin-bottom: 15px; }
+        /* Modal Chi tiết món */
+        .modal-img { width: 100%; height: 200px; object-fit: cover; border-radius: 25px; margin-bottom: 15px; }
         .modal-name { font-weight: 900; font-size: 1.4rem; color: var(--primary-color); margin-bottom: 5px; }
         .modal-price { color: var(--gold-accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; }
         
@@ -214,7 +220,10 @@
             width: 100%; border: 1px solid #EEE; border-radius: 15px; padding: 12px;
             font-size: 0.9rem; margin-top: 15px; background: #F9F9F9; outline: none;
         }
-        .note-input:focus { border-color: var(--gold-accent); }
+
+        /* Alert Thông báo Món Thêm */
+        .alert-icon { font-size: 3rem; color: var(--gold-accent); margin-bottom: 15px; }
+        .alert-title { font-weight: 900; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 10px; line-height: 1.4; }
 
         /* --- FLY ANIMATION --- */
         .fly-dot {
@@ -260,12 +269,11 @@
             transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .order-sheet.open { bottom: 0; }
-        .sheet-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); z-index: 2050; display: none; }
+        .sheet-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); z-index: 2050; display: none; }
 
         .quantity-control { display: flex; align-items: center; background: #F5F3F0; border-radius: 20px; padding: 3px; gap: 15px; }
         .btn-circle { width: 35px; height: 35px; border-radius: 50%; border: none; background: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 600; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .btn-confirm-order { width: 100%; background: var(--primary-color); color: #fff; border: none; padding: 16px; border-radius: 18px; font-weight: 800; margin-top: 15px; }
-        .btn-confirm-order:disabled { background: #ccc !important; cursor: not-allowed; }
         
         .cart-item-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #F5F5F5; }
 
@@ -287,7 +295,19 @@
     <div class="menu-content" id="main-menu" data-bs-spy="scroll" data-bs-target="#category-list" data-bs-offset="100" tabindex="0"></div>
 </div>
 
-<div class="item-modal" id="itemModal">
+<div class="custom-popup" id="monThemAlert">
+    <div class="text-center">
+        <div class="alert-icon"><i class="bi bi-info-circle-fill"></i></div>
+        <div class="alert-title">Lưu ý: Các món này chỉ gọi thêm khi bạn đã đặt 'Mẹt tổng hợp nhiều món'.</div>
+        <div style="font-size: 0.95rem; color: #666; margin-bottom: 25px;">Bạn có chắc chắn muốn tiếp tục order món này không?</div>
+        <div class="d-flex gap-2">
+            <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1; margin-top:0;" onclick="closeMonThemAlert()">Hủy</button>
+            <button class="btn-confirm-order" style="flex: 1; margin-top:0;" id="btn-confirm-monthem">Tiếp tục</button>
+        </div>
+    </div>
+</div>
+
+<div class="custom-popup" id="itemModal">
     <img id="modal-img" class="modal-img" src="">
     <div id="modal-name" class="modal-name"></div>
     <div id="modal-price" class="modal-price"></div>
@@ -303,9 +323,9 @@
     
     <textarea id="modal-note" class="note-input" placeholder="Ghi chú thêm (VD: Không hành, cay vừa...)"></textarea>
     
-    <div class="d-flex gap-2 mt-3">
-        <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1;" onclick="closeModal()">Hủy</button>
-        <button class="btn-confirm-order" style="flex: 2;" id="btn-add-to-cart">Thêm vào giỏ</button>
+    <div class="d-flex gap-2 mt-4">
+        <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1; margin-top:0;" onclick="closeModal()">Đóng</button>
+        <button class="btn-confirm-order" style="flex: 2; margin-top:0;" id="btn-add-to-cart">Thêm vào giỏ</button>
     </div>
 </div>
 
@@ -385,21 +405,12 @@
     function renderFullMenu(groups, menuData) {
         const sidebar = document.getElementById('category-list');
         const mainMenu = document.getElementById('main-menu');
-        sidebar.innerHTML = '';
-        mainMenu.innerHTML = '';
-        
+        sidebar.innerHTML = ''; mainMenu.innerHTML = '';
         sidebar.innerHTML += '<div class="sidebar-group-label">Thực đơn</div>';
         renderCategoryGroup(groups.food, menuData.food, foodLabels, sidebar, mainMenu);
-        
         sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
         renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
-        
-        setTimeout(() => {
-            new bootstrap.ScrollSpy(document.getElementById('main-menu'), {
-                target: '#category-list',
-                offset: 120
-            });
-        }, 500);
+        setTimeout(() => { new bootstrap.ScrollSpy(document.getElementById('main-menu'), { target: '#category-list', offset: 120 }); }, 500);
     }
 
     function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
@@ -411,7 +422,7 @@
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
                         sectionContent += `
-                        <div class="food-item" onclick="openItemModal(event, '${itemId}')">
+                        <div class="food-item" onclick="openItemModal(event, '${itemId}', '${catId}')">
                             <div class="item-badge" id="badge-${itemId}">0</div>
                             <img src="${info.imageUrl}" class="food-img" loading="lazy">
                             <div class="food-detail">
@@ -422,11 +433,7 @@
                     }
                 });
                 if (hasValid) {
-                    let bestSellerHtml = '';
-                    if (catId === 'metTongHop' || catId === 'nuocEp') {
-                        bestSellerHtml = '<i class="bi bi-star-fill bestseller-icon"></i>';
-                    }
-
+                    let bestSellerHtml = (catId === 'metTongHop' || catId === 'nuocEp') ? '<i class="bi bi-star-fill bestseller-icon"></i>' : '';
                     sidebarEl.innerHTML += `<a class="nav-link" href="#cat-${catId}">${bestSellerHtml}${labels[catId]}</a>`;
                     contentEl.innerHTML += `<div id="cat-${catId}" class="menu-section"><div class="category-header">${labels[catId]}</div>${sectionContent}</div>`;
                 }
@@ -434,16 +441,29 @@
         });
     }
 
-    window.openItemModal = (e, id) => {
+    window.openItemModal = (e, id, categoryId) => {
         const item = masterMenu[id];
         currentModalItem = { id, ...item, qty: 1, clickEvent: e };
-        
+
+        if (categoryId === 'monthemmet') {
+            document.getElementById('monThemAlert').classList.add('show');
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('btn-confirm-monthem').onclick = () => {
+                document.getElementById('monThemAlert').classList.remove('show');
+                showDetailModal();
+            };
+        } else {
+            showDetailModal();
+        }
+    };
+
+    function showDetailModal() {
+        const item = currentModalItem;
         document.getElementById('modal-img').src = item.imageUrl;
         document.getElementById('modal-name').innerText = item.name;
         document.getElementById('modal-price').innerText = item.price.toLocaleString() + 'đ';
         document.getElementById('modal-qty').innerText = '1';
         document.getElementById('modal-note').value = '';
-        
         document.getElementById('itemModal').classList.add('show');
         document.getElementById('overlay').style.display = 'block';
 
@@ -451,9 +471,14 @@
             const qty = currentModalItem.qty;
             const note = document.getElementById('modal-note').value;
             animateFly(currentModalItem.clickEvent);
-            updateCart(id, qty, item.price, note);
+            updateCart(item.id, qty, item.price, note);
             closeModal();
         };
+    }
+
+    window.closeMonThemAlert = () => {
+        document.getElementById('monThemAlert').classList.remove('show');
+        document.getElementById('overlay').style.display = 'none';
     };
 
     window.closeModal = () => {
@@ -470,23 +495,17 @@
 
     window.handleOverlayClick = () => {
         closeModal();
+        closeMonThemAlert();
         toggleCart(false);
     };
 
     window.updateCart = (id, delta, price, note = "") => {
-        if (!cart[id]) {
-            cart[id] = { qty: 0, price: price, name: masterMenu[id]?.name || id, note: "" };
-        }
+        if (!cart[id]) cart[id] = { qty: 0, price: price, name: masterMenu[id]?.name || id, note: "" };
         cart[id].qty += delta;
         if (note) cart[id].note = note;
-        
         if (cart[id].qty <= 0) delete cart[id];
-        
         const b = document.getElementById(`badge-${id}`);
-        if(b) {
-            b.innerText = cart[id]?.qty || 0;
-            b.style.display = cart[id]?.qty > 0 ? 'block' : 'none';
-        }
+        if(b) { b.innerText = cart[id]?.qty || 0; b.style.display = cart[id]?.qty > 0 ? 'block' : 'none'; }
         updateTotalUI();
     };
 
@@ -496,38 +515,12 @@
         Object.keys(cart).forEach(id => { 
             const item = cart[id];
             total += (item.qty * item.price); count += item.qty;
-            listHtml += `
-            <div class="cart-item-row">
-                <div style="flex:1">
-                    <div style="font-weight:700; color:#3E2723">${item.name}</div>
-                    ${item.note ? `<div style="font-size:0.75rem; color:#888; font-style:italic">Ghi chú: ${item.note}</div>` : ''}
-                    <div style="color:#C69C6D; font-size:0.9rem">${(item.qty * item.price).toLocaleString()}đ</div>
-                </div>
-                <div class="quantity-control">
-                    <div class="btn-circle" onclick="updateCart('${id}', -1, ${item.price})">−</div>
-                    <span style="font-weight:800; min-width:20px; text-align:center;">${item.qty}</span>
-                    <div class="btn-circle" style="background:var(--primary-color); color:white" onclick="updateCart('${id}', 1, ${item.price})">+</div>
-                </div>
-            </div>`;
+            listHtml += `<div class="cart-item-row"><div style="flex:1"><div style="font-weight:700; color:#3E2723">${item.name}</div>${item.note ? `<div style="font-size:0.75rem; color:#888; font-style:italic">Ghi chú: ${item.note}</div>` : ''}<div style="color:#C69C6D; font-size:0.9rem">${(item.qty * item.price).toLocaleString()}đ</div></div><div class="quantity-control"><div class="btn-circle" onclick="updateCart('${id}', -1, ${item.price})">−</div><span style="font-weight:800; min-width:20px; text-align:center;">${item.qty}</span><div class="btn-circle" style="background:var(--primary-color); color:white" onclick="updateCart('${id}', 1, ${item.price})">+</div></div></div>`;
         });
-        
         const icon = document.getElementById('cartIcon');
-        if (count > lastTotalCount) {
-            icon.classList.remove('bump');
-            void icon.offsetWidth;
-            icon.classList.add('bump');
-        }
+        if (count > lastTotalCount) { icon.classList.remove('bump'); void icon.offsetWidth; icon.classList.add('bump'); }
         lastTotalCount = count;
-
-        if (count > 0) { 
-            icon.classList.add('visible'); 
-            document.getElementById('total-count-badge').innerText = count; 
-            document.getElementById('sheet-footer-ui').style.display = 'block'; 
-        } else { 
-            icon.classList.remove('visible'); 
-            document.getElementById('sheet-footer-ui').style.display = 'none'; 
-            toggleCart(false); 
-        }
+        if (count > 0) { icon.classList.add('visible'); document.getElementById('total-count-badge').innerText = count; document.getElementById('sheet-footer-ui').style.display = 'block'; } else { icon.classList.remove('visible'); document.getElementById('sheet-footer-ui').style.display = 'none'; toggleCart(false); }
         document.getElementById('total-price').innerText = total.toLocaleString() + 'đ';
         document.getElementById('cart-list').innerHTML = listHtml || '<p style="text-align:center; opacity:0.4; margin-top:20px;">Giỏ hàng đang trống</p>';
     }
@@ -538,12 +531,7 @@
         dot.className = 'fly-dot';
         dot.style.left = e.clientX + 'px'; dot.style.top = e.clientY + 'px';
         document.body.appendChild(dot);
-        setTimeout(() => {
-            const rect = document.getElementById('cartIcon').getBoundingClientRect();
-            dot.style.left = (rect.left + 20) + 'px';
-            dot.style.top = (rect.top + 20) + 'px';
-            dot.style.transform = 'scale(0.2)'; dot.style.opacity = '0';
-        }, 10);
+        setTimeout(() => { const rect = document.getElementById('cartIcon').getBoundingClientRect(); dot.style.left = (rect.left + 20) + 'px'; dot.style.top = (rect.top + 20) + 'px'; dot.style.transform = 'scale(0.2)'; dot.style.opacity = '0'; }, 10);
         setTimeout(() => dot.remove(), 800);
     };
 
@@ -565,34 +553,17 @@
         });
         message += "------------------";
         const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
-        try {
-            await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHAT_ID,
-                    text: message
-                })
-            });
-        } catch (error) {
-            console.error("Loi gui Telegram:", error);
-        }
+        try { await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: message }) }); } catch (error) { console.error("Loi gui Telegram:", error); }
     }
 
     window.submitOrder = async () => {
         const btn = document.getElementById('btn-main-submit');
-        btn.disabled = true;
-        btn.innerText = "Dang gui...";
+        btn.disabled = true; btn.innerText = "Dang gui...";
         await sendTelegramMessage(cart);
         toggleCart(false);
         const success = document.getElementById('success-overlay');
         success.classList.add('show');
-        confetti({ 
-            particleCount: 150, 
-            spread: 70, 
-            origin: { y: 0.6 }, 
-            colors: ['#C69C6D', '#3E2723'] 
-        });
+        confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#C69C6D', '#3E2723'] });
         setTimeout(() => location.reload(), 3000);
     };
 </script>
