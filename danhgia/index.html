@@ -419,6 +419,13 @@
                 let sectionContent = ''; let hasValid = false;
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
+                    
+                    // --- ĐOẠN SỬA ĐỔI: LỌC BỎ CÁC MÓN CÓ CHỮ (cay) ---
+                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
+                        return; // Bỏ qua không hiển thị món này
+                    }
+                    // ----------------------------------------------
+
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
                         sectionContent += `
