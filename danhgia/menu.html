@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Thực đơn Ẩm thực Buôn Mê</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #3E2723;
+            --gold-accent: #C69C6D;
+            --bg-creme: #FAF9F6;
+            --ios-blur: rgba(255, 255, 255, 0.85);
+            --header-height: 80px;
+            --sidebar-width: 110px;
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* KHÓA CUỘN NGANG TUYỆT ĐỐI */
+        html, body {
+            height: 100vh;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden !important;
+            position: fixed;
+        }
+
+        * {
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-creme);
+            color: #2C1B18;
+        }
+
+        /* --- HEADER --- */
+        .restaurant-header {
+            height: var(--header-height);
+            background: var(--ios-blur);
+            backdrop-filter: blur(25px) saturate(200%);
+            -webkit-backdrop-filter: blur(25px) saturate(200%);
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1100;
+            border-bottom: 1px solid rgba(62, 39, 35, 0.08);
+        }
+
+        .restaurant-logo {
+            height: 40px; width: 40px;
+            object-fit: contain; border-radius: 10px; margin-right: 12px;
+        }
+
+        .restaurant-name {
+            font-weight: 900; font-size: 1.2rem;
+            color: var(--primary-color); margin: 0;
+            letter-spacing: -0.5px; text-transform: uppercase;
+        }
+
+        /* --- LAYOUT --- */
+        .order-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding-top: var(--header-height);
+            padding-bottom: var(--safe-area-bottom);
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            background: #F2EFE9;
+            overflow-y: auto;
+            scrollbar-width: none;
+            border-right: 1px solid rgba(62, 39, 35, 0.05);
+            padding: 10px 5px;
+        }
+        .sidebar::-webkit-scrollbar { display: none; }
+
+        .sidebar-group-label {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-align: center;
+            letter-spacing: 0.5px;
+            margin: 25px 0 12px;
+            text-transform: uppercase;
+            padding-bottom: 5px;
+            border-bottom: 2px solid rgba(198, 156, 109, 0.3);
+        }
+
+        .nav-link {
+            padding: 12px 8px;
+            margin-bottom: 8px;
+            color: #8D736B;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            line-height: 1.2;
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .nav-link.active {
+            background: #FFFFFF !important;
+            color: var(--primary-color) !important;
+            font-weight: 900 !important;
+            box-shadow: 0 8px 15px rgba(62, 39, 35, 0.1);
+            transform: scale(1.05);
+            border: 1px solid rgba(198, 156, 109, 0.2);
+        }
+
+        .bestseller-icon {
+            position: absolute;
+            top: -2px;
+            right: 4px;
+            font-size: 0.8rem;
+            color: #FF4D4D;
+            filter: drop-shadow(0 0 2px rgba(255, 77, 77, 0.4));
+        }
+
+        /* --- CONTENT --- */
+        .menu-content {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding: 0 15px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .category-header {
+            position: relative;
+            font-weight: 900;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            letter-spacing: -1px;
+            margin: 25px 0 15px;
+            padding-top: 10px;
+        }
+
+        /* CHẾ ĐỘ CHỈ XEM (ĐÃ BỎ CURSOR POINTER) */
+        .food-item {
+            display: flex;
+            flex-direction: column; 
+            padding: 10px;
+            background: #fff;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 15px rgba(62, 39, 35, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 200px; 
+            object-fit: cover; 
+            border-radius: 15px; 
+            margin-bottom: 10px;
+        }
+        
+        .food-detail { 
+            flex: 1; 
+            padding: 0 5px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            min-width: 0; 
+        }
+        
+        .food-name { font-weight: 700; font-size: 1.05rem; color: #2D1B18; margin-bottom: 4px; }
+        .food-price { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; }
+
+    </style>
+</head>
+<body>
+
+<div class="restaurant-header">
+    <img src="logobanme.png" alt="Logo" class="restaurant-logo" onerror="this.src='https://via.placeholder.com/100?text=BM'">
+    <h1 class="restaurant-name">Ẩm thực Buôn Mê</h1>
+</div>
+
+<div class="order-container">
+    <div class="sidebar">
+        <div class="nav flex-column" id="category-list" role="tablist"></div>
+    </div>
+    <div class="menu-content" id="main-menu" data-bs-spy="scroll" data-bs-target="#category-list" data-bs-offset="100" tabindex="0"></div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAV7r-rjXo6U62LX1AA7c7DAHb8GhOOOsg",
+        authDomain: "saigon-dalat.firebaseapp.com",
+        databaseURL: "https://saigon-dalat-default-rtdb.firebaseio.com",
+        projectId: "saigon-dalat",
+        storageBucket: "saigon-dalat.firebasestorage.app",
+        messagingSenderId: "339735183485",
+        appId: "1:339735183485:web:bc23cd740104d272577114"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    let masterMenu = {};
+
+    const foodLabels = { "4mon": "Món phải thử", "7mon": "Món nên trải nghiệm", "metTongHop": "Mẹt tổng hợp nhiều món", "monCanh": "Món Canh", "monChinh": "Món Chính", "monRau": "Món Rau", "monthemmet": "Món Thêm" };
+    const drinkLabels = { "coCon": "Đồ Có Cồn", "giaiKhat": "Giải Khát", "kem": "Kem", "nuocEp": "Nước Ép" };
+
+    onValue(ref(db, '/'), (snapshot) => {
+        const data = snapshot.val();
+        if (!data) return;
+        masterMenu = { ...data.menu.food, ...data.menu.drink };
+        renderFullMenu(data.menuGroups, data.menu);
+    });
+
+    function renderFullMenu(groups, menuData) {
+        const sidebar = document.getElementById('category-list');
+        const mainMenu = document.getElementById('main-menu');
+        sidebar.innerHTML = ''; mainMenu.innerHTML = '';
+        sidebar.innerHTML += '<div class="sidebar-group-label">Thực đơn</div>';
+        renderCategoryGroup(groups.food, menuData.food, foodLabels, sidebar, mainMenu);
+        sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
+        renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
+        setTimeout(() => { new bootstrap.ScrollSpy(document.getElementById('main-menu'), { target: '#category-list', offset: 120 }); }, 500);
+    }
+
+    function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
+        Object.keys(labels).forEach(catId => {
+            if (groups && groups[catId]) {
+                let sectionContent = ''; let hasValid = false;
+                Object.keys(groups[catId]).forEach(itemId => {
+                    const info = details[itemId];
+                    
+                    // LỌC BỎ CÁC MÓN CÓ CHỮ (cay)
+                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
+                        return;
+                    }
+
+                    if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
+                        hasValid = true;
+                        // ĐÃ LOẠI BỎ SỰ KIỆN CLICK VÀ BADGE SỐ LƯỢNG
+                        sectionContent += `
+                        <div class="food-item">
+                            <img src="${info.imageUrl}" class="food-img" loading="lazy">
+                            <div class="food-detail">
+                                <div class="food-name">${info.name}</div>
+                                <div class="food-price">${info.price.toLocaleString()}đ</div>
+                            </div>
+                        </div>`;
+                    }
+                });
+                if (hasValid) {
+                    let bestSellerHtml = (catId === 'metTongHop' || catId === 'nuocEp') ? '<i class="bi bi-star-fill bestseller-icon"></i>' : '';
+                    sidebarEl.innerHTML += `<a class="nav-link" href="#cat-${catId}">${bestSellerHtml}${labels[catId]}</a>`;
+                    contentEl.innerHTML += `<div id="cat-${catId}" class="menu-section"><div class="category-header">${labels[catId]}</div>${sectionContent}</div>`;
+                }
+            }
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
