@@ -150,7 +150,6 @@
             padding-top: 10px;
         }
 
-        /* CHẾ ĐỘ CHỈ XEM (ĐÃ BỎ CURSOR POINTER) */
         .food-item {
             display: flex;
             flex-direction: column; 
@@ -218,7 +217,18 @@
     const db = getDatabase(app);
     let masterMenu = {};
 
-    const foodLabels = { "4mon": "Món phải thử", "7mon": "Món nên trải nghiệm", "metTongHop": "Mẹt tổng hợp nhiều món", "monCanh": "Món Canh", "monChinh": "Món Chính", "monRau": "Món Rau", "monthemmet": "Món Thêm" };
+    // CẬP NHẬT: Thêm "trangmieng": "Tráng Miệng" vào danh sách foodLabels
+    const foodLabels = { 
+        "4mon": "Món phải thử", 
+        "7mon": "Món nên trải nghiệm", 
+        "metTongHop": "Mẹt tổng hợp nhiều món", 
+        "monCanh": "Món Canh", 
+        "monChinh": "Món Chính", 
+        "monRau": "Món Rau", 
+        "monthemmet": "Món Thêm",
+        "trangmieng": "Tráng Miệng" 
+    };
+    
     const drinkLabels = { "coCon": "Đồ Có Cồn", "giaiKhat": "Giải Khát", "kem": "Kem", "nuocEp": "Nước Ép" };
 
     onValue(ref(db, '/'), (snapshot) => {
@@ -246,14 +256,12 @@
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
                     
-                    // LỌC BỎ CÁC MÓN CÓ CHỮ (cay)
                     if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
                         return;
                     }
 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
-                        // ĐÃ LOẠI BỎ SỰ KIỆN CLICK VÀ BADGE SỐ LƯỢNG
                         sectionContent += `
                         <div class="food-item">
                             <img src="${info.imageUrl}" class="food-img" loading="lazy">
