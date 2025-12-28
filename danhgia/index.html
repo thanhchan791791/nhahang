@@ -392,7 +392,17 @@
     const TELEGRAM_TOKEN = "8581857488:AAGFtZdA3NecouzR8YaJsH0eVKEFlGZ2fB0";
     const TELEGRAM_CHAT_ID = "-5038976521";
 
-    const foodLabels = { "4mon": "Món phải thử", "7mon": "Món nên trải nghiệm", "metTongHop": "Mẹt tổng hợp nhiều món", "monCanh": "Món Canh", "monChinh": "Món Chính", "monRau": "Món Rau", "monthemmet": "Món Thêm" };
+    // CẬP NHẬT: Thêm "trangmieng" vào danh sách foodLabels
+    const foodLabels = { 
+        "4mon": "Món phải thử", 
+        "7mon": "Món nên trải nghiệm", 
+        "metTongHop": "Mẹt tổng hợp nhiều món", 
+        "monCanh": "Món Canh", 
+        "monChinh": "Món Chính", 
+        "monRau": "Món Rau", 
+        "monthemmet": "Món Thêm",
+        "trangmieng": "Tráng Miệng" 
+    };
     const drinkLabels = { "coCon": "Đồ Có Cồn", "giaiKhat": "Giải Khát", "kem": "Kem", "nuocEp": "Nước Ép" };
 
     onValue(ref(db, '/'), (snapshot) => {
@@ -420,11 +430,9 @@
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
                     
-                    // --- ĐOẠN SỬA ĐỔI: LỌC BỎ CÁC MÓN CÓ CHỮ (cay) ---
                     if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
-                        return; // Bỏ qua không hiển thị món này
+                        return; 
                     }
-                    // ----------------------------------------------
 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
