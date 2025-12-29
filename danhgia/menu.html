@@ -165,10 +165,12 @@
         .food-img { 
             width: 100%; 
             height: auto; 
-            max-height: 200px; 
-            object-fit: cover; 
+            /* SỬA TẠI ĐÂY: Thay đổi cover thành contain để hiện toàn bộ ảnh */
+            object-fit: contain; 
             border-radius: 15px; 
             margin-bottom: 10px;
+            /* Thêm nền sáng nhẹ để ảnh không bị lạc lõng nếu tỉ lệ không khớp khung */
+            background-color: #f9f9f9;
         }
         
         .food-detail { 
@@ -217,7 +219,6 @@
     const db = getDatabase(app);
     let masterMenu = {};
 
-    // CẬP NHẬT: Thêm "trangmieng": "Tráng Miệng" vào danh sách foodLabels
     const foodLabels = { 
         "4mon": "Món phải thử", 
         "7mon": "Món nên trải nghiệm", 
