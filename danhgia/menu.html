@@ -165,11 +165,9 @@
         .food-img { 
             width: 100%; 
             height: auto; 
-            /* SỬA TẠI ĐÂY: Thay đổi cover thành contain để hiện toàn bộ ảnh */
             object-fit: contain; 
             border-radius: 15px; 
             margin-bottom: 10px;
-            /* Thêm nền sáng nhẹ để ảnh không bị lạc lõng nếu tỉ lệ không khớp khung */
             background-color: #f9f9f9;
         }
         
@@ -219,7 +217,9 @@
     const db = getDatabase(app);
     let masterMenu = {};
 
+    // ĐÃ THÊM 'monmoi' VÀO ĐÂY ĐỂ HIỂN THỊ TRÊN DANH MỤC
     const foodLabels = { 
+        "monmoi": "Món mới",
         "4mon": "Món phải thử", 
         "7mon": "Món nên trải nghiệm", 
         "metTongHop": "Mẹt tổng hợp nhiều món", 
