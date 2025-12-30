@@ -170,9 +170,9 @@
         .food-img { 
             width: 100%; 
             height: auto; 
-            max-height: none; /* Bỏ giới hạn chiều cao để hiện đầy đủ */
-            object-fit: contain; /* Đổi từ cover sang contain để không mất góc */
-            background: #f8f8f8; /* Nền nhẹ nếu ảnh có tỉ lệ khác biệt */
+            max-height: none; 
+            object-fit: contain; 
+            background: #f8f8f8; 
             border-radius: 15px; 
             margin-bottom: 10px;
         }
@@ -197,7 +197,7 @@
             z-index: 10;
         }
 
-        /* --- POPUP CHUNG (MODAL & ALERT) --- */
+        /* --- POPUP CHUNG --- */
         .custom-popup {
             position: fixed; top: 50%; left: 50%; 
             transform: translate(-50%, 100%) scale(0.8);
@@ -212,12 +212,11 @@
         }
         .custom-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
         
-        /* Modal Chi tiết món */
         .modal-img { 
             width: 100%; 
             height: auto; 
             max-height: 300px; 
-            object-fit: contain; /* Đảm bảo ảnh trong popup không bị cắt */
+            object-fit: contain; 
             background: #f8f8f8;
             border-radius: 25px; 
             margin-bottom: 15px; 
@@ -230,7 +229,6 @@
             font-size: 0.9rem; margin-top: 15px; background: #F9F9F9; outline: none;
         }
 
-        /* Alert Thông báo Món Thêm */
         .alert-icon { font-size: 3rem; color: var(--gold-accent); margin-bottom: 15px; }
         .alert-title { font-weight: 900; font-size: 1.2rem; color: var(--primary-color); margin-bottom: 10px; line-height: 1.4; }
 
@@ -401,7 +399,9 @@
     const TELEGRAM_TOKEN = "8581857488:AAGFtZdA3NecouzR8YaJsH0eVKEFlGZ2fB0";
     const TELEGRAM_CHAT_ID = "-5038976521";
 
+    // CẬP NHẬT: Thêm monmoi vào danh sách nhãn món ăn
     const foodLabels = { 
+        "monmoi": "Món mới",
         "4mon": "Món phải thử", 
         "7mon": "Món nên trải nghiệm", 
         "metTongHop": "Mẹt tổng hợp nhiều món", 
@@ -456,7 +456,7 @@
                     }
                 });
                 if (hasValid) {
-                    let bestSellerHtml = (catId === 'metTongHop' || catId === 'nuocEp') ? '<i class="bi bi-star-fill bestseller-icon"></i>' : '';
+                    let bestSellerHtml = (catId === 'metTongHop' || catId === 'nuocEp' || catId === 'monmoi') ? '<i class="bi bi-star-fill bestseller-icon"></i>' : '';
                     sidebarEl.innerHTML += `<a class="nav-link" href="#cat-${catId}">${bestSellerHtml}${labels[catId]}</a>`;
                     contentEl.innerHTML += `<div id="cat-${catId}" class="menu-section"><div class="category-header">${labels[catId]}</div>${sectionContent}</div>`;
                 }
