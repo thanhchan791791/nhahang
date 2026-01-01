@@ -106,7 +106,7 @@
             font-size: 0.75rem;
             font-weight: 600;
             border-radius: 14px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             line-height: 1.2;
             border: 1px solid transparent;
             position: relative;
@@ -135,7 +135,8 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            /* Đã tắt scroll-behavior smooth để xử lý tức thì */
+            scroll-behavior: auto !important;
             padding: 0 15px;
             -webkit-overflow-scrolling: touch;
         }
@@ -215,9 +216,8 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    let masterMenu = {};
+    let scrollSpyInstance = null;
 
-    // ĐÃ THÊM 'monmoi' VÀO ĐÂY ĐỂ HIỂN THỊ TRÊN DANH MỤC
     const foodLabels = { 
         "monmoi": "Món mới",
         "4mon": "Món phải thử", 
@@ -235,7 +235,6 @@
     onValue(ref(db, '/'), (snapshot) => {
         const data = snapshot.val();
         if (!data) return;
-        masterMenu = { ...data.menu.food, ...data.menu.drink };
         renderFullMenu(data.menuGroups, data.menu);
     });
 
@@ -243,11 +242,25 @@
         const sidebar = document.getElementById('category-list');
         const mainMenu = document.getElementById('main-menu');
         sidebar.innerHTML = ''; mainMenu.innerHTML = '';
+        
         sidebar.innerHTML += '<div class="sidebar-group-label">Thực đơn</div>';
         renderCategoryGroup(groups.food, menuData.food, foodLabels, sidebar, mainMenu);
+        
         sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
         renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
-        setTimeout(() => { new bootstrap.ScrollSpy(document.getElementById('main-menu'), { target: '#category-list', offset: 120 }); }, 500);
+        
+        // KHỞI TẠO LẠI SCROLLSPY NGAY LẬP TỨC
+        if (scrollSpyInstance) {
+            scrollSpyInstance.dispose();
+        }
+        
+        // Đảm bảo DOM đã cập nhật xong rồi mới tính toán tọa độ
+        requestAnimationFrame(() => {
+            scrollSpyInstance = new bootstrap.ScrollSpy(mainMenu, {
+                target: '#category-list',
+                offset: 110
+            });
+        });
     }
 
     function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
@@ -256,10 +269,7 @@
                 let sectionContent = ''; let hasValid = false;
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
-                    
-                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
-                        return;
-                    }
+                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) return;
 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
