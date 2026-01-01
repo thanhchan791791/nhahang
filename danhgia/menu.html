@@ -18,6 +18,45 @@
             --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
+        /* HIỆU ỨNG LOADING */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-creme);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(62, 39, 35, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-weight: 600;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
         /* KHÓA CUỘN NGANG TUYỆT ĐỐI */
         html, body {
             height: 100vh;
@@ -135,7 +174,6 @@
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            /* Đã tắt scroll-behavior smooth để xử lý tức thì */
             scroll-behavior: auto !important;
             padding: 0 15px;
             -webkit-overflow-scrolling: touch;
@@ -161,6 +199,14 @@
             box-shadow: 0 6px 15px rgba(62, 39, 35, 0.04);
             position: relative;
             overflow: hidden;
+            /* Hiệu ứng load từ trên xuống cho từng item */
+            animation: slideDown 0.4s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .food-img { 
@@ -187,6 +233,11 @@
     </style>
 </head>
 <body>
+
+<div id="loading-overlay">
+    <div class="loader-spinner"></div>
+    <div class="loading-text">ĐANG TẢI THỰC ĐƠN...</div>
+</div>
 
 <div class="restaurant-header">
     <img src="logobanme.png" alt="Logo" class="restaurant-logo" onerror="this.src='https://via.placeholder.com/100?text=BM'">
@@ -236,7 +287,42 @@
         const data = snapshot.val();
         if (!data) return;
         renderFullMenu(data.menuGroups, data.menu);
+        
+        // Kiểm tra khi tất cả hình ảnh đã tải xong hoặc sau khi render xong DOM
+        const images = document.querySelectorAll('.food-img');
+        let loadedCount = 0;
+        
+        if (images.length === 0) {
+            hideLoading();
+        } else {
+            images.forEach(img => {
+                if (img.complete) {
+                    checkAllImages();
+                } else {
+                    img.addEventListener('load', checkAllImages);
+                    img.addEventListener('error', checkAllImages);
+                }
+            });
+        }
+
+        function checkAllImages() {
+            loadedCount++;
+            if (loadedCount >= images.length) {
+                hideLoading();
+            }
+        }
+
+        // Trường hợp mạng quá chậm, tự tắt loading sau 5 giây để khách xem chữ
+        setTimeout(hideLoading, 5000);
     });
+
+    function hideLoading() {
+        const loader = document.getElementById('loading-overlay');
+        if(loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+        }
+    }
 
     function renderFullMenu(groups, menuData) {
         const sidebar = document.getElementById('category-list');
@@ -249,12 +335,10 @@
         sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
         renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
         
-        // KHỞI TẠO LẠI SCROLLSPY NGAY LẬP TỨC
         if (scrollSpyInstance) {
             scrollSpyInstance.dispose();
         }
         
-        // Đảm bảo DOM đã cập nhật xong rồi mới tính toán tọa độ
         requestAnimationFrame(() => {
             scrollSpyInstance = new bootstrap.ScrollSpy(mainMenu, {
                 target: '#category-list',
@@ -267,20 +351,23 @@
         Object.keys(labels).forEach(catId => {
             if (groups && groups[catId]) {
                 let sectionContent = ''; let hasValid = false;
+                let delay = 0;
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
                     if (info && info.name && info.name.toLowerCase().includes("(cay)")) return;
 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
+                        // Thêm animation-delay để tạo hiệu ứng rơi từng món từ trên xuống
                         sectionContent += `
-                        <div class="food-item">
+                        <div class="food-item" style="animation-delay: ${delay}s">
                             <img src="${info.imageUrl}" class="food-img" loading="lazy">
                             <div class="food-detail">
                                 <div class="food-name">${info.name}</div>
                                 <div class="food-price">${info.price.toLocaleString()}đ</div>
                             </div>
                         </div>`;
+                        delay += 0.05; 
                     }
                 });
                 if (hasValid) {
