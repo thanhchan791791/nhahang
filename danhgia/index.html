@@ -19,6 +19,60 @@
             --safe-area-bottom: env(safe-area-inset-bottom);
         }
 
+        /* HIỆU ỨNG LOADING BAN ĐẦU */
+        #loading-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-creme);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.6s ease-out, visibility 0.6s;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #E0E0E0;
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* HIỆU ỨNG LOAD TỪ TRÊN XUỐNG CHO ITEM */
+        .food-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* KHÓA CUỘN NGANG TUYỆT ĐỐI */
         html, body {
             height: 100vh;
@@ -169,7 +223,7 @@
 
         .food-img { 
             width: 100%; 
-            aspect-ratio: 1 / 1; /* GIỮ KHUNG ẢNH ĐỂ KHÔNG BỊ NHẢY CHIỀU CAO KHI LOAD */
+            aspect-ratio: 1 / 1; 
             object-fit: contain; 
             background: #f8f8f8; 
             border-radius: 15px; 
@@ -288,6 +342,11 @@
     </style>
 </head>
 <body>
+
+<div id="loading-screen">
+    <div class="loader-spinner"></div>
+    <div class="loading-text">ẨM THỰC BUÔN MÊ ĐANG TẢI...</div>
+</div>
 
 <div class="restaurant-header">
     <img src="logobanme.png" alt="Logo" class="restaurant-logo" onerror="this.src='https://via.placeholder.com/100?text=BM'">
@@ -416,7 +475,19 @@
         if (!data) return;
         masterMenu = { ...data.menu.food, ...data.menu.drink };
         renderFullMenu(data.menuGroups, data.menu);
+        
+        // KHI DỮ LIỆU TỪ FIREBASE ĐÃ LOAD XONG, ẨN LOADING
+        hideLoading();
     });
+
+    function hideLoading() {
+        const loader = document.getElementById('loading-screen');
+        if(loader) {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+            setTimeout(() => loader.remove(), 600);
+        }
+    }
 
     function renderFullMenu(groups, menuData) {
         const sidebar = document.getElementById('category-list');
@@ -427,17 +498,15 @@
         sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
         renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
         
-        // Khởi tạo ScrollSpy sau khi render
         setTimeout(() => { 
             new bootstrap.ScrollSpy(document.getElementById('main-menu'), { 
                 target: '#category-list', 
                 offset: 120 
             }); 
-            setupSmoothScroll(); // Gọi hàm xử lý cuộn triệt để
+            setupSmoothScroll();
         }, 500);
     }
 
-    // HÀM XỬ LÝ CUỘN TRIỆT ĐỂ
     function setupSmoothScroll() {
         const links = document.querySelectorAll('.nav-link');
         const container = document.getElementById('main-menu');
@@ -449,7 +518,7 @@
                 const targetEl = document.getElementById(targetId);
                 
                 if (targetEl) {
-                    const offsetTop = targetEl.offsetTop - 10; // Trừ đi khoảng cách padding/header
+                    const offsetTop = targetEl.offsetTop - 10;
                     container.scrollTo({
                         top: offsetTop,
                         behavior: 'smooth'
@@ -460,6 +529,7 @@
     }
 
     function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
+        let globalIndex = 0; // Dùng để tạo hiệu ứng delay so le
         Object.keys(labels).forEach(catId => {
             if (groups && groups[catId]) {
                 let sectionContent = ''; let hasValid = false;
@@ -468,8 +538,9 @@
                     if (info && info.name && info.name.toLowerCase().includes("(cay)")) return; 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
+                        globalIndex++;
                         sectionContent += `
-                        <div class="food-item" onclick="openItemModal(event, '${itemId}', '${catId}')">
+                        <div class="food-item" style="animation-delay: ${globalIndex * 0.05}s" onclick="openItemModal(event, '${itemId}', '${catId}')">
                             <div class="item-badge" id="badge-${itemId}">0</div>
                             <img src="${info.imageUrl}" class="food-img" loading="lazy">
                             <div class="food-detail">
