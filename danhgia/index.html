@@ -169,8 +169,7 @@
 
         .food-img { 
             width: 100%; 
-            height: auto; 
-            max-height: none; 
+            aspect-ratio: 1 / 1; /* GIỮ KHUNG ẢNH ĐỂ KHÔNG BỊ NHẢY CHIỀU CAO KHI LOAD */
             object-fit: contain; 
             background: #f8f8f8; 
             border-radius: 15px; 
@@ -399,7 +398,6 @@
     const TELEGRAM_TOKEN = "8581857488:AAGFtZdA3NecouzR8YaJsH0eVKEFlGZ2fB0";
     const TELEGRAM_CHAT_ID = "-5038976521";
 
-    // CẬP NHẬT: Thêm monmoi vào danh sách nhãn món ăn
     const foodLabels = { 
         "monmoi": "Món mới",
         "4mon": "Món phải thử", 
@@ -428,7 +426,37 @@
         renderCategoryGroup(groups.food, menuData.food, foodLabels, sidebar, mainMenu);
         sidebar.innerHTML += '<div class="sidebar-group-label">Thức uống</div>';
         renderCategoryGroup(groups.drink, menuData.drink, drinkLabels, sidebar, mainMenu);
-        setTimeout(() => { new bootstrap.ScrollSpy(document.getElementById('main-menu'), { target: '#category-list', offset: 120 }); }, 500);
+        
+        // Khởi tạo ScrollSpy sau khi render
+        setTimeout(() => { 
+            new bootstrap.ScrollSpy(document.getElementById('main-menu'), { 
+                target: '#category-list', 
+                offset: 120 
+            }); 
+            setupSmoothScroll(); // Gọi hàm xử lý cuộn triệt để
+        }, 500);
+    }
+
+    // HÀM XỬ LÝ CUỘN TRIỆT ĐỂ
+    function setupSmoothScroll() {
+        const links = document.querySelectorAll('.nav-link');
+        const container = document.getElementById('main-menu');
+        
+        links.forEach(link => {
+            link.onclick = (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetEl = document.getElementById(targetId);
+                
+                if (targetEl) {
+                    const offsetTop = targetEl.offsetTop - 10; // Trừ đi khoảng cách padding/header
+                    container.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+        });
     }
 
     function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
@@ -437,11 +465,7 @@
                 let sectionContent = ''; let hasValid = false;
                 Object.keys(groups[catId]).forEach(itemId => {
                     const info = details[itemId];
-                    
-                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) {
-                        return; 
-                    }
-
+                    if (info && info.name && info.name.toLowerCase().includes("(cay)")) return; 
                     if (info && info.imageUrl && info.imageUrl.trim() !== "" && info.status !== "sold-out") {
                         hasValid = true;
                         sectionContent += `
@@ -467,7 +491,6 @@
     window.openItemModal = (e, id, categoryId) => {
         const item = masterMenu[id];
         currentModalItem = { id, ...item, qty: 1, clickEvent: e };
-
         if (categoryId === 'monthemmet') {
             document.getElementById('monThemAlert').classList.add('show');
             document.getElementById('overlay').style.display = 'block';
