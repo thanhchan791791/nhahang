@@ -262,6 +262,8 @@
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: 0 25px 60px rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.4);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .custom-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
         
@@ -277,6 +279,29 @@
         .modal-name { font-weight: 900; font-size: 1.4rem; color: var(--primary-color); margin-bottom: 5px; }
         .modal-price { color: var(--gold-accent); font-weight: 800; font-size: 1.2rem; margin-bottom: 15px; }
         
+        /* CHÚ THÍCH MÓN TRONG MẸT */
+        .met-details {
+            background: rgba(198, 156, 109, 0.1);
+            border-radius: 15px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--gold-accent);
+        }
+        .met-details-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+        .met-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
         .note-input {
             width: 100%; border: 1px solid #EEE; border-radius: 15px; padding: 12px;
             font-size: 0.9rem; margin-top: 15px; background: #F9F9F9; outline: none;
@@ -377,6 +402,11 @@
     <div id="modal-name" class="modal-name"></div>
     <div id="modal-price" class="modal-price"></div>
     
+    <div id="modal-met-details" class="met-details" style="display: none;">
+        <div class="met-details-title">Bao gồm các món:</div>
+        <ul id="met-list-ui" class="met-list"></ul>
+    </div>
+    
     <div class="d-flex justify-content-between align-items-center">
         <span style="font-weight: 600;">Số lượng:</span>
         <div class="quantity-control">
@@ -442,6 +472,27 @@
     let lastTotalCount = 0;
     let currentModalItem = null;
 
+    // Dữ liệu thành phần các Mẹt
+    const metData = {
+        "met5": [
+            "Canh theo ngày",
+            "Mít/măng/ cà đắng xào/bạc hà xào",
+            "Cá khô sóc muối",
+            "Đu đủ đâm",
+            "Heo nướng"
+        ],
+        "met7": [
+            "Canh theo ngày",
+            "Mít/măng/ cà đắng xào thịt",
+            "Đọt su/rau bí/ bạc hà/ đậu rồng xào",
+            "Cá khô sóc muối",
+            "Đu đủ đâm",
+            "Heo nướng",
+            "Gà xào xả ớt",
+            "Lá mì xào"
+        ]
+    };
+
     function getTableFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         let table = urlParams.get('table');
@@ -475,8 +526,6 @@
         if (!data) return;
         masterMenu = { ...data.menu.food, ...data.menu.drink };
         renderFullMenu(data.menuGroups, data.menu);
-        
-        // KHI DỮ LIỆU TỪ FIREBASE ĐÃ LOAD XONG, ẨN LOADING
         hideLoading();
     });
 
@@ -529,7 +578,7 @@
     }
 
     function renderCategoryGroup(groups, details, labels, sidebarEl, contentEl) {
-        let globalIndex = 0; // Dùng để tạo hiệu ứng delay so le
+        let globalIndex = 0;
         Object.keys(labels).forEach(catId => {
             if (groups && groups[catId]) {
                 let sectionContent = ''; let hasValid = false;
@@ -581,6 +630,27 @@
         document.getElementById('modal-price').innerText = item.price.toLocaleString() + 'đ';
         document.getElementById('modal-qty').innerText = '1';
         document.getElementById('modal-note').value = '';
+
+        // Xử lý hiển thị danh sách món trong mẹt
+        const metDetailsBox = document.getElementById('modal-met-details');
+        const metListUI = document.getElementById('met-list-ui');
+        metDetailsBox.style.display = 'none';
+        metListUI.innerHTML = '';
+
+        const nameLower = item.name.toLowerCase();
+        let selectedMet = null;
+        if (nameLower.includes("mẹt 5 món")) selectedMet = metData.met5;
+        else if (nameLower.includes("mẹt 7 món")) selectedMet = metData.met7;
+
+        if (selectedMet) {
+            metDetailsBox.style.display = 'block';
+            selectedMet.forEach(m => {
+                const li = document.createElement('li');
+                li.innerText = m;
+                metListUI.appendChild(li);
+            });
+        }
+
         document.getElementById('itemModal').classList.add('show');
         document.getElementById('overlay').style.display = 'block';
 
