@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -511,6 +510,18 @@
             "Heo nướng",
             "Gà xào xả ớt",
             "Lá mì xào"
+        ],
+        "met10": [
+            "Canh theo ngày",
+            "Mít/măng/ cà đắng xào thịt",
+            "Đọt su/rau bí/ bạc hà/ đậu rồng xào",
+            "Đu đủ đâm",
+            "Heo nướng",
+            "Gà xào xả ớt",
+            "Lá mì xào",
+            "Cà giã",
+            "Cá khô sóc muối",
+            "Cá nướng giã muối ớt"
         ]
     };
 
@@ -661,6 +672,7 @@
         let selectedMet = null;
         if (nameLower.includes("mẹt 5 món")) selectedMet = metData.met5;
         else if (nameLower.includes("mẹt 7 món")) selectedMet = metData.met7;
+        else if (nameLower.includes("mẹt 10 món")) selectedMet = metData.met10;
 
         if (selectedMet) {
             metDetailsBox.style.display = 'block';
