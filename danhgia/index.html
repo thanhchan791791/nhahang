@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -257,20 +258,36 @@
             width: 90%; max-width: 400px; 
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border-radius: 35px; z-index: 3000; padding: 25px; 
+            border-radius: 35px; z-index: 3000;
             opacity: 0; pointer-events: none;
             transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             box-shadow: 0 25px 60px rgba(0,0,0,0.2);
             border: 1px solid rgba(255,255,255,0.4);
-            max-height: 90vh;
-            overflow-y: auto;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         .custom-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+        
+        /* Cấu trúc Modal mới để cố định nút */
+        .modal-body-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 25px 10px 25px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-footer-fixed {
+            padding: 10px 25px 25px 25px;
+            background: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
         
         .modal-img { 
             width: 100%; 
             height: auto; 
-            max-height: 300px; 
+            max-height: 250px; 
             object-fit: contain; 
             background: #f8f8f8;
             border-radius: 25px; 
@@ -385,7 +402,7 @@
     <div class="menu-content" id="main-menu" data-bs-spy="scroll" data-bs-target="#category-list" data-bs-offset="100" tabindex="0"></div>
 </div>
 
-<div class="custom-popup" id="monThemAlert">
+<div class="custom-popup" id="monThemAlert" style="padding: 25px;">
     <div class="text-center">
         <div class="alert-icon"><i class="bi bi-info-circle-fill"></i></div>
         <div class="alert-title">Lưu ý: Các món này chỉ gọi thêm khi bạn đã đặt 'Mẹt tổng hợp nhiều món'.</div>
@@ -398,29 +415,33 @@
 </div>
 
 <div class="custom-popup" id="itemModal">
-    <img id="modal-img" class="modal-img" src="">
-    <div id="modal-name" class="modal-name"></div>
-    <div id="modal-price" class="modal-price"></div>
-    
-    <div id="modal-met-details" class="met-details" style="display: none;">
-        <div class="met-details-title">Bao gồm các món:</div>
-        <ul id="met-list-ui" class="met-list"></ul>
-    </div>
-    
-    <div class="d-flex justify-content-between align-items-center">
-        <span style="font-weight: 600;">Số lượng:</span>
-        <div class="quantity-control">
-            <button class="btn-circle" onclick="changeModalQty(-1)">−</button>
-            <span id="modal-qty" style="font-weight: 800; font-size: 1.1rem;">1</span>
-            <button class="btn-circle" style="background:var(--primary-color); color:white" onclick="changeModalQty(1)">+</button>
+    <div class="modal-body-scroll">
+        <img id="modal-img" class="modal-img" src="">
+        <div id="modal-name" class="modal-name"></div>
+        <div id="modal-price" class="modal-price"></div>
+        
+        <div id="modal-met-details" class="met-details" style="display: none;">
+            <div class="met-details-title">Bao gồm các món:</div>
+            <ul id="met-list-ui" class="met-list"></ul>
         </div>
+        
+        <div class="d-flex justify-content-between align-items-center">
+            <span style="font-weight: 600;">Số lượng:</span>
+            <div class="quantity-control">
+                <button class="btn-circle" onclick="changeModalQty(-1)">−</button>
+                <span id="modal-qty" style="font-weight: 800; font-size: 1.1rem;">1</span>
+                <button class="btn-circle" style="background:var(--primary-color); color:white" onclick="changeModalQty(1)">+</button>
+            </div>
+        </div>
+        
+        <textarea id="modal-note" class="note-input" placeholder="Ghi chú thêm (VD: Không hành, cay vừa...)"></textarea>
     </div>
     
-    <textarea id="modal-note" class="note-input" placeholder="Ghi chú thêm (VD: Không hành, cay vừa...)"></textarea>
-    
-    <div class="d-flex gap-2 mt-4">
-        <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1; margin-top:0;" onclick="closeModal()">Đóng</button>
-        <button class="btn-confirm-order" style="flex: 2; margin-top:0;" id="btn-add-to-cart">Thêm vào giỏ</button>
+    <div class="modal-footer-fixed">
+        <div class="d-flex gap-2">
+            <button class="btn-confirm-order" style="background: #EEE; color: #333; flex: 1; margin-top:0;" onclick="closeModal()">Đóng</button>
+            <button class="btn-confirm-order" style="flex: 2; margin-top:0;" id="btn-add-to-cart">Thêm vào giỏ</button>
+        </div>
     </div>
 </div>
 
@@ -631,7 +652,6 @@
         document.getElementById('modal-qty').innerText = '1';
         document.getElementById('modal-note').value = '';
 
-        // Xử lý hiển thị danh sách món trong mẹt
         const metDetailsBox = document.getElementById('modal-met-details');
         const metListUI = document.getElementById('met-list-ui');
         metDetailsBox.style.display = 'none';
