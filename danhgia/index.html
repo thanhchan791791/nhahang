@@ -492,38 +492,37 @@
     let lastTotalCount = 0;
     let currentModalItem = null;
 
-    // Dữ liệu thành phần các Mẹt
-    const metData = {
-        "met5": [
-            "Canh theo ngày",
-            "Mít/măng/ cà đắng xào/bạc hà xào",
-            "Cá khô sóc muối",
-            "Đu đủ đâm",
-            "Heo nướng"
-        ],
-        "met7": [
-            "Canh theo ngày",
-            "Mít/măng/ cà đắng xào thịt",
-            "Đọt su/rau bí/ bạc hà/ đậu rồng xào",
-           
-            "Đu đủ đâm",
-            "Heo nướng",
-            "Gà xào xả ớt",
-            "Lá mì xào"
-        ],
-        "met10": [
-            "Canh theo ngày",
-            "Mít/măng/ cà đắng xào thịt",
-            "Đọt su/rau bí/ bạc hà/ đậu rồng xào",
-            "Đu đủ đâm",
-            "Heo nướng",
-            "Gà xào xả ớt",
-            "Lá mì xào",
-            "Cà giã",
-            "Cá khô sóc muối",
-            "Cá nướng giã muối ớt"
-        ]
-    };
+   // Dữ liệu thành phần các Mẹt đã được cập nhật
+const metData = {
+    "met5": [
+        "Heo quay",
+        "Măng xào",
+        "Đọt su xào",
+        "Cá khô sóc muối",
+        "Canh theo ngày"
+    ],
+    "met7": [
+        "Heo quay",
+        "Măng xào",
+        "Cá khô sóc muối",
+        "Đọt su xào",
+        "Mít xào",
+        "Ốc bươu xào / Gà xào sả ớt",
+        "Canh theo ngày"
+    ],
+    "met10": [
+        "Heo quay",
+        "Măng xào cá hấp",
+        "Cá khô sóc muối",
+        "Cá nướng giã muối ớt",
+        "Bạc hà xào",
+        "Gà xào sả ớt",
+        "Cà đắng xào ba chỉ",
+        "Ốc bươu xào",
+        "Mít non xào / Đọt su xào",
+        "Canh theo ngày"
+    ]
+};
 
     function getTableFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
