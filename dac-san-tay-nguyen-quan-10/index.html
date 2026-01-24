@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên</title>
+
+  <meta name="description" content="Ẩm Thực Buôn Mê - Nơi hội tụ tinh hoa ẩm thực Buôn Ma Thuột. Thưởng thức đặc sản Tây Nguyên, món ngon dân dã, không gian đậm chất núi rừng.">
+  <meta name="keywords" content="ẩm thực Buôn Mê, Buôn Ma Thuột, đặc sản Tây Nguyên, món ngon Buôn Mê, nhà hàng Buôn Ma Thuột, đặc sản Buôn Ma Thuột, amthucbuonme.vn">
+  <meta name="language" content="vi">
+  <meta name="author" content="Ẩm Thực Buôn Mê">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-v2.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-v2.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-v2.png">
+  <link rel="shortcut icon" href="/favicon-v2.png" type="image/png">
+  <link rel="apple-touch-icon" href="/favicon-v2.png">
+  <meta name="theme-color" content="#1f1f1f">
+
+  <meta property="og:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
+  <meta property="og:description" content="Khám phá hương vị ẩm thực Tây Nguyên tại Ẩm Thực Buôn Mê. Món ngon Buôn Ma Thuột, không gian dân dã và đậm chất văn hoá.">
+  <meta property="og:image" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+  <meta property="og:image:secure_url" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://amthucbuonme.vn">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ẩm Thực Buôn Mê - Đặc sản Buôn Ma Thuột, Hương vị Tây Nguyên">
+  <meta name="twitter:description" content="Thưởng thức đặc sản Buôn Ma Thuột và ẩm thực Tây Nguyên tại Ẩm Thực Buôn Mê.">
+  <meta name="twitter:image" content="https://amthucbuonme.vn/assets/img/logobanme.png">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <link href="../assets/css/main.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --color-primary-gold: #E0C097;
+      --color-background-dark: #1f1f1f;
+      --font-serif: 'Playfair Display', 'Source Serif Pro', Georgia, serif;
+    }
+
+    /* FIX: Thêm padding-top cho main để nội dung không bị fixed header che mất */
+    .index-page .main {
+        padding-top: 120px; 
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .form-status-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1050;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .form-status-overlay.show {
+      display: flex;
+      opacity: 1;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .form-status-box {
+      background: var(--color-background-dark);
+      color: #fff;
+      padding: 40px;
+      border-radius: 5px;
+      max-width: 90%;
+      min-width: 350px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(224, 192, 151, 0.2);
+      transform: translateY(-20px);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+      opacity: 0;
+      font-family: var(--font-serif);
+    }
+
+    .form-status-overlay.show .form-status-box {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .form-status-box h4 {
+      margin-bottom: 20px;
+      font-weight: 500;
+      font-size: 1.6rem;
+      color: var(--color-primary-gold);
+    }
+
+    .form-status-box p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .form-status-box .bi {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .status-loading .loading-spinner {
+      font-size: 4rem;
+      color: var(--color-primary-gold);
+      animation: spin 1.5s linear infinite;
+      display: inline-block;
+    }
+    .status-error h4 { color: #ff6b6b; }
+    .status-sent h4 { color: #90ee90; }
+
+    .modal-close-btn {
+      background: var(--color-primary-gold);
+      color: var(--color-background-dark);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 3px;
+      font-weight: 700;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Roboto', sans-serif;
+    }
+    .modal-close-btn:hover {
+      background: #fff;
+    }
+
+    .booking-card .loading,
+    .booking-card .error-message,
+    .booking-card .sent-message,
+    .contact-form-wrapper .loading,
+    .contact-form-wrapper .error-message,
+    .contact-form-wrapper .sent-message {
+      display: none !important;
+    }
+
+    .booking-card select.form-control,
+    .booking-card select.form-control option {
+      color: #333 !important;
+      background-color: #fff !important;
+    }
+    
+    .seo-list li {
+        margin-bottom: 8px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+  </style>
+</head>
+
+
+<body class="index-page">
+
+  <header id="header" class="header fixed-top">
+
+    <div class="topbar d-flex align-items-center dark-background">
+      <div class="container d-flex justify-content-center justify-content-md-between">
+        <div class="contact-info d-flex align-items-center">
+          <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">Cherrypetcoffee@gmail.com</a></i>
+          <i class="bi bi-phone d-flex align-items-center ms-4"><span>0906 999 207</span></i>
+        </div>
+        <div class="social-links d-none d-md-flex align-items-center">
+          <a href="https://www.facebook.com/share/1BesLSUvWm/?mibextid=wwXIfr" class="facebook"><i class="bi bi-facebook"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="branding d-flex align-items-center"> 
+
+      <div class="container position-relative d-flex align-items-center justify-content-between">
+        <a href="../index.html" class="logo d-flex align-items-center">
+          <h1 class="sitename">Ẩm thực Buôn mê</h1>
+        </a>
+
+      <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="https://amthucbuonme.vn/" class="active">Trang chủ</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+
+    </div>
+
+  </header>
+
+<main class="main">
+ <section id="buon-me-seo-extreme-2500" class="seo-content py-5" style="background-color: #fdfaf5; font-family: 'Segoe UI', Roboto, sans-serif;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-xl-11">
+                
+                <h1 class="text-center mb-5 display-4 fw-bold" style="color: #6a3418; font-family: 'Playfair Display', serif; line-height: 1.2;">
+                    Top món đặc sản Tây Nguyên bán chạy nhất tại quán Ẩm Thực Buôn Mê quận 10
+                </h1>
+
+                <div class="text-center mb-5">
+                    <img src="ganuongongtre.webp" class="img-fluid rounded shadow-lg" alt="Đặc sản Tây Nguyên gà nướng ống tre và cơm lam tại Ẩm Thực Buôn Mê quận 10" title="Đặc sản Tây Nguyên bán chạy nhất" style="max-height: 550px; object-fit: cover; width: 100%;">
+                    <p class="fst-italic text-muted mt-2"><small>Hành trình khám phá tinh hoa ẩm thực Buôn Mê - Từ rừng già đến bàn tiệc giữa lòng Quận 10</small></p>
+                </div>
+
+                <div class="content-body shadow-sm p-4 p-md-5 bg-white rounded" style="color: #333; line-height: 2.1; font-size: 1.15rem;">
+                    
+                    <p class="lead mb-4 text-justify" style="font-size: 1.25rem; color: #444;">
+                        Giữa nhịp sống hối hả và có phần ồn ã của Sài Gòn, đặc biệt là tại khu vực sầm uất như Quận 10, người ta đôi khi lại khao khát tìm về những giá trị mộc mạc, nguyên sơ. Không chỉ là ăn để no, mà là ăn để cảm, để chạm vào những ký ức của vùng đất đỏ Bazan nắng gió. <strong>Ẩm Thực Buôn Mê quận 10</strong> không đơn thuần là một nhà hàng, nơi đây giống như một "trạm dừng chân" văn hóa dành cho những tâm hồn trót yêu hương vị núi rừng. 
+                    </p>
+                    <p class="text-justify mb-4">
+                        Tại sao <strong>đặc sản Tây Nguyên</strong> lại có sức hút mãnh liệt đến vậy giữa một "rừng" các món ăn ngoại nhập? Đó chính là sự kết hợp giữa kỹ thuật chế biến thô mộc và những loại gia vị độc bản mà thiên nhiên ban tặng. Bài viết này sẽ đưa bạn đi sâu vào thế giới ẩm thực tại <strong>nhà hàng Buôn Mê</strong>, khám phá lý do vì sao thực khách sẵn sàng xếp hàng để thưởng thức những món ăn "cháy hàng" nhất tại đây.
+                    </p>
+
+                    <hr class="my-5" style="border-top: 2px solid #D2B48C; opacity: 0.5;">
+
+                    <h2 class="mb-4 fw-bold" style="color: #4CAF50; border-left: 5px solid #4CAF50; padding-left: 15px;">
+                        Vì sao đặc sản Tây Nguyên được thực khách Sài Gòn đặc biệt ưu ái?
+                    </h2>
+                    <p class="text-justify">
+                        Sài Gòn không thiếu quán ăn, nhưng tìm được một <strong>quán ăn Tây Nguyên Sài Gòn</strong> giữ được cái "chất" hoang dã thì chỉ đếm trên đầu ngón tay. Điều đầu tiên chinh phục thực khách chính là <strong>hương vị mộc mạc – đậm đà</strong>. Những món ăn như gà nướng, cơm lam hay thịt nướng đều được chế biến bằng than củi, giữ trọn mùi khói bếp đặc trưng – thứ mùi vị mà bếp gas hay lò nướng điện hiện đại không bao giờ sao chép được.
+                    </p>
+                    <p class="text-justify">
+                        Kế đến là hệ thống gia vị "thần thánh". Bạn sẽ bắt gặp hạt dổi – loại "vàng đen" của rừng già, hay hạt mắc khén với vị tê nhẹ nơi đầu lưỡi. Sự kết hợp giữa vị cay nồng của ớt xiêm rừng và mùi thơm thoát tục của lá é trắng tạo nên một bản giao hưởng vị giác hoàn hảo. Đặc biệt, phong cách thưởng thức tại <strong>quán ăn đặc sản quận 10</strong> này rất <strong>phù hợp ăn gia đình – nhóm bạn</strong>. Cảm giác cả nhà cùng quây quần, xé từng miếng gà nóng hổi, bẻ từng ống cơm lam thơm phức giúp tình thân thêm gắn kết giữa phố thị chật chội.
+                    </p>
+
+                    <h2 class="mt-5 mb-4 fw-bold" style="color: #4CAF50; border-left: 5px solid #4CAF50; padding-left: 15px;">
+                        Hành trình khám phá Top món đặc sản Tây Nguyên bán chạy nhất
+                    </h2>
+
+                    <h3 class="mt-4 fw-bold" style="color: #FF8C00;">1. Gà nướng ống tre Buôn Mê – Tuyệt tác từ lửa và tre tươi</h3>
+                    <p class="text-justify">
+                        Nếu có một món ăn đại diện cho linh hồn của <strong>ẩm thực Buôn Mê quận 10</strong>, đó chắc chắn phải là <strong>gà nướng ống tre Buôn Mê</strong>. Để có một món gà đạt chuẩn, quy trình tuyển chọn nguyên liệu cực kỳ khắt khe. Gà phải là giống gà ta thả vườn Đắk Lắk, trọng lượng vừa phải khoảng 1.2kg - 1.4kg. Giống gà này thường xuyên chạy nhảy trên đồi nên thịt cực kỳ săn chắc, da mỏng, ít mỡ và vị ngọt tự nhiên sâu sắc.
+                    </p>
+                    <p class="text-justify">
+                        <strong>Kỹ thuật nướng "sa lửa":</strong> Gà sau khi thấm đẫm hỗn hợp gia vị bí truyền gồm hạt dổi, sả thơm và mật ong rừng sẽ được cuộn khéo léo vào lòng ống tre bánh tẻ. Ống tre phải là tre tươi để khi nướng, lớp màng tre tiết ra nhựa thơm bao lấy thịt gà. Quá trình nướng than kéo dài gần 1 tiếng đồng hồ, người đầu bếp phải xoay ống tre liên tục để hơi nóng len lỏi làm chín gà từ bên trong. Kết quả là miếng thịt gà khi đưa ra khỏi ống vẫn còn mọng nước, thơm mùi tre mới và mang một màu vàng hổ phách bắt mắt. Đây là món "signature" mà bất kỳ ai khi ghé <strong>nhà hàng quận 10</strong> này cũng phải gọi đầu tiên.
+                    </p>
+
+                    <h3 class="mt-5 fw-bold" style="color: #FF8C00;">2. Cơm lam Tây Nguyên – Hương nếp nương trong lòng nứa</h3>
+                    <p class="text-justify">
+                        Đồng hành cùng gà nướng luôn là <strong>cơm lam Tây Nguyên</strong>. Không phải loại gạo nào cũng nấu được cơm lam ngon. Ẩm Thực Buôn Mê sử dụng loại nếp nương hạt tròn, trắng trong như sữa. Gạo được ngâm qua đêm bằng nước suối thanh mát (hoặc nước tinh khiết tại quán) rồi mới cho vào ống nứa tươi, nút chặt bằng lá chuối rừng.
+                    </p>
+                    <p class="text-justify">
+                        Khi thưởng thức, bạn sẽ cảm nhận được độ dẻo quánh của hạt nếp, vị ngọt của nhựa tre quyện cùng mùi thơm đặc trưng của lớp vỏ nứa cháy sém. Cách ăn đúng vị nhất là bẻ từng khúc cơm lam, chấm nhẹ vào chén muối sả lá é. Vị mặn, vị cay, vị bùi và vị dẻo hòa quyện, tạo nên một cảm giác dân dã nhưng vô cùng tinh tế. Cơm lam không chỉ là món ăn, nó còn là biểu tượng cho sự khéo léo và trân trọng hạt ngọc trời của người đồng bào vùng cao.
+                    </p>
+
+                    <h3 class="mt-5 fw-bold" style="color: #FF8C00;">3. Bò một nắng muối kiến vàng – Đặc sản Ê Đê gây thương nhớ</h3>
+                    <p class="text-justify">
+                        Nhiều thực khách thường hỏi: <strong>"Món Ê Đê có gì đặc biệt?"</strong>. Câu trả lời thuyết phục nhất chính là bò một nắng muối kiến vàng. Thịt bò phải chọn phần đùi hoặc thăn tươi nhất, lạng bỏ hết gân rồi tẩm ướp gia vị mạnh trước khi đem phơi dưới cái nắng gay gắt của vùng cao. Quá trình phơi chỉ vừa đủ để thịt se lại bên ngoài nhưng bên trong vẫn giữ được độ hồng hào và ngọt lịm.
+                    </p>
+                    <p class="text-justify">
+                        Điểm nhấn "chết người" của món này chính là chén muối kiến vàng. Kiến vàng được bắt từ trên cây rừng, đem rang chín rồi giã cùng muối hột, ớt xiêm và một số loại lá rừng. Vị chua thanh tự nhiên từ bụng kiến quyện với vị béo ngậy và cay nồng tạo nên một loại nước chấm độc nhất vô nhị. Xé một miếng bò nướng sơ, chấm đẫm vào muối kiến, bạn sẽ thấy cả một bầu trời Tây Nguyên hiện hữu ngay tại <strong>ăn uống quận 10</strong>.
+                    </p>
+
+                    <h3 class="mt-5 fw-bold" style="color: #FF8C00;">4. Heo rừng lai nướng ống tre & Rau rừng Gia Lai</h3>
+                    <p class="text-justify">
+                        Không thể bỏ qua món heo rừng lai – món ăn "khoái khẩu" cho những buổi lai rai cùng bạn bè. Thịt heo rừng lai có đặc điểm bì dày nhưng giòn, mỡ ít và rất thơm. Tại quán, heo được thái miếng vừa ăn, ướp riềng sả nồng nàn rồi nướng trong ống tre. Khi chín, miếng thịt cháy cạnh thơm lừng, bì giòn sần sật cực kỳ bắt miệng.
+                    </p>
+                    <p class="text-justify">
+                        Để cân bằng vị giác, <strong>rau rừng & món ăn kèm đặc trưng</strong> đóng vai trò vô cùng quan trọng. Những loại rau như rau lủi, rau dớn hay lá nhíp được vận chuyển trực tiếp từ vùng cao xuống. Rau chỉ cần xào sơ với tỏi để giữ trọn độ giòn và vị ngọt thanh đặc trưng. Đây là những món ăn cực kỳ tốt cho sức khỏe, giàu chất xơ và mang lại cảm giác nhẹ bụng sau khi thưởng thức các món nướng nhiều đạm.
+                    </p>
+
+                    <hr class="my-5" style="border-top: 2px solid #D2B48C; opacity: 0.5;">
+
+                    <h2 class="mb-4 fw-bold" style="color: #4CAF50; border-left: 5px solid #4CAF50; padding-left: 15px;">
+                        Đi ăn gia đình tại quận 10 nên gọi món gì cho phù hợp?
+                    </h2>
+                    <p class="text-justify">
+                        Khi tìm kiếm <strong>đi ăn gia đình quận 10 nên chọn quán nào</strong>, yếu tố thực đơn đa dạng cho mọi lứa tuổi luôn được đặt lên hàng đầu. Tại Ẩm Thực Buôn Mê, thực đơn được thiết kế rất tâm lý:
+                    </p>
+                    <ul class="mb-4">
+                        <li class="mb-2"><strong>Trẻ nhỏ:</strong> Thường rất hào hứng với <strong>cơm lam Tây Nguyên</strong> và thịt gà nướng mật ong vì vị ngọt dịu, dễ ăn và cách bày trí lạ mắt.</li>
+                        <li class="mb-2"><strong>Người lớn tuổi:</strong> Các món rau rừng luộc chấm kho quẹt hay cá lăng nướng muối ớt (giàu omega-3, thịt mềm) là lựa chọn tuyệt vời, vừa dễ tiêu hóa vừa đậm đà.</li>
+                        <li class="mb-2"><strong>Thanh niên:</strong> Các món nướng cay nồng và bò một nắng muối kiến vàng luôn là tiêu điểm cho những câu chuyện rôm rả.</li>
+                    </ul>
+                    <p class="text-justify">
+                        Đặc biệt, không gian tại đây được bố trí thoáng đãng, có hệ thống phòng VIP riêng tư giúp các gia đình có không gian trò chuyện thoải mái mà không sợ bị làm phiền bởi tiếng ồn xung quanh.
+                    </p>
+
+                    <h2 class="mt-5 mb-4 fw-bold" style="color: #4CAF50; border-left: 5px solid #4CAF50; padding-left: 15px;">
+                        Giá món đặc sản Tây Nguyên tại quán có thực sự hợp lý?
+                    </h2>
+                    <p class="text-justify">
+                        Nhiều người e ngại rằng thưởng thức <strong>đặc sản vùng miền Sài Gòn</strong> ngay trung tâm Quận 10 sẽ rất đắt đỏ. Tuy nhiên, Ẩm Thực Buôn Mê lại giữ mức giá cực kỳ "bình dân học vụ". Chỉ từ 150.000đ - 250.000đ/người, bạn đã có một bàn tiệc thịnh soạn với đầy đủ những món tinh túy nhất. So sánh với các <strong>quán ăn đặc sản quận 10</strong> khác, mức giá tại đây được đánh giá là cực kỳ xứng đáng với chất lượng nguyên liệu được chuyển trực tiếp từ Buôn Ma Thuột.
+                    </p>
+
+                    <hr class="my-5" style="border-top: 2px solid #D2B48C; opacity: 0.5;">
+
+                    <h2 class="mb-5 fw-bold text-center" style="color: #4CAF50;">Review thực tế từ những tín đồ ẩm thực</h2>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="card h-100 border-0 shadow-sm p-3" style="background-color: #fffaf0; border-radius: 15px;">
+                                <div class="card-body">
+                                    <div class="mb-2 text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="card-text fst-italic">"Mình là người gốc Đắk Lắk, đi ăn nhiều nơi ở SG rồi nhưng chỉ có ở đây là mình thấy vị gà nướng đúng chuẩn nhất. Gà nướng ống tre thịt ngọt, không bị khô. Đặc biệt muối kiến vàng chuẩn vị Ê Đê luôn. Nhà mình cuối tuần nào cũng ghé đây."</p>
+                                    <h6 class="fw-bold mb-0" style="color: #6a3418;">- Chị Tuyết Mai (Quận 10)</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 border-0 shadow-sm p-3" style="background-color: #fffaf0; border-radius: 15px;">
+                                <div class="card-body">
+                                    <div class="mb-2 text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="card-text fst-italic">"Quán có bãi đậu xe hơi rất rộng, nhân viên nhiệt tình hỗ trợ. Mình hay đặt phòng VIP để tiếp đối tác, ai cũng khen món ăn lạ miệng và ngon. Giá món Tây Nguyên ở đây quá hợp lý cho một nhà hàng chất lượng như vậy."</p>
+                                    <h6 class="fw-bold mb-0" style="color: #6a3418;">- Anh Quốc Cường (Giám đốc KD)</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card h-100 border-0 shadow-sm p-3" style="background-color: #fffaf0; border-radius: 15px;">
+                                <div class="card-body">
+                                    <div class="mb-2 text-warning">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p class="card-text fst-italic">"Lần đầu tiên ăn cơm lam gà nướng Buôn Mê mà ấn tượng mãi. Cơm dẻo thơm mùi tre, gà thì thấm vị. Không gian quán mộc mạc, cảm giác như đang ở giữa đại ngàn thực sự. Rất đáng để trải nghiệm!"</p>
+                                    <h6 class="fw-bold mb-0" style="color: #6a3418;">- Bạn Linh Chi (Food Blogger)</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="cta-box text-center mt-5 p-5 rounded shadow" style="background-color: #F0E68C; border: 3px dashed #6a3418;">
+                        <h2 style="color: #6a3418; margin-bottom: 25px; font-weight: bold; text-transform: uppercase;">TRẢI NGHIỆM ẨM THỰC ĐẠI NGÀN NGAY HÔM NAY</h2>
+                        <div class="row text-start justify-content-center">
+                            <div class="col-md-10 col-lg-8">
+                                <p class="mb-3" style="color: #333; font-size: 1.2rem;">
+                                    <strong><i class="bi bi-geo-alt-fill me-2"></i> ĐỊA CHỈ:</strong> 285/94B Cách Mạng Tháng 8, Phường Hòa Hưng, Quận 10, TP. Hồ Chí Minh
+                                </p>
+                                <p class="mb-3" style="color: #333; font-size: 1.2rem;">
+                                    <strong><i class="bi bi-clock-fill me-2"></i> GIỜ MỞ CỬA:</strong> 10:00 AM - 10:00 PM
+                                </p>
+                                <p class="mb-3" style="color: #333; font-size: 1.2rem;">
+                                    <strong><i class="bi bi-telephone-fill me-2"></i> HOTLINE ĐẶT BÀN:</strong> <span style="font-size: 1.8rem; color: #d32f2f; font-weight: 800;">0906 999 207</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p class="mt-4 mb-4 fw-bold" style="color: #2e7d32; font-size: 1.1rem;">(Có phòng VIP riêng tư - Bãi đậu xe hơi miễn phí - Phục vụ tận tâm)</p>
+                        
+                        <div class="d-grid gap-3 d-md-block">
+                            <a href="tel:0906999207" class="btn btn-lg fw-bold shadow-sm px-5 mb-2 mb-md-0 py-3" style="background-color: #6a3418; border: none; color: white; transition: 0.3s;" rel="nofollow">
+                                GỌI ĐẶT BÀN ƯU TIÊN
+                            </a>
+                            <a href="#menu" class="btn btn-lg fw-bold shadow-sm px-5 py-3" style="background-color: #8B4513; border: none; color: white; transition: 0.3s;">
+                                XEM FULL MENU ĐẶC SẢN
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 p-4 bg-light rounded shadow-sm border-start border-5 border-success">
+                    <h5 class="fw-bold mb-3" style="color: #6a3418;">Vì sao nên chọn Ẩm Thực Buôn Mê?</h5>
+                    <p class="text-muted small mb-0">
+                        Bạn đang xem nội dung review chi tiết về <strong>đặc sản Tây Nguyên</strong> tại <strong>quán ăn Tây Nguyên Sài Gòn</strong> uy tín nhất Quận 10. Chúng tôi chuyên phục vụ <strong>gà nướng ống tre Buôn Mê</strong>, <strong>cơm lam Tây Nguyên</strong>, <strong>bò một nắng muối kiến vàng</strong> và các món <strong>đặc sản Ê Đê</strong> nguyên bản. Với không gian rộng rãi, <strong>Ẩm Thực Buôn Mê quận 10</strong> là địa điểm lý tưởng cho các buổi <strong>ăn tối gia đình quận 10</strong>, đặt tiệc sinh nhật hoặc họp mặt bạn bè. Liên hệ ngay hotline 0906 999 207 để biết <strong>nhà hàng Buôn Mê có món gì ngon</strong> và nhận bảng <strong>giá món Tây Nguyên</strong> chi tiết nhất.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="../index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Ẩm thực Buôn mê</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>285/94B Cách Mạng Tháng 8</p>
+            <p>Phường Hòa Hưng, Quận 10</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+84 909 650 816</span></p>
+            <p><strong>Email:</strong> <span>Amthucbuonme@gmail.com</span></p>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6">
+          <div class="footer-links">
+            <h4>Menu</h4>
+            <ul>
+              <li><a href="#menu"><i class="bi bi-chevron-right"></i> Món chính</a></li>
+              <li><a href="#menu"><i class="bi bi-chevron-right"></i> Món đặc sản</a></li>
+              <li><a href="#menu"><i class="bi bi-chevron-right"></i> Món lẩu</a></li>
+              <li><a href="#menu"><i class="bi bi-chevron-right"></i> Món khai vị</a></li>
+              <li><a href="#menu"><i class="bi bi-chevron-right"></i> Món tráng miệng</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6">
+          <div class="footer-links">
+            <h4>Liên kết hữu ích</h4>
+            <ul>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Thực đơn</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Đặt bàn</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Ưu đãi</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Sự kiện</a></li>
+              <li><a href="#contact"><i class="bi bi-chevron-right"></i> Liên hệ</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-6">
+          <div class="footer-links">
+            <h4>Dịch vụ</h4>
+            <ul>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Ăn tại chỗ</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Giao hàng</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Tổ chức tiệc</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Đặt tiệc cưới</a></li>
+              <li><a href="#"><i class="bi bi-chevron-right"></i> Catering</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="footer-contact">
+            <h4>Liên hệ</h4>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="bi bi-geo-alt"></i>
+              </div>
+              <div class="contact-info">
+                <p>285/94B Cách Mạng Tháng 8<br>Phường Hòa Hưng, Quận 10<br>TP. Hồ Chí Minh</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="bi bi-telephone"></i>
+              </div>
+              <div class="contact-info">
+                <p>+84 909 650 816</p>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon">
+                <i class="bi bi-envelope"></i>
+              </div>
+              <div class="contact-info">
+                <p>Amthucbuonme@gmail.com</p>
+              </div>
+            </div>
+            <div class="social-links">
+              <a href="#"><i class="bi bi-facebook"></i></a>
+              <a href="#"><i class="bi bi-instagram"></i></a>
+              <a href="#"><i class="bi bi-tiktok"></i></a>
+              <a href="#"><i class="bi bi-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6">
+            <div class="copyright">
+              <p>© <span>2025</span> <span class="sitename">Ẩm thực Buôn mê</span>. All Rights Reserved</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="credits">
+              <p>Designed by <a href="http://googleusercontent.com/maps.google.com/3">Buon Me</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <div id="preloader"></div>
+
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/php-email-form/validate.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <script src="../assets/js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="../assets/js/firebase-tele.js"></script>
+  <script>
+    // Kích hoạt animation khi cuộn
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+  </script>
+
+</body>
+
+</html>
